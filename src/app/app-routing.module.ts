@@ -32,6 +32,7 @@ import { AccessComponent } from './components/access/access.component';
 const routes: Routes = [
     {
         path: 'role',
+        component: AppMainComponent,
         loadChildren: () => import('./pages/admin/role/role.module').then(m => m.RoleModule)
     },
         {

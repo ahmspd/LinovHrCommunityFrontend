@@ -12,9 +12,6 @@ import { AppMainComponent } from './app.main.component';
                         <li app-menuitem *ngFor="let child of item.items" [item]="child" [index]="i" role="none"></li>
                     </ul>
                 </li>
-                <a href="https://www.primefaces.org/primeblocks-ng/#/">
-                    <img src="assets/layout/images/{{appMain.config.dark ? 'banner-primeblocks-dark' : 'banner-primeblocks'}}.png" alt="Prime Blocks" class="w-full mt-3"/>
-                </a>
             </ul>
         </div>
     `
@@ -31,6 +28,12 @@ export class AppMenuComponent implements OnInit {
                 label: 'Home',
                 items:[
                     {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/']}
+                ]
+            },
+            {
+                label: 'Menu',
+                items: [
+                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']}
                 ]
             },
             {
@@ -52,13 +55,6 @@ export class AppMenuComponent implements OnInit {
                     {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
                     {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']},
                     {label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc']}
-                ]
-            },
-            {
-                label:'Prime Blocks',
-                items:[
-                    {label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW'},
-                    {label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank'},
                 ]
             },
             {label:'Utilities',
