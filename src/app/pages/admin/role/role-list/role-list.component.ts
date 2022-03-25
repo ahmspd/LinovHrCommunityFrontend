@@ -16,10 +16,10 @@ export class RoleListComponent implements OnInit {
 
   constructor() { }
 
-  loadData(event: LazyLoadEvent) {
-    console.log(event)
-    this.getData(event.first, event.rows)
-  }
+  // loadData(event: LazyLoadEvent) {
+  //   console.log(event)
+  //   this.getData(event.first, event.rows)
+  // }
 
   getData(startPage : number = 0, maxPage : number = this.maxPage) : void {
     // this.loading = true;

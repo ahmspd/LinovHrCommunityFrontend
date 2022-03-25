@@ -31,9 +31,11 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Menu',
+                label: 'Master',
                 items: [
-                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']}
+                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
+                    {label: 'Industry', icon: 'pi pi-fw pi-youtube', routerLink: ['/industry/list']},
+
                 ]
             },
             {

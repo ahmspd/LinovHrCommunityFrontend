@@ -35,47 +35,57 @@ const routes: Routes = [
         component: AppMainComponent,
         loadChildren: () => import('./pages/admin/role/role.module').then(m => m.RoleModule)
     },
-        {
-            path: '', component: AppMainComponent,
-            children: [
-                { path: '', component: DashboardComponent },
-                { path: 'uikit/formlayout', component: FormLayoutComponent },
-                { path: 'uikit/input', component: InputComponent },
-                { path: 'uikit/floatlabel', component: FloatLabelComponent },
-                { path: 'uikit/invalidstate', component: InvalidStateComponent },
-                { path: 'uikit/button', component: ButtonComponent },
-                { path: 'uikit/table', component: TableComponent },
-                { path: 'uikit/list', component: ListComponent },
-                { path: 'uikit/tree', component: TreeComponent },
-                { path: 'uikit/panel', component: PanelsComponent },
-                { path: 'uikit/overlay', component: OverlaysComponent },
-                { path: 'uikit/media', component: MediaComponent },
-                { path: 'uikit/menu', loadChildren: () => import('./components/menus/menus.module').then(m => m.MenusModule) },
-                { path: 'uikit/message', component: MessagesComponent },
-                { path: 'uikit/misc', component: MiscComponent },
-                { path: 'uikit/charts', component: ChartsComponent },
-                { path: 'uikit/file', component: FileComponent },
-                { path: 'pages/crud', component: CrudComponent },
-                { path: 'pages/timeline', component: TimelineComponent },
-                { path: 'pages/empty', component: EmptyComponent },
-                { path: 'icons', component: IconsComponent },
-                { path: 'blocks', component: BlocksComponent },
-                { path: 'documentation', component: DocumentationComponent }
-            ],
-        },
-        { path: 'pages/landing', component: LandingComponent },
-        { path: 'pages/login', component: LoginComponent },
-        { path: 'pages/error', component: ErrorComponent },
-        { path: 'pages/notfound', component: NotfoundComponent },
-        { path: 'pages/access', component: AccessComponent },
-        { path: '**', redirectTo: 'pages/notfound' },
-    ]
+    {
+        path: 'industry',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/industry/industry.module').then(m => m.IndustryModule)
+    },
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+    {
+        path: '', component: AppMainComponent,
+        children: [
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'uikit/formlayout', component: FormLayoutComponent },
+            { path: 'uikit/input', component: InputComponent },
+            { path: 'uikit/floatlabel', component: FloatLabelComponent },
+            { path: 'uikit/invalidstate', component: InvalidStateComponent },
+            { path: 'uikit/button', component: ButtonComponent },
+            { path: 'uikit/table', component: TableComponent },
+            { path: 'uikit/list', component: ListComponent },
+            { path: 'uikit/tree', component: TreeComponent },
+            { path: 'uikit/panel', component: PanelsComponent },
+            { path: 'uikit/overlay', component: OverlaysComponent },
+            { path: 'uikit/media', component: MediaComponent },
+            { path: 'uikit/menu', loadChildren: () => import('./components/menus/menus.module').then(m => m.MenusModule) },
+            { path: 'uikit/message', component: MessagesComponent },
+            { path: 'uikit/misc', component: MiscComponent },
+            { path: 'uikit/charts', component: ChartsComponent },
+            { path: 'uikit/file', component: FileComponent },
+            { path: 'pages/crud', component: CrudComponent },
+            { path: 'pages/timeline', component: TimelineComponent },
+            { path: 'pages/empty', component: EmptyComponent },
+            { path: 'icons', component: IconsComponent },
+            { path: 'blocks', component: BlocksComponent },
+            { path: 'documentation', component: DocumentationComponent }
+        ],
+    },
+    { path: 'pages/landing', component: LandingComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'pages/error', component: ErrorComponent },
+    { path: 'pages/notfound', component: NotfoundComponent },
+    { path: 'pages/access', component: AccessComponent },
+    { path: '**', redirectTo: 'pages/notfound' },
+]
 
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, 
-        { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' },)
+        RouterModule.forRoot(routes,
+            { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
     ],
     exports: [RouterModule]
 })
