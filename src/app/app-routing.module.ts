@@ -40,6 +40,11 @@ const routes: Routes = [
         component : NavbarComponent,
         loadChildren: () => import('./pages/user/homepage/homepage.module').then(m => m.HomepageModule)
     },
+    {
+        path: 'thread',
+        component : NavbarComponent,
+        loadChildren: () => import('./pages/user/thread/thread.module').then(m => m.ThreadModule)
+    },
         {
             path: '', component: AppMainComponent,
             children: [

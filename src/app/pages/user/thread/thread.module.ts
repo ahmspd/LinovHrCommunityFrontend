@@ -1,18 +1,18 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
-import { HomepageComponent } from './homepage.component';
-import { HomepageRouter } from "./homepage.router";
+import { ThreadListComponent } from "./thread-list/thread-list.component";
+import { ThreadRouter } from "./thread.router";
+
 
 @NgModule({
     declarations: [
-        HomepageComponent
+        ThreadListComponent
     ],
     imports: [
+        ThreadRouter,
         RouterModule,
-        HomepageRouter,
         ButtonModule
     ]
 })
-
-export class HomepageModule { }
+export class ThreadModule{}
