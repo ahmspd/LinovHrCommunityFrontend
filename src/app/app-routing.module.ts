@@ -28,11 +28,17 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
+import { NavbarComponent } from './pages/user/navbar/navbar.component';
 
 const routes: Routes = [
     {
         path: 'role',
         loadChildren: () => import('./pages/admin/role/role.module').then(m => m.RoleModule)
+    },
+    {
+        path: 'homepage',
+        component : NavbarComponent,
+        loadChildren: () => import('./pages/user/homepage/homepage.module').then(m => m.HomepageModule)
     },
         {
             path: '', component: AppMainComponent,
