@@ -36,8 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-row-reverse flex-wrap">
-        <p-button label="More Aricles" styleClass="p-button-link mr-2 mb-2"></p-button>
+    <div class="flex justify-content-end align-items-center">
+        <p-button label="More Articles" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
     </div>
 </div>
 
@@ -113,9 +113,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-offset-11">
-            <p-button label="More Threads" styleClass="p-button-link"></p-button>
-        </div>
+    </div>
+    <div class="flex justify-content-end align-items-center">
+        <p-button (click)="toThread()" label="More Threads" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
     </div>
 </div>
 
@@ -161,7 +161,7 @@
             </div>
         </div>
     </div>
-    <div class="col-offset-11">
-        <p-button label="More Event" styleClass="p-button-link"></p-button>
+    <div class="flex justify-content-end align-items-center">
+        <p-button label="More Event" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
     </div>
 </div>
