@@ -1,8 +1,8 @@
 export class GetAllIndustryDtoDataRes { 
-	 id?: string 
-	 code?: string 
-	 industryName?: string 
-	 version?: number 
-	 isActive?: boolean 
+	 id!: string 
+	 code!: string 
+	 industryName!: string 
+	 version!: number 
+	 isActive!: boolean 
 } 
 

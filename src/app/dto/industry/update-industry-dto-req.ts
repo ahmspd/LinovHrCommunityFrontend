@@ -1,7 +1,7 @@
 export class UpdateIndustryDtoReq { 
-	 id?: string 
+	 id!: string 
 	 code?: string 
 	 industryName?: string 
-	 version?: number 
+	 version!: number 
 } 
 

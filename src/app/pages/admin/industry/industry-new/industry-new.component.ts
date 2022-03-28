@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { InsertIndustryDtoReq } from 'src/app/dto/industry/insert-industry-dto-req';
+import { IndustryService } from 'src/app/service/industry.service';
 
 @Component({
   selector: 'app-industry-new',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndustryNewComponent implements OnInit {
 
-  constructor() { }
+  industry: InsertIndustryDtoReq = new InsertIndustryDtoReq()
+
+  constructor(private industryService: IndustryService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  insert(isValid: boolean): void {
+    if(isValid){
+      this.industryService.insert(this.industry).subscribe(result => {
+        console.log(result)
+        this.router.navigateByUrl('/industry/list')
+      })
+    }
   }
 
 }

@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/industry/industry.module').then(m => m.IndustryModule)
     },
     {
+        path: 'position',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/position/position.module').then(m => m.PositionModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

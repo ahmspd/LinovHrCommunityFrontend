@@ -2,7 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { DeleteByIdIndustryDtoRes } from "../dto/industry/delete-by-id-industry-dto-res";
-import { GetAllIndustryDtoRes } from "../dto/industry/get-all-industry-dto-res";
+import { DeleteMultipleIndustryDtoReq } from "../dto/industry/delete-multiple-industry-dto-req";
+import { DeleteMultipleIndustryDtoRes } from "../dto/industry/delete-multiple-industry-dto-res";
 import { GetAllIndustryPageDtoRes } from "../dto/industry/get-all-industry-page-dto-res";
 import { GetByIdIndustryDtoRes } from "../dto/industry/get-by-id-industry-dto-res";
 import { InsertIndustryDtoReq } from "../dto/industry/insert-industry-dto-req";
@@ -19,7 +20,7 @@ export class IndustryService {
     }
 
     getAll(startPage : number, maxPage : number): Observable<GetAllIndustryPageDtoRes> {
-        return this.http.get<GetAllIndustryPageDtoRes>(`http://localhost:1234/industries/${startPage}/${maxPage}`)
+        return this.http.get<GetAllIndustryPageDtoRes>(`http://localhost:1234/industries/page?start=${startPage}&max=${maxPage}`)
     }
 
     insert(industry: InsertIndustryDtoReq): Observable<InsertIndustryDtoRes> {
@@ -36,5 +37,9 @@ export class IndustryService {
 
     deleteById(id: number): Observable<DeleteByIdIndustryDtoRes> {
         return this.http.delete<DeleteByIdIndustryDtoRes>(`http://localhost:1234/industries/${id}`)
+    }
+
+    deleteMultiple(industry: DeleteMultipleIndustryDtoReq): Observable<DeleteMultipleIndustryDtoRes> {
+        return this.http.post<DeleteMultipleIndustryDtoRes>('http://localhost:1234/industries/multiple', industry)
     }
 }

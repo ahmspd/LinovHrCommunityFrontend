@@ -1,4 +1,4 @@
 export class UpdateIndustryDtoDataRes { 
-	 version?: number 
+	 version!: number 
 } 
 
