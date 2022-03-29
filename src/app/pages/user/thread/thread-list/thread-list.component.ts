@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-thread-list',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThreadListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit(): void {
+  }
+
+  toThreadDetail(){
+    this.router.navigateByUrl('/thread/detail')
   }
 
 }

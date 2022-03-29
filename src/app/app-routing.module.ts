@@ -29,6 +29,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { NavbarComponent } from './pages/user/navbar/navbar.component';
+import { NavbarModule } from './pages/user/navbar/navbar.module';
 
 const routes: Routes = [
     {
@@ -85,7 +86,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, 
-        { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' },)
+        { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' },),
+        NavbarModule
     ],
     exports: [RouterModule]
 })

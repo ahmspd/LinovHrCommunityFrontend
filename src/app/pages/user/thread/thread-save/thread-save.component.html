@@ -1,58 +1,21 @@
 <!-- Content -->
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
     <!-- Main Content -->
-    <div class="col-12 md:col-6 lg:col-9">
-        <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
-            <div class="font-bold text-2xl text-900 ml-1">Threads</div>
-        </div>
-        <div class="surface-card p-4 mb-3">
-            <div class="text-600 text-sm mb-3"><span>Published </span><span class="font-bold">April 6, 2021</span><span>
-                    by
-                </span><span class="font-bold mr-2">Claire Williams</span>
-                <p-tag severity="warning" class="p-element">
-                    <span class="p-tag p-component p-tag-warning">Premium</span>
-                </p-tag>
-            </div>
-            <a href="">
-                <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900" style="border-left: 8px solid;">
-                    Content Section Title
-                </div>
-            </a>
-            <div class="line-height-3 text-xl text-700 mb-5">
-                Metus aliquam eleifend mi in nulla posuere. In vitae turpis massa
-                sed elementum tempus egestas sed. Dui ut ornare lectus sit. Massa ultricies mi quis hendrerit.
-            </div>
-
-            <div class="text-500 flex justify-content-end align-items-center">
-                <i class="pi pi-heart mr-1"></i><span class="mr-3">26</span>
-                <i class="pi pi-comment mr-1"></i><span class="mr-3">6</span>
-                <i class="pi pi-bookmark mr-1"></i><span></span>
-                <p-button (click)="toThreadDetail()" label="Read More" icon="pi pi-chevron-right" styleClass="p-button-link mr-2"></p-button>
-            </div>
-        </div>
-
-        <div class="surface-card p-4 mb-3">
-            <div class="text-600 text-sm mb-3"><span>Published </span><span class="font-bold">April 6, 2021</span><span>
-                    by
-                </span><span class="font-bold mr-2">Claire Williams</span>
-            </div>
-            <a href="">
-                <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900" style="border-left: 8px solid;">
-                    Content Section Title
-                </div>
-            </a>
-            <div class="line-height-3 text-xl text-700 mb-5">
-                Metus aliquam eleifend mi in nulla posuere. In vitae turpis massa
-                sed elementum tempus egestas sed. Dui ut ornare lectus sit. Massa ultricies mi quis hendrerit.
-            </div>
-
-            <div class="text-500 flex justify-content-end align-items-center">
-                <i class="pi pi-heart mr-1"></i><span class="mr-3">26</span>
-                <i class="pi pi-comment mr-1"></i><span class="mr-3">6</span>
-                <i class="pi pi-bookmark mr-1"></i><span></span>
-                <p-button (click)="toThreadDetail()" label="Read More" icon="pi pi-chevron-right" styleClass="p-button-link mr-2"></p-button>
+    <div class="col-12 md:col-6 lg:col-9 my-5">
+        <div class="surface-card shadow-2 border-round p-3 flex-auto mb-3">
+            <div class="mb-3"><span class="text-900 font-bold inline-block mr-3">Detail Thread</span></div>
+            <div class="mb-3"><span class="text-900 font-medium inline-block mr-3">Title</span></div>
+            <textarea id="notes" pinputtextarea
+                class="p-inputtextarea p-inputtext p-component p-element p-inputtextarea-resizable p-filled" rows="5"
+                [cols]="80" style="height: 124px; overflow: hidden;">
+            </textarea>
+            <div class="mb-3"><span class="text-900 font-medium inline-block mr-3">Content</span></div>
+            <textarea id="notes" pinputtextarea
+                class="p-inputtextarea p-inputtext p-component p-element p-inputtextarea-resizable p-filled" rows="5"
+                [cols]="80" style="height: 124px; overflow: hidden;">
+            </textarea>
+            <div class="text-500 flex justify-content-end align-items-center mr-3 mt-3">
+                <p-button>ADD COMMENTS</p-button>
             </div>
         </div>
     </div>
@@ -180,4 +143,5 @@
         </div>
     </div>
 
+    
 </div>
