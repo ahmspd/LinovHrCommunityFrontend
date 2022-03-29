@@ -46,6 +46,26 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/position/position.module').then(m => m.PositionModule)
     },
     {
+        path: 'payment-method',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/payment-method/payment-method.module').then(m => m.PaymentMethodModule)
+    },
+    {
+        path: 'price-type',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/price-type/price-type.module').then(m => m.PriceTypeModule)
+    },
+    {
+        path: 'price-list',
+        component: AppMainComponent,
+        loadChildren: () =>import('./pages/admin/price-list/price-list.module').then(m => m.PriceListModule)
+    },
+    {
+        path: 'thread-type',
+        component: AppMainComponent,
+        loadChildren: () =>import('./pages/admin/thread-type/thread-type.module').then(m =>m.ThreadTypeModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

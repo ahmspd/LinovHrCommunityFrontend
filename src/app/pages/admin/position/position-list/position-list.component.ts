@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { PositionService } from 'src/app/service/position.service';
   styleUrls: ['./position-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class PositionListComponent implements OnInit {
+export class PositionListComponent implements OnInit , OnDestroy{
 
   constructor(private positionService: PositionService, private router: Router, private confirmationService: ConfirmationService) { }
 
@@ -37,7 +37,7 @@ export class PositionListComponent implements OnInit {
   getData(startPage: number = 0, maxPage: number = this.maxPage): void {
     this.loading = true;
 
-    this.positionService.getAll(startPage, maxPage).subscribe({
+    this.positionSubsGetAll = this.positionService.getAll(startPage, maxPage).subscribe({
       next: result => {
         const resultData: any = result
         this.positions = resultData.data
@@ -48,7 +48,7 @@ export class PositionListComponent implements OnInit {
     })
   }
 
-  update(id: number): void {
+  update(id: string): void {
     this.router.navigateByUrl(`/position/${id}`)
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UpdatePositionDtoReq } from 'src/app/dto/position/update-position-dto-req';
@@ -9,7 +9,7 @@ import { PositionService } from 'src/app/service/position.service';
   templateUrl: './position-update.component.html',
   styleUrls: ['./position-update.component.scss']
 })
-export class PositionUpdateComponent implements OnInit {
+export class PositionUpdateComponent implements OnInit , OnDestroy{
 
   position: UpdatePositionDtoReq = new UpdatePositionDtoReq()
   positionSubsGetById?: Subscription

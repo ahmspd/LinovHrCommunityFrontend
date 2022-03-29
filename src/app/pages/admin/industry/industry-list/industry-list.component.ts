@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { IndustryService } from 'src/app/service/industry.service';
   styleUrls: ['./industry-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class IndustryListComponent implements OnInit {
+export class IndustryListComponent implements OnInit , OnDestroy{
 
   constructor(private industryService: IndustryService, private router: Router, private confirmationService: ConfirmationService) { }
 
@@ -31,7 +31,11 @@ export class IndustryListComponent implements OnInit {
 
   loadData(event: LazyLoadEvent) {
     console.log(event)
-    this.getData(event.first, event.rows)
+    if(event.globalFilter){
+      this.filter(event.globalFilter)
+    }else {
+      this.getData(event.first, event.rows)
+    }
   }
 
   getData(startPage: number = 0, maxPage: number = this.maxPage): void {
@@ -48,10 +52,13 @@ export class IndustryListComponent implements OnInit {
     })
   }
 
-  update(id: number): void {
+  update(id: string): void {
     this.router.navigateByUrl(`/industry/${id}`)
   }
 
+  filter(text: string):void{
+    this.industries = this.industries.filter(industry=>industry.industryName.includes(text))
+  }
   confirm(): void {
     this.confirmationService.confirm({
       key: 'confirm',

@@ -31,11 +31,11 @@ export class IndustryService {
         return this.http.put<UpdateIndustryDtoRes>('http://localhost:1234/industries', industry)
     }
     
-    getById(id: number): Observable<GetByIdIndustryDtoRes> {
+    getById(id: string): Observable<GetByIdIndustryDtoRes> {
         return this.http.get<GetByIdIndustryDtoRes>(`http://localhost:1234/industries/${id}`)
     }
 
-    deleteById(id: number): Observable<DeleteByIdIndustryDtoRes> {
+    deleteById(id: string): Observable<DeleteByIdIndustryDtoRes> {
         return this.http.delete<DeleteByIdIndustryDtoRes>(`http://localhost:1234/industries/${id}`)
     }
 

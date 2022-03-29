@@ -36,7 +36,10 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
                     {label: 'Industry', icon: 'pi pi-fw pi-youtube', routerLink: ['/industry/list']},
                     {label: 'Position', icon: 'pi pi-fw pi-youtube', routerLink: ['/position/list']},
-
+                    {label: 'Payment Method', icon: 'pi pi-fw pi-youtube', routerLink: ['/payment-method/list']},
+                    {label: 'Price Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-type/list']},
+                    {label: 'Price List', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-list/list']},
+                    {label: 'Thread Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/thread-type/list']}
                 ]
             },
             {
