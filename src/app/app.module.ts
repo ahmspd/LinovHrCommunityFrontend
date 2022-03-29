@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -94,7 +93,6 @@ import { AppComponent } from './app.component';
 import { AppMainComponent } from './app.main.component';
 import { AppTopBarComponent } from './app.topbar.component';
 import { AppFooterComponent } from './app.footer.component';
-import { AppConfigComponent } from './app.config.component';
 import { AppMenuComponent } from './app.menu.component';
 import { AppMenuitemComponent } from './app.menuitem.component';
 
@@ -141,6 +139,8 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { NavbarModule } from './pages/user/navbar/navbar.module';
+import { HttpHandlerCommunity } from './http/http-handler';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -176,6 +176,7 @@ import { NavbarModule } from './pages/user/navbar/navbar.module';
         FieldsetModule,
         FileUploadModule,
         GalleriaModule,
+        HttpClientModule,
         ImageModule,
         InplaceModule,
         InputNumberModule,
@@ -238,7 +239,6 @@ import { NavbarModule } from './pages/user/navbar/navbar.module';
         AppMainComponent,
         AppTopBarComponent,
         AppFooterComponent,
-        AppConfigComponent,
         AppMenuComponent,
         AppMenuitemComponent,
         DashboardComponent,
@@ -277,9 +277,13 @@ import { NavbarModule } from './pages/user/navbar/navbar.module';
         AccessComponent
     ],
     providers: [
-        // {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService
+        PhotoService, ProductService, MenuService, ConfigService, MessageService,
+        {
+            provide : HTTP_INTERCEPTORS,
+            useClass : HttpHandlerCommunity,
+            multi : true
+          }
     ],
     bootstrap: [AppComponent]
 })
