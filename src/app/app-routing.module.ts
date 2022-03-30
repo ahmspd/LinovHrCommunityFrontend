@@ -30,6 +30,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { NavbarComponent } from './pages/user/navbar/navbar.component';
 import { NavbarModule } from './pages/user/navbar/navbar.module';
+import { RegisterComponent } from './components/register/register.component';
+import { VerificationComponent } from './components/verification/verification.component';
 
 const routes: Routes = [
     {
@@ -75,7 +77,9 @@ const routes: Routes = [
             ],
         },
         { path: 'pages/landing', component: LandingComponent },
-        { path: 'pages/login', component: LoginComponent },
+        { path: 'login', component: LoginComponent },
+        { path: 'register', component: RegisterComponent },
+        { path: 'verification', component: VerificationComponent },
         { path: 'pages/error', component: ErrorComponent },
         { path: 'pages/notfound', component: NotfoundComponent },
         { path: 'pages/access', component: AccessComponent },
@@ -86,7 +90,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, 
-        { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' },),
+        { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
         NavbarModule
     ],
     exports: [RouterModule]

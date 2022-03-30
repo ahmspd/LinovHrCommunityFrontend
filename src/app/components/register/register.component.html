@@ -1,0 +1,61 @@
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 mt-5 xl:mt-0 text-center">
+            <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo"
+                class="mb-5" style="width:81px; height:60px;">
+        </div>
+        <div class="col-12 xl:col-6"
+            style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4"
+                style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <div class="w-full md:w-10 mx-auto">
+                    <label for="fullName" class="block text-900 text-xl font-medium mb-2">Full Name</label>
+                    <input id="fullName" type="text" placeholder="Full Name" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                    <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+                    
+                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
+                    <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true"
+                        styleClass="w-full mb-3"></p-password>
+
+                    <label for="confirmPassword" class="block text-900 font-medium text-xl mb-2">Confirm
+                        Password</label>
+                    <p-password id="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Repeat Password"
+                        styleClass="w-full mb-3" [feedback]="false"></p-password>
+
+                    <label for="company" class="block text-900 text-xl font-medium mb-2">Company</label>
+                    <input id="company" type="text" placeholder="Company Name" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="industry"
+                                class="block text-900 font-medium text-xl mb-2">Industry</label>
+                            <p-dropdown inputid="industry" optionlabel="name" filterby="name"
+                                placeholder="Select a Industry"
+                                class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted">
+                            </p-dropdown>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="position"
+                                class="block text-900 font-medium text-xl mb-2">Position</label>
+                            <p-dropdown inputid="position" optionlabel="name" filterby="name"
+                                placeholder="Select a Position"
+                                class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="flex align-items-center justify-content-between mb-5">
+                        <a (click)="toLogin()" class="font-medium no-underline ml-2 text-right cursor-pointer"
+                            style="color: var(--primary-color)">Already have account? Sign In</a>
+                    </div>
+                    <button (click)="toVerify()" pButton pRipple label="Register" class="w-full p-3 text-xl"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

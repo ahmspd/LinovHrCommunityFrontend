@@ -141,6 +141,9 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { NavbarModule } from './pages/user/navbar/navbar.module';
+import { RegisterComponent } from './components/register/register.component';
+import { VerificationComponent } from './components/verification/verification.component';
+import { NavbarComponent } from './pages/user/navbar/navbar.component';
 
 @NgModule({
     imports: [
@@ -230,8 +233,7 @@ import { NavbarModule } from './pages/user/navbar/navbar.module';
         TreeTableModule,
         VirtualScrollerModule,
         AppCodeModule,
-        StyleClassModule,
-        NavbarModule
+        StyleClassModule
     ],
     declarations: [
         AppComponent,
@@ -274,7 +276,9 @@ import { NavbarModule } from './pages/user/navbar/navbar.module';
         LoginComponent,
         ErrorComponent,
         NotfoundComponent,
-        AccessComponent
+        AccessComponent,
+        RegisterComponent,
+        VerificationComponent
     ],
     providers: [
         // {provide: LocationStrategy, useClass: HashLocationStrategy},

@@ -8,6 +8,8 @@ import { ThreadDetailComponent } from './thread-detail/thread-detail.component';
 import {AvatarModule} from 'primeng/avatar';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ThreadSaveComponent } from './thread-save/thread-save.component';
+import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,9 @@ import { ThreadSaveComponent } from './thread-save/thread-save.component';
         ButtonModule,
         TagModule,
         AvatarModule,
-        InputTextareaModule
+        InputTextareaModule,
+        InputTextModule,
+        DropdownModule
     ]
 })
 export class ThreadModule{}
