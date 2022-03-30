@@ -66,6 +66,11 @@ const routes: Routes = [
         loadChildren: () =>import('./pages/admin/thread-type/thread-type.module').then(m =>m.ThreadTypeModule)
     },
     {
+        path: 'category',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/category/category.module').then(m => m.CategoryModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
