@@ -138,16 +138,10 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
-<<<<<<< HEAD
 import { HttpHandlerCommunity } from './http/http-handler';
 import { MessageService } from 'primeng/api';
 import { RegisterComponent } from './components/register/register.component';
 import { VerificationComponent } from './components/verification/verification.component';
-=======
-import { NavbarModule } from './pages/user/navbar/navbar.module';
-import { HttpHandlerCommunity } from './http/http-handler';
-import { MessageService } from 'primeng/api';
->>>>>>> 590aed699cf1173e2336679cc3c981423513c0d4
 
 @NgModule({
     imports: [
