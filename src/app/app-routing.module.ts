@@ -36,6 +36,7 @@ import { VerificationComponent } from './components/verification/verification.co
 const routes: Routes = [
     {
         path: 'role',
+        component: AppMainComponent,
         loadChildren: () => import('./pages/admin/role/role.module').then(m => m.RoleModule)
     },
     {
@@ -48,10 +49,50 @@ const routes: Routes = [
         component : NavbarComponent,
         loadChildren: () => import('./pages/user/thread/thread.module').then(m => m.ThreadModule)
     },
+    {
+        path: 'industry',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/industry/industry.module').then(m => m.IndustryModule)
+    },
+    {
+        path: 'position',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/position/position.module').then(m => m.PositionModule)
+    },
+    {
+        path: 'payment-method',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/payment-method/payment-method.module').then(m => m.PaymentMethodModule)
+    },
+    {
+        path: 'price-type',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/price-type/price-type.module').then(m => m.PriceTypeModule)
+    },
+    {
+        path: 'price-list',
+        component: AppMainComponent,
+        loadChildren: () =>import('./pages/admin/price-list/price-list.module').then(m => m.PriceListModule)
+    },
+    {
+        path: 'thread-type',
+        component: AppMainComponent,
+        loadChildren: () =>import('./pages/admin/thread-type/thread-type.module').then(m =>m.ThreadTypeModule)
+    },
+    {
+        path: 'category',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/category/category.module').then(m => m.CategoryModule)
+    },
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
         {
             path: '', component: AppMainComponent,
             children: [
-                { path: '', component: DashboardComponent },
+                { path: 'dashboard', component: DashboardComponent },
                 { path: 'uikit/formlayout', component: FormLayoutComponent },
                 { path: 'uikit/input', component: InputComponent },
                 { path: 'uikit/floatlabel', component: FloatLabelComponent },

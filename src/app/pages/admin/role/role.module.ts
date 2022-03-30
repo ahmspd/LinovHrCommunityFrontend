@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { TableModule } from "primeng/table";
 import { RoleListComponent } from './role-list/role-list.component';
 import { RoleRouter } from "./role.router";
 
@@ -7,8 +9,12 @@ import { RoleRouter } from "./role.router";
     RoleListComponent
   ],
     imports: [
-        RoleRouter
-    ]
+        RoleRouter,
+        TableModule,
+        CommonModule
+    ],
+    providers: [],
+  
 })
 export class RoleModule {
 
