@@ -58,9 +58,9 @@
                 Enim lobortis scelerisque fermentum dui faucibus in ornare. In mollis nunc sed id semper. Vitae
                 ultricies leo integer malesuada nunc vel risus commodo. </div>
             <div class="text-500 flex justify-content-end align-items-center">
-                <i class="pi pi-heart mr-1"></i><span class="mr-3"></span>
-                <i class="pi pi-comment mr-1"></i><span class="mr-3"></span>
-                <i class="pi pi-bookmark mr-1"></i>
+                <span class="cursor-pointer" (click)="likeClick()"><i class="pi pi-heart mr-3"></i></span>
+                <span class="cursor-pointer" (click)="commentClick()"><i class="pi pi-comment mr-3"></i></span>
+                <span class="cursor-pointer" (click)="bookmarkClick()"><i class="pi pi-bookmark"></i></span>
             </div>
         </div>
     </div>
@@ -199,10 +199,7 @@
                 <span class="inline-flex align-items-start">
                     <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-5" shape="circle">
                     </p-avatar>
-                    <textarea id="notes" pinputtextarea
-                        class="p-inputtextarea p-inputtext p-component p-element p-inputtextarea-resizable p-filled"
-                        rows="5" [cols]="80" style="height: 124px; overflow: hidden;">
-                    </textarea>
+                    <ckeditor [editor]="editor" [(ngModel)]="data"></ckeditor>
                 </span>
             </div>
             <div class="text-500 flex justify-content-end align-items-center mr-3 mt-3">

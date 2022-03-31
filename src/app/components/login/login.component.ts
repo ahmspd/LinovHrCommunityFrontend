@@ -8,7 +8,7 @@ import { LoginUserDtoReq } from 'src/app/dto/user/login-user-dto-req';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styles:[`
+  styles: [`
     :host ::ng-deep .p-password input {
     width: 100%;
     padding:1rem;
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   config: AppConfig;
   subscription: Subscription;
 
-  constructor(public configService: ConfigService, private loginService: LoginService, private router: Router){ }
+  constructor(public configService: ConfigService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
     this.config = this.configService.config;
@@ -43,18 +43,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogin(isValid: boolean): void{
-    if(isValid) {
+  onLogin(isValid: boolean): void {
+    if (isValid) {
       this.loginService.login(this.login).subscribe(result => {
         console.log(result)
         this.loginService.saveData(result)
         this.router.navigateByUrl('/dashboard')
       })
     }
-    }
+  }
 
   ngOnDestroy(): void {
-    if(this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }

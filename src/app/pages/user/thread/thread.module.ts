@@ -10,6 +10,10 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ThreadSaveComponent } from './thread-save/thread-save.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from '@angular/common';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
     declarations: [
@@ -25,7 +29,11 @@ import {DropdownModule} from 'primeng/dropdown';
         AvatarModule,
         InputTextareaModule,
         InputTextModule,
-        DropdownModule
+        DropdownModule,
+        CKEditorModule,
+        FormsModule,
+        CommonModule,
+        InputSwitchModule
     ]
 })
 export class ThreadModule{}

@@ -17,4 +17,16 @@ export class ThreadListComponent implements OnInit {
     this.router.navigateByUrl('/thread/detail')
   }
 
+  likeClick(){
+
+  }
+
+  bookmarkClick(){
+
+  }
+
+  commentClick(){
+    this.router.navigateByUrl('/thread/detail')
+  }
+
 }

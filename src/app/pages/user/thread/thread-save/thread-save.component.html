@@ -1,5 +1,6 @@
 <!-- Content -->
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+
     <!-- Main Content -->
     <div class="col-12 md:col-6 lg:col-9">
         <div class="flex justify-content-start align-items-center mb-3">
@@ -8,23 +9,43 @@
             <div class="font-bold text-2xl text-900 ml-1">Create Threads & Discuss</div>
         </div>
         <div class="surface-card shadow-2 border-round p-3 flex-auto mb-3">
-            <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
-            <input id="title" type="text" placeholder="Thread Title" pInputText class="w-full mb-3"
-                style="padding:1rem;">
+            <form #formCreateThread="ngForm" (ngSubmit)="onCreate(formCreateThread.form.valid)">
+                <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
+                <input id="title" name="title" type="text" placeholder="Thread Title" pInputText class="w-full mb-3"
+                    style="padding:1rem;">
 
-            <label for="type" class="block text-900 text-xl font-medium mb-2">Thread Type</label>
-            <div class="w-full mb-3">
-                <p-dropdown id="type" optionLabel="name" placeholder="Select a Thread Type"></p-dropdown>
-            </div>  
+                <label for="content" class="block text-900 text-xl font-medium mb-2">Content</label>
+                <ckeditor name="content" [editor]="editor" [(ngModel)]="data"></ckeditor>
 
-            <label for="content" class="block text-900 text-xl font-medium mb-2">Content</label>
-            <textarea id="notes" pinputtextarea
-                class="p-inputtextarea p-inputtext p-component p-element p-inputtextarea-resizable p-filled" rows="5"
-                [cols]="80" style="height: 124px; overflow: hidden;">
-            </textarea>
-            <div class="text-500 flex justify-content-end align-items-center mr-3 mt-3">
-                <p-button>Create Thread</p-button>
-            </div>
+                <label for="category" class="block text-900 text-xl font-medium mb-2 mt-3">Category</label>
+                <div class="mb-3">
+                    <p-dropdown id="category" optionLabel="name" placeholder="Select a Category"></p-dropdown>
+                </div>
+
+                <div class="grid formgrid ml-1">
+                    <div class="field mb-4">
+                        <label for="polling" class="block text-900 text-xl font-medium mb-2 mt-3">Polling</label>
+                        <p-inputSwitch name="polling" id="polling" class="mb-3" [(ngModel)]="isPolling"></p-inputSwitch>
+                    </div>
+                    <div class="field mb-4 ml-4">
+                        <label for="premium" class="block text-900 text-xl font-medium mb-2 mt-3">Premium</label>
+                        <p-inputSwitch name="premium" id="premium" [(ngModel)]="isPremium"></p-inputSwitch>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="pollingTitle" class="block text-900 text-xl font-medium mb-2 mt-3">Polling
+                        Content</label>
+                    <input id="pollingTitle" type="text" placeholder="Polling Title" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <input id="pollingName" type="text" placeholder="Polling Name" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+                </div>
+                <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
+                    <p-button>Create Thread</p-button>
+                </div>
+            </form>
         </div>
     </div>
     <!-- Side Content -->
@@ -150,6 +171,4 @@
             </div>
         </div>
     </div>
-
-
 </div>
