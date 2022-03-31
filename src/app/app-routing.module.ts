@@ -120,7 +120,7 @@ const routes: Routes = [
         { path: 'pages/landing', component: LandingComponent },
         { path: 'login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
-        { path: 'verification', component: VerificationComponent },
+        { path: 'verification/:id', component: VerificationComponent },
         { path: 'pages/error', component: ErrorComponent },
         { path: 'pages/notfound', component: NotfoundComponent },
         { path: 'pages/access', component: AccessComponent },

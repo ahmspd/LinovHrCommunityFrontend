@@ -1,6 +1,6 @@
 import { GetUserDtoDataRes } from "./get-user-dto-data-res"
 
-export class LoginUserDtoRes { 
+export class GetUserDtoRes { 
 	 message?: string 
 	 data?: GetUserDtoDataRes 
 } 

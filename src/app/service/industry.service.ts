@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { DeleteByIdIndustryDtoRes } from "../dto/industry/delete-by-id-industry-dto-res";
 import { DeleteMultipleIndustryDtoReq } from "../dto/industry/delete-multiple-industry-dto-req";
 import { DeleteMultipleIndustryDtoRes } from "../dto/industry/delete-multiple-industry-dto-res";
+import { GetAllIndustryDtoRes } from "../dto/industry/get-all-industry-dto-res";
 import { GetAllIndustryPageDtoRes } from "../dto/industry/get-all-industry-page-dto-res";
 import { GetByIdIndustryDtoRes } from "../dto/industry/get-by-id-industry-dto-res";
 import { InsertIndustryDtoReq } from "../dto/industry/insert-industry-dto-req";
@@ -21,6 +22,10 @@ export class IndustryService {
 
     getAll(startPage : number, maxPage : number): Observable<GetAllIndustryPageDtoRes> {
         return this.http.get<GetAllIndustryPageDtoRes>(`http://localhost:1234/industries/page?start=${startPage}&max=${maxPage}`)
+    }
+
+    getAllIndustry(): Observable<GetAllIndustryDtoRes> {
+        return this.http.get<GetAllIndustryDtoRes>(`http://localhost:1234/industries`)
     }
 
     insert(industry: InsertIndustryDtoReq): Observable<InsertIndustryDtoRes> {

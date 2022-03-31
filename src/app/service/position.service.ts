@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { DeleteByIdPositionDtoRes } from "../dto/position/delete-by-id-position-dto-res";
 import { DeleteMultiplePositionDtoReq } from "../dto/position/delete-multiple-position-dto-req";
 import { DeleteMultiplePositionDtoRes } from "../dto/position/delete-multiple-position-dto-res";
+import { GetAllPositionDtoRes } from "../dto/position/get-all-position-dto-res";
 import { GetAllPositionPageDtoRes } from "../dto/position/get-all-position-page-dto-res";
 import { GetByIdPositionDtoRes } from "../dto/position/get-by-id-position-dto-res";
 import { InsertPositionDtoReq } from "../dto/position/insert-position-dto-req";
@@ -21,6 +22,10 @@ export class PositionService {
 
     getAll(startPage : number, maxPage : number): Observable<GetAllPositionPageDtoRes> {
         return this.http.get<GetAllPositionPageDtoRes>(`http://localhost:1234/positions/page?start=${startPage}&max=${maxPage}`)
+    }
+
+    getAllPosition(): Observable<GetAllPositionDtoRes> {
+        return this.http.get<GetAllPositionDtoRes>(`http://localhost:1234/positions`)
     }
 
     insert(position: InsertPositionDtoReq): Observable<InsertPositionDtoRes> {
