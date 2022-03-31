@@ -4,23 +4,35 @@
             <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo"
                 class="mb-5" style="width:81px; height:60px;">
         </div>
+        <pre>
+            {{
+                userData | json
+            }}
+        </pre>
+        <pre>
+            {{
+                registrationCode | json
+            }}
+        </pre>
         <div class="col-12 xl:col-6"
             style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-            <div class="h-full w-full m-0 py-7 px-4"
-                style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
-                <div class="w-full md:w-10 mx-auto">
-                    <div class="flex align-items-center justify-content-between mb-5">
-                        <p class="font-medium no-underline text-right"
-                            style="color: var(--primary-color)">Thankyou for register. Please Check Your Email !</p>
+            <form #formVerification="ngForm" (ngSubmit)="update(formVerification.form.valid)">
+                <div class="h-full w-full m-0 py-7 px-4"
+                    style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                    <div class="w-full md:w-10 mx-auto">
+                        <div class="flex align-items-center justify-content-between mb-5">
+                            <p class="font-medium no-underline text-right"
+                                style="color: var(--primary-color)">Thankyou for register. Please Check Your Email !</p>
+                        </div>
+    
+                        <label for="verification" class="block text-900 text-xl font-medium mb-2">Verification Code</label>
+                        <input id="verification" name="verification" type="text" placeholder="Your Code" pInputText class="w-full mb-3"
+                            style="padding:1rem;" [(ngModel)]="registrationCode" required="true">
+    
+                        <button pButton pRipple label="Verify" class="w-full p-3 text-xl" [disabled]="formVerification.form.invalid"></button>
                     </div>
-
-                    <label for="verification" class="block text-900 text-xl font-medium mb-2">Verification Code</label>
-                    <input id="verification" type="text" placeholder="Your Code" pInputText class="w-full mb-3"
-                        style="padding:1rem;">
-
-                    <button (click)="toLogin()" pButton pRipple label="Verify" class="w-full p-3 text-xl"></button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

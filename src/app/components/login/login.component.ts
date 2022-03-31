@@ -48,7 +48,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginService.login(this.login).subscribe(result => {
         console.log(result)
         this.loginService.saveData(result)
-        this.router.navigateByUrl('/dashboard')
+        const roleCode: string = result.data.roleCode
+        if(roleCode.match('SA001')){
+          this.router.navigateByUrl('/dashboard')
+        }
+        if(roleCode.match('MB001')){
+          this.router.navigateByUrl('/homepage')
+        }
       })
     }
   }
