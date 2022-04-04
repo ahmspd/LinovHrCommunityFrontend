@@ -44,6 +44,19 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Transaksi',
+                items: [
+                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
+                    {label: 'Industry', icon: 'pi pi-fw pi-youtube', routerLink: ['/industry/list']},
+                    {label: 'Position', icon: 'pi pi-fw pi-youtube', routerLink: ['/position/list']},
+                    {label: 'Payment Method', icon: 'pi pi-fw pi-youtube', routerLink: ['/payment-method/list']},
+                    {label: 'Price Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-type/list']},
+                    {label: 'Price List', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-list/list']},
+                    {label: 'Thread Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/thread-type/list']},
+                    {label: 'Category', icon: 'pi pi-fw pi-youtube', routerLink: ['/category/list']}
+                ]
+            },
+            {
                 label: 'UI Components',
                 items: [
                     {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout']},

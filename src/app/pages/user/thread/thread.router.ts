@@ -14,7 +14,7 @@ const routes: Routes = [
         component: ThreadSaveComponent
     },
     {
-        path: 'detail',
+        path: ':id',
         component: ThreadDetailComponent
     }
 ]

@@ -142,11 +142,16 @@
 			<h5>Dropdown</h5>
 			<p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a City" [showClear]="true"></p-dropdown>
 
+			<pre>
+				{{
+					selectedMulti | json
+				}}
+			</pre>
 			<h5>MultiSelect</h5>
 			<p-multiSelect [options]="countries" [(ngModel)]="selectedMulti" defaultLabel="Select a Country" optionLabel="name" class="multiselect-custom">
 				<ng-template let-value pTemplate="selectedItems">
 					<div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2" *ngFor="let option of selectedMulti">
-						<img src="assets/demo/flags/flag_placeholder.png" [class]="'flag flag-' + option.code.toLowerCase()" />
+						<!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'flag flag-' + option.code.toLowerCase()" /> -->
 						<div>{{option.name}}</div>
 					</div>
 					<div *ngIf="!selectedMulti || selectedMulti.length === 0" class="country-placeholder">
@@ -155,7 +160,7 @@
 				</ng-template>
 				<ng-template let-country pTemplate="item">
 					<div class="flex align-items-center country-item">
-						<img src="assets/demo/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + country.code.toLowerCase()" style="width:18px; height:12px;"/>
+						<!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + country.code.toLowerCase()" style="width:18px; height:12px;"/> -->
 						<div>{{country.name}}</div>
 					</div>
 				</ng-template>

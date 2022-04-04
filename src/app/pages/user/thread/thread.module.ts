@@ -14,6 +14,7 @@ import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import { MultiSelectModule } from "primeng/multiselect";
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
         CKEditorModule,
         FormsModule,
         CommonModule,
-        InputSwitchModule
+        InputSwitchModule,
+        MultiSelectModule
     ]
 })
 export class ThreadModule{}

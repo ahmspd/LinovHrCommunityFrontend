@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { DeleteByIdCategoryDtoDataRes } from "../dto/category/delete-by-id-category-dto-data-res";
 import { DeleteMultipleCategoryDtoReq } from "../dto/category/delete-multiple-category-dto-req";
 import { DeleteMultipleCategoryDtoRes } from "../dto/category/delete-multiple-category-dto-res";
+import { GetAllCategoryDtoRes } from "../dto/category/get-all-category-dto-res";
 import { GetAllCategoryPageDtoRes } from "../dto/category/get-all-category-page-dto-res";
 import { GetByIdCategoryDtoRes } from "../dto/category/get-by-id-category-dto-res";
 import { InsertCategoryDtoReq } from "../dto/category/insert-category-dto-req";
@@ -21,6 +22,10 @@ export class CategoryService {
 
     getAll(startPage : number, maxPage : number): Observable<GetAllCategoryPageDtoRes> {
         return this.http.get<GetAllCategoryPageDtoRes>(`http://localhost:1234/categories/page?start=${startPage}&max=${maxPage}`)
+    }
+
+    getAllCategories(): Observable<GetAllCategoryDtoRes> {
+        return this.http.get<GetAllCategoryDtoRes>(`http://localhost:1234/categories`)
     }
 
     insert(Category: InsertCategoryDtoReq): Observable<InsertCategoryDtoRes> {
