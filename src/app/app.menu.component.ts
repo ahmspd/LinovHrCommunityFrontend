@@ -46,7 +46,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Transaksi',
                 items: [
-                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
+                    {label: 'Article', icon: 'pi pi-fw pi-youtube', routerLink: ['/article/list']},
                     {label: 'Industry', icon: 'pi pi-fw pi-youtube', routerLink: ['/industry/list']},
                     {label: 'Position', icon: 'pi pi-fw pi-youtube', routerLink: ['/position/list']},
                     {label: 'Payment Method', icon: 'pi pi-fw pi-youtube', routerLink: ['/payment-method/list']},

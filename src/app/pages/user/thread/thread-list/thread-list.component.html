@@ -14,6 +14,9 @@
                 <p-tag severity="warning" class="p-element" *ngIf="data.isPremium">
                     <span class="p-tag p-component p-tag-warning">Premium</span>
                 </p-tag>
+                <p-tag severity="success" class="p-element" *ngIf="data.idPolling!=null">
+                    <span class="p-tag p-component p-tag-success">Polling</span>
+                </p-tag>
             </div>
             <a (click)="toThreadDetail(data.isPremium, data.id)">
                 <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900" style="border-left: 8px solid;">

@@ -21,6 +21,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
   data: string = '';
   pollingDetail: string = ''
   pollingNumber: number = 2
+  idThreadType : string = '1'
   // isPremium: boolean = false;
   isPolling: boolean = false;
 
@@ -56,6 +57,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
       // })
     }
   }
+
   counter(i: number) {
     return new Array(i);
   }
@@ -69,11 +71,19 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
 
   click() {
     console.log(this.dataPolling)
+    if(this.isPolling){
+      this.idThreadType = '4'
+      this.insertThread.dataPolling = this.dataPolling
+    }
+    else {
+      this.idThreadType = '1'
+    }
+    this.insertThread.idThreadType = this.idThreadType
     // this.insertThread.idThreadType = '1'
-    // this.insertThread.dataCategory = this.selectCategories
-    // this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
-    //   console.log(result.data)
-    // })
+    this.insertThread.dataCategory = this.selectCategories
+    this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
+      console.log(result.data)
+    })
   }
   ngOnDestroy(): void {
     this.getAllCategoriesSubscription?.unsubscribe()

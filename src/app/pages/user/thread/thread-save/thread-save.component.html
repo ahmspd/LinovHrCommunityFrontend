@@ -62,16 +62,17 @@
                         pollingDetail | json
                     }}
                 </pre>
-                <div>
+                <div *ngIf="isPolling">
                     <label for="pollingTitle" class="block text-900 text-xl font-medium mb-2 mt-3">Polling
                         Content</label>
                     <input id="pollingTitle" type="text" placeholder="Polling Title" pInputText class="w-full mb-3"
                         style="padding:1rem;" name="pollingTitle" [(ngModel)]="insertThread.pollingName">
 
-                        <div *ngFor='let num of counter(pollingNumber) ;let no = index'>
-                            <input pInputText id=`{{no+1}}` type="text" name=`{{no+1}}` class="w-full mb-3"
-                                style="padding:1rem;" [ngModel]="pollingDetail" (ngModelChange)="pollingChange(no,$event)" placeholder="Polling Name">
-                        </div>
+                    <div *ngFor='let num of counter(pollingNumber) ;let no = index'>
+                        <input pInputText id=`{{no+1}}` type="text" name=`{{no+1}}` class="w-full mb-3"
+                            style="padding:1rem;" [ngModel]="pollingDetail" (ngModelChange)="pollingChange(no,$event)"
+                            placeholder="Polling Name">
+                    </div>
                 </div>
                 <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
                     <p-button (onClick)="click()">Create Thread</p-button>

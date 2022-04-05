@@ -50,6 +50,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/user/thread/thread.module').then(m => m.ThreadModule)
     },
     {
+        path: 'user/article',
+        component : NavbarComponent,
+        loadChildren: () => import('./pages/user/article/article.module').then(m=>m.ArticleUserModule)
+    },
+    {
         path: 'industry',
         component: AppMainComponent,
         loadChildren: () => import('./pages/admin/industry/industry.module').then(m => m.IndustryModule)
@@ -83,6 +88,11 @@ const routes: Routes = [
         path: 'category',
         component: AppMainComponent,
         loadChildren: () => import('./pages/admin/category/category.module').then(m => m.CategoryModule)
+    },
+    {
+        path: 'article',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/article/article.module').then(m=>m.ArticleModule)
     },
     {
         path: '',
