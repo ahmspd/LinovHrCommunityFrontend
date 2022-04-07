@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { MultiSelectModule } from "primeng/multiselect";
 import { ProgressBarModule } from "primeng/progressbar";
+import { TableModule } from "primeng/table";
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { ProgressBarModule } from "primeng/progressbar";
         ThreadRouter,
         RouterModule,
         ButtonModule,
+        TableModule,
         TagModule,
         AvatarModule,
         InputTextareaModule,

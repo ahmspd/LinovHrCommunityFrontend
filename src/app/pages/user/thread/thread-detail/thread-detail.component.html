@@ -42,9 +42,15 @@
             </div>
 
             <div class="text-500 flex justify-content-end align-items-center">
-                <span class="cursor-pointer" (click)="likeClick()"><i class="{{labelLike}}"></i></span>
-                <span class="cursor-pointer" (click)="commentClick()"><i class="pi pi-comment mr-3"></i></span>
-                <span class="cursor-pointer" (click)="bookmarkClick()"><i class="{{labelBookmark}}"></i></span>
+                <span class="cursor-pointer" (click)="likeClick()"><i class="{{labelLike}}"></i>
+                    <span class="mr-3">{{threadDetailData.like}}</span>
+                </span>
+                <span class="cursor-pointer" (click)="commentClick()"><i class="pi pi-comment mr-3"></i>
+                    <span class="mr-3">{{threadDetailData.comment}}</span>
+                </span>
+                <span class="cursor-pointer" (click)="bookmarkClick()"><i class="{{labelBookmark}}"></i>
+                    <span class="mr-3">{{threadDetailData.bookmark}}</span>
+                </span>
             </div>
         </div>
 

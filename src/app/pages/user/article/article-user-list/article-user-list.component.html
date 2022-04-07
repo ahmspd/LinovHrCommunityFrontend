@@ -1,1 +1,134 @@
-<p>article-user-list works!</p>
+<!-- Content -->
+<div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+    <!-- Main Content -->
+    <div class="col-12 md:col-6 lg:col-9">
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="font-bold text-2xl text-900 ml-1">Article</div>
+        </div>
+        <p-table #dt [value]="dataArticle" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
+            [paginator]="true" [rows]="maxPage" [totalRecords]="totalRecords" [loading]="loading"
+            [rowsPerPageOptions]="[10,25,50]">
+
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td>
+                        <div class="surface-card p-4 mb-3">
+                            <div class="text-600 text-sm mb-3"><span>Published </span><span class="font-bold">{{data.date}}</span><span>
+                                    by
+                                </span><span class="font-bold mr-2">{{data.fullName}}</span>
+                            </div>
+                            <a (click)="toArticleDetail(data.isPremium, data.id)">
+                                <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900" style="border-left: 8px solid;">
+                                    {{data.title}}
+                                </div>
+                            </a>
+                            <div class="mb-5">
+                                <p-tag class="p-element mr-2" *ngFor="let dataCategory of data.dataCategoryDetail"><span
+                                        class="p-tag p-component">
+                                        <span class="p-tag-value">{{dataCategory.categoryName}}</span>
+                                    </span></p-tag>
+                            </div>
+                            <div class="text-500 flex justify-content-end align-items-center">
+                                <p-button (click)="toArticleDetail(data.isPremium, data.id)" label="Read More" icon="pi pi-chevron-right"
+                                    styleClass="p-button-link mr-2"></p-button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <!-- Side Content -->
+    <div class="col-12 md:col-6 lg:col-3 p-3">
+        <!-- event course -->
+        <div class="mb-5">
+            <div class="flex justify-content-start align-items-center mb-3">
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
+                    style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+                <div class="font-bold text-lg text-900 ml-1">Event & Course</div>
+            </div>
+            <div class="grid grid-nogutter">
+                <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
+                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
+                    <div class="flex justify-content-between align-items-center text-900">
+                        <span class="inline-flex align-items-center">
+                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                            </p-avatar>
+                            <span>LanaDelRey</span>
+                        </span>
+                        <span>Training / Event</span>
+                    </div>
+                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
+                    <div class="mb-5">
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                <span>Online</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                <span>19.30 - 22.00</span>
+                            </span>
+                        </div>
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                <span>Mar 30</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                <span>Rp. 50.000</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
+                            style="border-radius: 30px;">Self Improvement</span>
+                    </div>
+                </div>
+
+                <div class="p-3 shadow-2 border-round surface-card h-full">
+                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
+                    <div class="flex justify-content-between align-items-center text-900">
+                        <span class="inline-flex align-items-center">
+                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                            </p-avatar>
+                            <span>LanaDelRey</span>
+                        </span>
+                        <span>Training / Event</span>
+                    </div>
+                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
+                    <div class="mb-5">
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                <span>Online</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                <span>19.30 - 22.00</span>
+                            </span>
+                        </div>
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                <span>Mar 30</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                <span>Rp. 50.000</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
+                            style="border-radius: 30px;">Self Improvement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -22,15 +22,12 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
   pollingDetail: string = ''
   pollingNumber: number = 2
   idThreadType : string = '1'
-  // isPremium: boolean = false;
   isPolling: boolean = false;
 
   categories: GetAllCategoryDtoDataRes[] = []
   categoriesData: GetAllCategoryDtoDataRes[] = []
-  categoriesData2: GetAllCategoryDtoDataRes = new GetAllCategoryDtoDataRes()
   selectCategories: GetAllCategoryThreadDetail[] = []
   dataPolling: InsertPollingDetailDtoReq[]=[]
-  // selectCategories : GetAllCategoryDtoDataRes[]=[]
 
   getAllCategoriesSubscription?: Subscription
   insertSubscription?: Subscription
@@ -50,11 +47,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
 
   onCreate(isValid: boolean): void {
     if (isValid) {
-      // this.loginService.login(this.login).subscribe(result => {
-      //   console.log(result)
-      // this.loginService.saveData(result)
       this.router.navigateByUrl('/dashboard')
-      // })
     }
   }
 
@@ -79,11 +72,20 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
       this.idThreadType = '1'
     }
     this.insertThread.idThreadType = this.idThreadType
-    // this.insertThread.idThreadType = '1'
     this.insertThread.dataCategory = this.selectCategories
     this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
       console.log(result.data)
     })
+  }
+  addPolling() : void {
+    this.pollingNumber = this.pollingNumber +1
+  }
+  removePolling() : void {
+    if(this.pollingNumber === 2){
+      alert("Asdasd")
+    }else {
+      this.pollingNumber = this.pollingNumber -1
+    }
   }
   ngOnDestroy(): void {
     this.getAllCategoriesSubscription?.unsubscribe()

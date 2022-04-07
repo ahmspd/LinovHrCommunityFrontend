@@ -16,6 +16,7 @@ import { InputSwitchModule } from "primeng/inputswitch";
 import { MultiSelectModule } from "primeng/multiselect";
 import { ProgressBarModule } from "primeng/progressbar";
 import { ArticleUserRouter } from "./article.router";
+import { TableModule } from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ArticleUserRouter } from "./article.router";
   imports: [
     ArticleUserRouter,
     RouterModule,
+    TableModule,
     ButtonModule,
     TagModule,
     AvatarModule,

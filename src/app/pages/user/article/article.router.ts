@@ -13,7 +13,7 @@ const routes: Routes = [
         component: ArticleUserSaveComponent
     },
     {
-        path: 'detail',
+        path: ':id',
         component: ArticleUserDetailComponent
     }
 ]
