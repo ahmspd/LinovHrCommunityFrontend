@@ -50,6 +50,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/user/thread/thread.module').then(m => m.ThreadModule)
     },
     {
+        path: 'user/article',
+        component : NavbarComponent,
+        loadChildren: () => import('./pages/user/article/article.module').then(m=>m.ArticleUserModule)
+    },
+    {
         path: 'industry',
         component: AppMainComponent,
         loadChildren: () => import('./pages/admin/industry/industry.module').then(m => m.IndustryModule)
@@ -90,11 +95,21 @@ const routes: Routes = [
         loadChildren: () => import('./pages/user/event-course/event-course.module').then(m => m.EventCourseModule)
     },
     {
+        path: 'article',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/article/article.module').then(m=>m.ArticleModule)
+    },
+    {
+        path: 'user/setting',
+        component: NavbarComponent,
+        loadChildren: () => import('./pages/user/profile/profile.module').then(m=>m.ProfileModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
     },
-        {
+    {
             path: '', component: AppMainComponent,
             children: [
                 { path: 'dashboard', component: DashboardComponent },

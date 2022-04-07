@@ -12,26 +12,19 @@
             <form #formCreateThread="ngForm" (ngSubmit)="onCreate(formCreateThread.form.valid)">
                 <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
                 <input id="title" name="title" type="text" placeholder="Thread Title" pInputText class="w-full mb-3"
-                    style="padding:1rem;" [(ngModel)]="insertThread.title">
+                    style="padding:1rem;" [(ngModel)]="insertThread.title" required="true" minlength="10"
+                    maxlength="100">
 
                 <label for="content" class="block text-900 text-xl font-medium mb-2">Content</label>
-                <ckeditor name="content" [editor]="editor" [(ngModel)]="insertThread.contents"></ckeditor>
-                <pre>
-                    {{
-                        insertThread | json
-                    }}
-                </pre>
+                <ckeditor name="content" [editor]="editor" [(ngModel)]="insertThread.contents" required="true"
+                    minlength="50"></ckeditor>
+
                 <label for="category" class="block text-900 text-xl font-medium mb-2 mt-3">Category</label>
-                <!-- <div class="mb-3">
-                    <p-dropdown id="category" optionLabel="name" placeholder="Select a Category"></p-dropdown>
-                </div> -->
-                <!-- <h5>MultiSelect</h5> -->
                 <p-multiSelect [options]="categories" [(ngModel)]="selectCategories" defaultLabel="Select a Country"
-                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect">
+                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect" required="true">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
                             *ngFor="let option of selectCategories">
-                            <!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'flag flag-' + option.code.toLowerCase()" /> -->
                             <div>{{option.categoryName}}</div>
                         </div>
                         <div *ngIf="!selectCategories || selectCategories.length === 0" class="country-placeholder">
@@ -40,7 +33,6 @@
                     </ng-template>
                     <ng-template let-category pTemplate="item">
                         <div class="flex align-items-center country-item">
-                            <!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + country.code.toLowerCase()" style="width:18px; height:12px;"/> -->
                             <div>{{category.categoryName}}</div>
                         </div>
                     </ng-template>
@@ -51,30 +43,29 @@
                         <label for="polling" class="block text-900 text-xl font-medium mb-2 mt-3">Polling</label>
                         <p-inputSwitch name="polling" id="polling" class="mb-3" [(ngModel)]="isPolling"></p-inputSwitch>
                     </div>
-                    <div class="field mb-4 ml-4">
+                    <div class="field mb-4 ml-4" *ngIf="isPremium">
                         <label for="premium" class="block text-900 text-xl font-medium mb-2 mt-3">Premium</label>
                         <p-inputSwitch name="premium" id="premium" [(ngModel)]="insertThread.isPremium"></p-inputSwitch>
                     </div>
                 </div>
-
-                <pre>
-                    {{
-                        pollingDetail | json
-                    }}
-                </pre>
-                <div>
+                <div *ngIf="isPolling">
                     <label for="pollingTitle" class="block text-900 text-xl font-medium mb-2 mt-3">Polling
                         Content</label>
                     <input id="pollingTitle" type="text" placeholder="Polling Title" pInputText class="w-full mb-3"
                         style="padding:1rem;" name="pollingTitle" [(ngModel)]="insertThread.pollingName">
 
-                        <div *ngFor='let num of counter(pollingNumber) ;let no = index'>
-                            <input pInputText id=`{{no+1}}` type="text" name=`{{no+1}}` class="w-full mb-3"
-                                style="padding:1rem;" [ngModel]="pollingDetail" (ngModelChange)="pollingChange(no,$event)" placeholder="Polling Name">
-                        </div>
+                    <label class="block text-900 text-xl font-medium mb-2 mt-3">Polling
+                        Name</label>
+                    <div *ngFor='let num of counter(pollingNumber) ;let no = index'>
+                        <input pInputText id=`{{no+1}}` type="text" name=`{{no+1}}` class="w-full mb-3"
+                            style="padding:1rem;" [ngModel]="pollingDetail" (ngModelChange)="pollingChange(no,$event)"
+                            placeholder="Polling Name">
+                    </div>
+                    <p-button (onClick)="addPolling()" class="mr-2">Add</p-button>
+                    <p-button (onClick)="removePolling()" class="mr-2">Remove</p-button>
                 </div>
                 <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
-                    <p-button (onClick)="click()">Create Thread</p-button>
+                    <p-button (onClick)="click()" [disabled]="formCreateThread.form.invalid">Create Thread</p-button>
                 </div>
             </form>
         </div>

@@ -1,4 +1,5 @@
 import { GetCategoryDetailByThreadDtoRes } from "../category-detail/get-category-detail-by-thread-dto-res"
+import { GetPollingDetailByPollingIdDto } from "../polling-detail/get-polling-detail-by-polling-id-dto"
 import { GetThreadDetailDataDtoRes } from "../thread-detail/get-thread-detail-data-dto-res"
 
 export class GetThreadDataDtoRes { 
@@ -16,8 +17,12 @@ export class GetThreadDataDtoRes {
 	 date? : string
 	 like? : number
 	 bookmark? : number
-	 commet? : number
+	 comment? : number
+	 idPolling?: string
+	 pollingName? : string
+	 isActive? : boolean
 	 dataCategoryDetail?: GetCategoryDetailByThreadDtoRes[] 
 	 dataThreadComment?: GetThreadDetailDataDtoRes[] 
+	 dataThreadPolling? : GetPollingDetailByPollingIdDto[]
 } 
 

@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { StyleClassModule } from "primeng/styleclass";
@@ -11,7 +13,9 @@ import { NavbarComponent } from './navbar.component';
     imports : [
         RouterModule,
         StyleClassModule,
-        ButtonModule  
+        ButtonModule,
+        FormsModule,
+        CommonModule
     ],
     exports : [
         RouterModule

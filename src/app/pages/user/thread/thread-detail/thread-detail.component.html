@@ -21,10 +21,38 @@
             </div>
             <div class="line-height-3 text-lg text-700 mb-4" [innerHTML]="threadDetailData.contents">
             </div>
+            <div *ngIf="voteStatus">
+                <h5>{{threadDetailData.pollingName}}</h5>
+
+                <div class="line-height-3 text-lg text-700 mb-4"
+                    *ngFor="let dataPol of threadDetailData.dataThreadPolling">
+                    <p-button name="commetBtn" id="commnetBtn" (click)="doVote(dataPol.id)">{{dataPol.pollingName}}
+                    </p-button>
+                </div>
+            </div>
+
+            <div class="card" *ngIf="!voteStatus">
+                <h5>{{threadDetailData.pollingName}}</h5>
+                <div class="grid" *ngFor="let dataVote of voteData.data">
+                    <div class="col">
+
+                        <span>{{dataVote.name}}</span>
+                        <p-progressBar [value]="dataVote.total/voteData.total*100" [showValue]="true">{{data.name}}
+                        </p-progressBar>
+                    </div>
+                </div>
+            </div>
+
             <div class="text-500 flex justify-content-end align-items-center">
-                <span class="cursor-pointer" (click)="likeClick()" ><i class="{{labelLike}}"></i></span>
-                <span class="cursor-pointer" (click)="commentClick()"><i class="pi pi-comment mr-3"></i></span>
-                <span class="cursor-pointer" (click)="bookmarkClick()"><i class="{{labelBookmark}}"></i></span>
+                <span class="cursor-pointer" (click)="likeClick()"><i class="{{labelLike}}"></i>
+                    <span class="mr-3">{{threadDetailData.like}}</span>
+                </span>
+                <span class="cursor-pointer" (click)="commentClick()"><i class="pi pi-comment mr-3"></i>
+                    <span class="mr-3">{{threadDetailData.comment}}</span>
+                </span>
+                <span class="cursor-pointer" (click)="bookmarkClick()"><i class="{{labelBookmark}}"></i>
+                    <span class="mr-3">{{threadDetailData.bookmark}}</span>
+                </span>
             </div>
         </div>
 

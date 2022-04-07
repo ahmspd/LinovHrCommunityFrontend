@@ -15,6 +15,8 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { MultiSelectModule } from "primeng/multiselect";
+import { ProgressBarModule } from "primeng/progressbar";
+import { TableModule } from "primeng/table";
 
 @NgModule({
     declarations: [
@@ -26,6 +28,7 @@ import { MultiSelectModule } from "primeng/multiselect";
         ThreadRouter,
         RouterModule,
         ButtonModule,
+        TableModule,
         TagModule,
         AvatarModule,
         InputTextareaModule,
@@ -35,7 +38,8 @@ import { MultiSelectModule } from "primeng/multiselect";
         FormsModule,
         CommonModule,
         InputSwitchModule,
-        MultiSelectModule
+        MultiSelectModule,
+        ProgressBarModule
     ]
 })
 export class ThreadModule{}

@@ -1,0 +1,160 @@
+<div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+    <!-- left nav -->
+    <div class="col-12 md:col-6 lg:col-3 p-3">
+        <!-- title -->
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+            <div class="font-bold text-lg text-900 ml-1">Settings</div>
+        </div>
+        <!-- nav item -->
+        <div class="surface-card shadow-2 border-round select-none">
+            <ul class="list-none p-2 m-0">
+                <li (click)="toThread()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Thread</span>
+                    </a>
+                </li>
+                <li (click)="toThreadLike()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Likes</span>
+                    </a>
+                </li>
+                <li (click)="toThreadBookmark()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Bookmark</span>
+                    </a>
+                </li>
+                <li (click)="toEdit()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-900">Edit Profile</span>
+                    </a>
+                </li>
+                <li (click)="toChangePass()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Password</span>
+                    </a>
+                </li>
+                <li (click)="toPremium()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">👑Premium👑</span>
+                    </a>
+                </li>
+                <p-divider></p-divider>
+                <li (click)="toLogout()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-pink-500">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- main -->
+    <div class="col-12 md:col-6 lg:col-9 p-3">
+        <!-- title -->
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="font-bold text-lg text-900 ml-1">Edit Profiles</div>
+        </div>
+        <!-- form -->
+        <div class="surface-card p-4 shadow-2 border-round">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12">
+                    <label for="fullname" class="font-medium">Fullname</label>
+                    <input id="fullname" name="fullname" type="text" class="p-inputtext p-component p-element">
+                </div>
+                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="email" class="font-medium">Email</label>
+                    <input id="email" type="email" name="email" pinputtext="" class="p-inputtext p-component p-element">
+                </div>
+                <div class="field mb-4 col-12 md:col-6"><label for="avatar" class="font-medium">Avatar</label>
+                    <div class="flex align-items-center"><img src="assets/images/blocks/avatars/circle/avatar-f-4.png"
+                            class="mr-4">
+                        <p-fileUpload id="avatar" mode="basic" name="avatar" url="./upload.php" accept="image/*"
+                            maxfilesize="1000000" styleclass="p-button-outlined p-button-plain"
+                            chooseLabel="Upload Image" class="p-element" [auto]="true">
+                        </p-fileUpload>
+                    </div>
+                </div>
+                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+
+                <div class="field mb-4 col-12 md:col-6"><label for="province" class="font-medium">Province</label>
+                    <p-dropdown id="province" name="province" optionlabel="name" filterby="name"
+                        placeholder="Select a Province">
+                    </p-dropdown>
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6"><label for="city" class="font-medium">City</label>
+                    <p-dropdown id="city" name="city" optionlabel="name" filterby="name" placeholder="Select a City">
+                    </p-dropdown>
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="postalCode" class="font-medium">Postal Code</label>
+                    <input id="postalCode" name="postalCode" type="text" class="p-inputtext p-component p-element">
+                </div>
+
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="phoneNumber" class="font-medium">Phone Number</label>
+                    <div class="p-inputgroup"><span class="p-inputgroup-addon">🇮🇩</span>
+                        <input id="phoneNumber" name="phoneNumber" type="text"
+                            class="p-inputtext p-component p-element">
+                    </div>
+                </div>
+
+                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+
+                <div class="field mb-4 col-12">
+                    <label for="company" class="font-medium">Company</label>
+                    <input id="company" name="company" type="text" pinputtext=""
+                        class="p-inputtext p-component p-element">
+                </div>
+
+                <div class="field mb-4 col-12">
+                    <label for="industry" class="font-medium">Industry</label>
+                    <p-dropdown id="industry" name="industry" optionlabel="name" filterby="name"
+                        placeholder="Select a Industry">
+                    </p-dropdown>
+                </div>
+
+                <div class="field mb-4 col-12">
+                    <label for="position" class="font-medium">Position</label>
+                    <p-dropdown id="position" name="position" optionlabel="name" filterby="name"
+                        placeholder="Select a Position">
+                    </p-dropdown>
+                </div>
+
+                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                <div class="field mb-4 col-12">
+                    <label for="instagram" class="font-medium">Instagram</label>
+                    <input id="instagram" name="instagram" type="text" pinputtext=""
+                        class="p-inputtext p-component p-element" placeholder="enter your username">
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="twitter" class="font-medium">Twitter</label>
+                    <input id="twitter" name="twitter" type="text" pinputtext=""
+                        class="p-inputtext p-component p-element" placeholder="enter your username">
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="facebook" class="font-medium">Facebook</label>
+                    <input id="facebook" name="facebook" type="text" pinputtext=""
+                        class="p-inputtext p-component p-element" placeholder="enter your username">
+                </div>
+                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                <div class="col-12"><button pbutton="" pripple="" label="Save Changes"
+                        class="p-ripple p-element w-auto mt-3 p-button p-component"><span class="p-ink"></span><span
+                            class="p-button-label">Save Changes</span></button></div>
+            </div>
+        </div>
+    </div>
+
+</div>

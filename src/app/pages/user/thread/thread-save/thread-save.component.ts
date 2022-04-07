@@ -8,6 +8,7 @@ import { InsertPollingDetailDtoReq } from 'src/app/dto/polling-detail/insert-pol
 import { InsertThreadDtoReq } from 'src/app/dto/thread/insert-thread-dto-req';
 import { InsertThreadDtoRes } from 'src/app/dto/thread/insert-thread-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
+import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
 
@@ -21,22 +22,21 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
   data: string = '';
   pollingDetail: string = ''
   pollingNumber: number = 2
-  // isPremium: boolean = false;
-  isPolling: boolean = false;
+  idThreadType : string = '1'
+  isPolling: boolean = false
+  isPremium: boolean = false
 
   categories: GetAllCategoryDtoDataRes[] = []
   categoriesData: GetAllCategoryDtoDataRes[] = []
-  categoriesData2: GetAllCategoryDtoDataRes = new GetAllCategoryDtoDataRes()
   selectCategories: GetAllCategoryThreadDetail[] = []
   dataPolling: InsertPollingDetailDtoReq[]=[]
-  // selectCategories : GetAllCategoryDtoDataRes[]=[]
 
   getAllCategoriesSubscription?: Subscription
   insertSubscription?: Subscription
 
   insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
 
-  constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService) { }
+  constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.getAllCategoriesSubscription = this.categoryService.getAllCategories().subscribe(result => {
@@ -45,17 +45,15 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
     this.insertThread.isPremium = false
     this.insertThread.contents = ''
     this.dataPolling[this.pollingNumber]
+    this.isPremium = this.loginService.getData().data.isMember
   }
 
   onCreate(isValid: boolean): void {
     if (isValid) {
-      // this.loginService.login(this.login).subscribe(result => {
-      //   console.log(result)
-      // this.loginService.saveData(result)
       this.router.navigateByUrl('/dashboard')
-      // })
     }
   }
+
   counter(i: number) {
     return new Array(i);
   }
@@ -69,11 +67,28 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
 
   click() {
     console.log(this.dataPolling)
-    // this.insertThread.idThreadType = '1'
-    // this.insertThread.dataCategory = this.selectCategories
-    // this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
-    //   console.log(result.data)
-    // })
+    if(this.isPolling){
+      this.idThreadType = '4'
+      this.insertThread.dataPolling = this.dataPolling
+    }
+    else {
+      this.idThreadType = '1'
+    }
+    this.insertThread.idThreadType = this.idThreadType
+    this.insertThread.dataCategory = this.selectCategories
+    this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
+      this.router.navigateByUrl(`thread/${result.data.id}`)
+    })
+  }
+  addPolling() : void {
+    this.pollingNumber = this.pollingNumber +1
+  }
+  removePolling() : void {
+    if(this.pollingNumber === 2){
+      alert("Asdasd")
+    }else {
+      this.pollingNumber = this.pollingNumber -1
+    }
   }
   ngOnDestroy(): void {
     this.getAllCategoriesSubscription?.unsubscribe()

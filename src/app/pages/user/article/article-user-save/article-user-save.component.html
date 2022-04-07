@@ -1,0 +1,138 @@
+<!-- Content -->
+<div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+
+    <!-- Main Content -->
+    <div class="col-12 md:col-6 lg:col-9">
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="font-bold text-2xl text-900 ml-1">Create Threads & Discuss</div>
+        </div>
+        <div class="surface-card shadow-2 border-round p-3 flex-auto mb-3">
+            <form #formCreateThread="ngForm">
+                <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
+                <input id="title" name="title" type="text" placeholder="Thread Title" pInputText class="w-full mb-3"
+                    style="padding:1rem;" [(ngModel)]="insertArticle.title">
+
+                <label for="content" class="block text-900 text-xl font-medium mb-2">Content</label>
+                <ckeditor name="content" [editor]="editor" [(ngModel)]="insertArticle.contents"></ckeditor>
+                <pre>
+                    {{
+                        insertArticle | json
+                    }}
+                </pre>
+                <label for="category" class="block text-900 text-xl font-medium mb-2 mt-3">Category</label>
+                <p-multiSelect [options]="categories" [(ngModel)]="selectCategories" defaultLabel="Select a Country"
+                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
+                            *ngFor="let option of selectCategories">
+                            <div>{{option.categoryName}}</div>
+                        </div>
+                        <div *ngIf="!selectCategories || selectCategories.length === 0" class="country-placeholder">
+                            Select Categories
+                        </div>
+                    </ng-template>
+                    <ng-template let-category pTemplate="item">
+                        <div class="flex align-items-center country-item">
+                            <div>{{category.categoryName}}</div>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+                <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
+                    <p-button id="createArticle" name="createArticle" (click)="onCreate()">Create Thread</p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Side Content -->
+    <div class="col-12 md:col-6 lg:col-3 p-3">
+        <!-- event course -->
+        <div class="mb-5">
+            <div class="flex justify-content-start align-items-center mb-3">
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
+                    style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+                <div class="font-bold text-lg text-900 ml-1">Event & Course</div>
+            </div>
+            <div class="grid grid-nogutter">
+                <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
+                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
+                    <div class="flex justify-content-between align-items-center text-900">
+                        <span class="inline-flex align-items-center">
+                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                            </p-avatar>
+                            <span>LanaDelRey</span>
+                        </span>
+                        <span>Training / Event</span>
+                    </div>
+                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
+                    <div class="mb-5">
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                <span>Online</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                <span>19.30 - 22.00</span>
+                            </span>
+                        </div>
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                <span>Mar 30</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                <span>Rp. 50.000</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
+                            style="border-radius: 30px;">Self Improvement</span>
+                    </div>
+                </div>
+
+                <div class="p-3 shadow-2 border-round surface-card h-full">
+                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
+                    <div class="flex justify-content-between align-items-center text-900">
+                        <span class="inline-flex align-items-center">
+                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                            </p-avatar>
+                            <span>LanaDelRey</span>
+                        </span>
+                        <span>Training / Event</span>
+                    </div>
+                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
+                    <div class="mb-5">
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                <span>Online</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                <span>19.30 - 22.00</span>
+                            </span>
+                        </div>
+                        <div class="mb-3 flex justify-content-between align-items-center text-900">
+                            <span>
+                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                <span>Mar 30</span>
+                            </span>
+                            <span>
+                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                <span>Rp. 50.000</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
+                            style="border-radius: 30px;">Self Improvement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

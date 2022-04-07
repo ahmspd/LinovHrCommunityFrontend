@@ -1,0 +1,116 @@
+<div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+    <!-- left nav -->
+    <div class="col-12 md:col-6 lg:col-3 p-3">
+        <!-- title -->
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+            <div class="font-bold text-lg text-900 ml-1">Settings</div>
+        </div>
+        <!-- nav item -->
+        <div class="surface-card shadow-2 border-round select-none">
+            <ul class="list-none p-2 m-0">
+                <li (click)="toThread()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Thread</span>
+                    </a>
+                </li>
+                <li (click)="toThreadLike()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Likes</span>
+                    </a>
+                </li>
+                <li (click)="toThreadBookmark()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-900">Bookmark</span>
+                    </a>
+                </li>
+                <li (click)="toEdit()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Edit Profile</span>
+                    </a>
+                </li>
+                <li (click)="toChangePass()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Password</span>
+                    </a>
+                </li>
+                <li (click)="toPremium()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">👑Premium👑</span>
+                    </a>
+                </li>
+                <p-divider></p-divider>
+                <li (click)="toLogout()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-pink-500">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- main -->
+    <div class="col-12 md:col-6 lg:col-9 p-3">
+        <!-- title -->
+        <div class="flex justify-content-start align-items-center mb-3">
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
+                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="font-bold text-lg text-900 ml-1">Threads Bookmark</div>
+        </div>
+        <!-- form -->
+        <p-table #dt [value]="dataThread" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
+        [paginator]="true" [rows]="maxPage" [totalRecords]="totalRecords" [loading]="loading"
+        [rowsPerPageOptions]="[10,25,50]">
+
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td>
+                    <div class="surface-card p-4 mb-3">
+                        <div class="text-600 text-sm mb-3"><span>Published </span><span
+                                class="font-bold">{{data.date}}</span><span>
+                                by
+                            </span><span class="font-bold mr-2">{{data.fullName}}</span>
+                            <p-tag severity="warning" class="p-element" *ngIf="data.isPremium">
+                                <span class="p-tag p-component p-tag-warning">Premium</span>
+                            </p-tag>
+                            <p-tag severity="success" class="p-element" *ngIf="data.idPolling!=null">
+                                <span class="p-tag p-component p-tag-success">Polling</span>
+                            </p-tag>
+                        </div>
+                        <a (click)="toThreadDetail(data.id)">
+                            <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900"
+                                style="border-left: 8px solid;">
+                                {{data.title}}
+                            </div>
+                        </a>
+                        <div class="mb-5">
+                            <p-tag class="p-element mr-2" *ngFor="let dataCategory of data.dataCategoryDetail"><span
+                                    class="p-tag p-component">
+                                    <span class="p-tag-value">{{dataCategory.categoryName}}</span>
+                                </span></p-tag>
+                        </div>
+                        <div class="text-500 flex justify-content-end align-items-center">
+                            <span class="cursor-pointer"><i class="pi pi-heart mr-1"></i><span
+                                    class="mr-3">{{data.like}}</span></span>
+                            <span class="cursor-pointer"><i class="pi pi-comment mr-1"></i><span
+                                    class="mr-3">{{data.comment}}</span></span>
+                            <span class="cursor-pointer"><i class="pi pi-bookmark mr-1"></i><span
+                                    class="mr-3">{{data.bookmark}}</span></span>
+                            <p-button (click)="toThreadDetail(data.id)" label="Read More"
+                                icon="pi pi-chevron-right" styleClass="p-button-link mr-2"></p-button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+
+</div>
