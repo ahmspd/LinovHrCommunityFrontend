@@ -1,0 +1,21 @@
+<div class="lg:px-8 md:px-6 px-4 py-8 ng-star-inserted">
+    {{unpaidEventCourses | json}}
+    <div class="text-900 text-xl mb-3 text-left font-medium">Choose your favorite animal</div>
+    <div class="w-full" *ngFor="let unpaidEventCourse of unpaidEventCourses">
+        <label for="{{unpaidEventCourse.id}}">
+            <div class="border-1 p-4 mb-3 border-round flex flex-column md:flex-row align-items-start md:align-items-center md:justify-content-start cursor-pointer surface-card surface-border">
+                <p-checkbox name="group1" value="{{unpaidEventCourse.idEventCourse}}" inputId="{{unpaidEventCourse.id}}"></p-checkbox>
+                <div class="flex align-items-start mr-0 md:mr-8 ml-5">
+                    <!-- <img src="assets/images/blocks/animals/a2.jpg" class="mr-3" style="width: 50px;"> -->
+                    <div>
+                        <div class="font-medium mb-2 text-900">{{unpaidEventCourse.title}}</div>
+                        <span class="p-1 border-round surface-100 text-600">{{dateFormatter(unpaidEventCourse.dateStart)}} &nbsp; - &nbsp; {{dateFormatter(unpaidEventCourse.dateEnd)}}</span>
+                    </div>
+                </div>
+                <div class="ml-0 md:ml-8 mt-2 md:mt-0 border-1 p-1 px-2 border-round flex align-items-center surface-100 text-600 surface-border">
+                    <i class="pi pi-users mr-2"></i><span>702</span>
+                </div>
+            </div>
+        </label>
+    </div>
+</div>

@@ -85,6 +85,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/category/category.module').then(m => m.CategoryModule)
     },
     {
+        path: 'event-course',
+        component: NavbarComponent,
+        loadChildren: () => import('./pages/user/event-course/event-course.module').then(m => m.EventCourseModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

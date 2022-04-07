@@ -1,0 +1,64 @@
+<div class="col-12 md:col-6 lg:col-9">
+    <div class="flex justify-content-start align-items-center mb-3">
+        <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+        <div class="font-bold text-2xl text-900 ml-1">Create Event & Course</div>
+    </div>
+    <div class="surface-card shadow-2 border-round p-3 flex-auto mb-3">
+        <form #formCreateEventCourse="ngForm">
+            <p-selectButton styleClass="mb-3" id="evtType" name="evtType" [options]="types" optionLabel="eventTypeName" optionValue="id" [(ngModel)]="insertEventCourse.idEventCourseType"></p-selectButton>
+
+            <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
+            <input id="title" name="title" type="text" pInputText class="w-full mb-3" style="padding:1rem;" [(ngModel)]="insertEventCourse.title">
+
+            <label for="content" class="block text-900 text-xl font-medium mb-2">Description</label>
+            <textarea class="mb-3" id="contents" name="contents" rows="5" cols="100" pInputTextarea autoResize="autoResize" [(ngModel)]="insertEventCourse.contents"></textarea>
+
+            <label for="price" class="block text-900 text-xl font-medium mb-2">Price</label>
+            <p-inputNumber styleClass="mb-3" [(ngModel)]="insertEventCourse.price" mode="currency" inputId="price" name="price" currency="IDR" currencyDisplay="code" locale="en-ID">
+            </p-inputNumber>
+
+            <label for="location" class="block text-900 text-xl font-medium mb-2">Location</label>
+            <input id="location" name="location" type="text" pInputText class="w-full mb-3" [(ngModel)]="insertEventCourse.eventCourseLocation">
+
+            <label for="location" class="block text-900 text-xl font-medium mb-2">Date Start</label>
+            <p-calendar [(ngModel)]="insertEventCourse.dateStart" [minDate]="minDate" [readonlyInput]="true" inputId="dateStart" name="dateStart"></p-calendar>
+
+            <label for="location" class="block text-900 text-xl font-medium mb-2 mt-3">Date End</label>
+            <p-calendar [(ngModel)]="insertEventCourse.dateEnd" [minDate]="minDate" [readonlyInput]="true" inputId="dateEnd" name="dateStart"></p-calendar>
+
+            <label for="timeStart" class="block text-900 text-xl font-medium mb-2 mt-3">Time Start</label>
+            <p-calendar [(ngModel)]="insertEventCourse.timeStart" [timeOnly]="true" inputId="timeStart" name="timeStart"></p-calendar>
+
+            <label for="timeEnd" class="block text-900 text-xl font-medium mb-2 mt-3">Time End</label>
+            <p-calendar [(ngModel)]="insertEventCourse.timeEnd" [timeOnly]="true" inputId="timeEnd" name="timeEnd"></p-calendar>
+
+            <label for="category" class="block text-900 text-xl font-medium mb-2 mt-3">Category</label>
+            <p-multiSelect [options]="categories" [(ngModel)]="selectCategories" defaultLabel="Select a Country" optionLabel="categoryName" class="multiselect-custom" name="multiSelect">
+                <ng-template let-value pTemplate="selectedItems">
+                    <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2" *ngFor="let option of selectCategories">
+                        <div>{{option.categoryName}}</div>
+                    </div>
+                    <div *ngIf="!selectCategories || selectCategories.length === 0" class="country-placeholder">
+                        Select Categories
+                    </div>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="flex align-items-center country-item">
+                        <div>{{category.categoryName}}</div>
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+
+            <label for="file" class="block text-900 text-xl font-medium mb-2 mt-3">File</label>
+            <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
+
+            <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
+                <p-button (onClick)="click()">
+                    Create &nbsp;
+                    <span *ngIf="insertEventCourse.idEventCourseType == '1'"> Event</span>
+                    <span *ngIf="insertEventCourse.idEventCourseType == '2'"> Course</span>
+                </p-button>
+            </div>
+        </form>
+    </div>
+</div>

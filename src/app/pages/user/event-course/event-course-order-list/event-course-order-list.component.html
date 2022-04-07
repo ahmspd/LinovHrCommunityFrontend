@@ -1,0 +1,32 @@
+<div class="lg:px-8 md:px-6 px-4 py-8 surface-ground">
+    <div class="surface-ground">
+        <div class="grid" *ngFor="let order of orders">
+            <div class="col-12 md:col-6 xl:col-3 p-3">
+                <div class="surface-card shadow-2 border-rounded p-3" style="border-radius: 6px;">
+                    <p-image src='http://localhost:1234/files/download/{{order.idFile}}' alt="No Image" class="mb-3 flex justify-content-center " width="300" [preview]="true"></p-image>
+                    <div class="flex justify-content-between align-items-start">
+                        <div>
+                            <div class="text-xl font-medium text-900 mb-2">{{order.fullName}}</div>
+                            <p class="mt-0 mb-3 text-600">{{order.email}}</p>
+                        </div>
+                        <button pbutton="" pripple="" icon="pi pi-download" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only">
+                            <span class="p-button-icon pi pi-download"></span>
+                            <span class="p-ink"></span>
+                        </button>
+                    </div>
+                    <ul class="list-none m-0 p-0">
+                        <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border"><span class="text-600 font-medium text-sm">Created</span><span class="text-900 font-medium text-sm">{{timeFormatter(order.createdAt)}}</span></li>
+                        <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border"><span class="text-600 font-medium text-sm">Phone Number</span><span class="text-900 font-medium text-sm">{{order.phoneNumber}}</span></li>
+                        <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border"><span class="text-600 font-medium text-sm">Payment Method</span><span class="text-900 font-medium text-sm">{{order.paymentName}}</span></li>
+                        <li *ngIf="order.isAccept" class="px-0 py-2 flex justify-content-between align-items-center mb-2"><span class="text-600 font-medium text-sm">Invoice</span><span class="text-900 font-medium text-sm">{{order.invoice}}</span></li>
+                        <li *ngIf="!order.isAccept" class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border"><span class="text-600 font-medium text-sm">Invoice</span><span class="text-900 font-medium text-sm">{{order.invoice}}</span></li>
+                    </ul>
+                    <div class="flex justify-content-end">
+                        <button *ngIf="!order.isAccept" (click)="confirm(order.id)" class="p-button-outlined p-button-rounded mt-3 mb-2 right-0" pButton label="Confirm"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
