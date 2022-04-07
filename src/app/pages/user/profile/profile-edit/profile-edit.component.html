@@ -10,6 +10,24 @@
         <!-- nav item -->
         <div class="surface-card shadow-2 border-round select-none">
             <ul class="list-none p-2 m-0">
+                <li (click)="toThread()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Thread</span>
+                    </a>
+                </li>
+                <li (click)="toThreadLike()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Likes</span>
+                    </a>
+                </li>
+                <li (click)="toThreadBookmark()">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Bookmark</span>
+                    </a>
+                </li>
                 <li (click)="toEdit()">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">

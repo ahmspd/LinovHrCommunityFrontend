@@ -30,4 +30,14 @@ export class ProfileEditComponent implements OnInit {
     this.router.navigateByUrl("/login")
   }
 
+  toThread(){
+    this.router.navigateByUrl("/user/setting/thread")
+  }
+  toThreadLike(){
+    this.router.navigateByUrl("/user/setting/thread-like")
+  }
+  toThreadBookmark(){
+    this.router.navigateByUrl("/user/setting/thread-bookmark")
+  }
+
 }

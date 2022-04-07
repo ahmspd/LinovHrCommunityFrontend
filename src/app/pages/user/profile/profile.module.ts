@@ -3,24 +3,40 @@ import { ProfileDetailComponent } from './profile-detail/profile-detail.componen
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileUserPremiumComponent } from './profile-user-premium/profile-user-premium.component';
 import { ProfileRouter } from "./profile.router";
-import {FileUploadModule} from 'primeng/fileupload';
-import {HttpClientModule} from '@angular/common/http';
-import {DropdownModule} from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { HttpClientModule } from '@angular/common/http';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from "primeng/inputswitch";
-import {RippleModule} from 'primeng/ripple';
+import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from "primeng/button";
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
-import {DividerModule} from 'primeng/divider';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { DividerModule } from 'primeng/divider';
 import { ProfileChangePasswordComponent } from './profile-change-password/profile-change-password.component';
-import {PasswordModule} from 'primeng/password';
+import { PasswordModule } from 'primeng/password';
+import { ProfileThreadComponent } from './profile-thread/profile-thread.component';
+import { TableModule } from "primeng/table";
+import { TagModule } from "primeng/tag";
+import { AvatarModule } from "primeng/avatar";
+import { InputTextareaModule } from "primeng/inputtextarea";
+import { InputTextModule } from "primeng/inputtext";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { ProgressBarModule } from "primeng/progressbar";
+import { MultiSelectModule } from "primeng/multiselect";
+import { ProfileThreadLikeComponent } from './profile-thread-like/profile-thread-like.component';
+import { ProfileThreadBookmarkComponent } from './profile-thread-bookmark/profile-thread-bookmark.component';
 
 @NgModule({
   declarations: [
     ProfileDetailComponent,
     ProfileEditComponent,
     ProfileUserPremiumComponent,
-    ProfileChangePasswordComponent
+    ProfileChangePasswordComponent,
+    ProfileThreadComponent,
+    ProfileThreadLikeComponent,
+    ProfileThreadBookmarkComponent
   ],
   imports: [
     ProfileRouter,
@@ -33,7 +49,19 @@ import {PasswordModule} from 'primeng/password';
     MessageModule,
     MessagesModule,
     DividerModule,
-    PasswordModule
+    PasswordModule,
+    TableModule,
+    TagModule,
+    AvatarModule,
+    InputTextareaModule,
+    InputTextModule,
+    DropdownModule,
+    CKEditorModule,
+    FormsModule,
+    CommonModule,
+    InputSwitchModule,
+    MultiSelectModule,
+    ProgressBarModule
   ]
 })
 export class ProfileModule { }

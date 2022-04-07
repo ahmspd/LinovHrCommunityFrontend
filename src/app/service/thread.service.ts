@@ -61,6 +61,10 @@ export class ThreadService {
 
     }
 
+    getThreadByUser(idUser: string,startPage : number, maxPage : number) : Observable<GetAllThreadPageDtoRes>{
+        return this.http.get<GetAllThreadPageDtoRes>(`http://localhost:1234/threads/user?idUser=${idUser}&start=${startPage}&max=${maxPage}`)
+    }
+
     updateStatusArticle(data : UpdateThreadStatusDtoReq): Observable<UpdateThreadStatusDtoRes> {
         return this.http.put<UpdateThreadStatusDtoRes>(`http://localhost:1234/threads/status`,data)
 

@@ -8,6 +8,7 @@ import { InsertPollingDetailDtoReq } from 'src/app/dto/polling-detail/insert-pol
 import { InsertThreadDtoReq } from 'src/app/dto/thread/insert-thread-dto-req';
 import { InsertThreadDtoRes } from 'src/app/dto/thread/insert-thread-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
+import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
 
@@ -22,7 +23,8 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
   pollingDetail: string = ''
   pollingNumber: number = 2
   idThreadType : string = '1'
-  isPolling: boolean = false;
+  isPolling: boolean = false
+  isPremium: boolean = false
 
   categories: GetAllCategoryDtoDataRes[] = []
   categoriesData: GetAllCategoryDtoDataRes[] = []
@@ -34,7 +36,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
 
   insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
 
-  constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService) { }
+  constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.getAllCategoriesSubscription = this.categoryService.getAllCategories().subscribe(result => {
@@ -43,6 +45,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
     this.insertThread.isPremium = false
     this.insertThread.contents = ''
     this.dataPolling[this.pollingNumber]
+    this.isPremium = this.loginService.getData().data.isMember
   }
 
   onCreate(isValid: boolean): void {
@@ -74,7 +77,7 @@ export class ThreadSaveComponent implements OnInit, OnDestroy {
     this.insertThread.idThreadType = this.idThreadType
     this.insertThread.dataCategory = this.selectCategories
     this.insertSubscription = this.threadService.insert(this.insertThread).subscribe(result => {
-      console.log(result.data)
+      this.router.navigateByUrl(`thread/${result.data.id}`)
     })
   }
   addPolling() : void {
