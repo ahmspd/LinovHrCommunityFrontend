@@ -7,6 +7,7 @@ export class InsertThreadDtoReq {
 	 idThreadType?: string 
 	 isPremium?: boolean 
 	 pollingName?: string 
+	 isActive? : boolean
 	 dataPolling?: InsertPollingDetailDtoReq[] 
 	 dataCategory?: GetAllCategoryThreadDetail[] 
 } 

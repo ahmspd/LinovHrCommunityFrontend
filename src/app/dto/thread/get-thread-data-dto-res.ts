@@ -17,9 +17,10 @@ export class GetThreadDataDtoRes {
 	 date? : string
 	 like? : number
 	 bookmark? : number
-	 commet? : number
+	 comment? : number
 	 idPolling?: string
 	 pollingName? : string
+	 isActive? : boolean
 	 dataCategoryDetail?: GetCategoryDetailByThreadDtoRes[] 
 	 dataThreadComment?: GetThreadDetailDataDtoRes[] 
 	 dataThreadPolling? : GetPollingDetailByPollingIdDto[]

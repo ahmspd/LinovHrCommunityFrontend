@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
@@ -12,16 +14,37 @@ import { ThreadService } from 'src/app/service/thread.service';
 })
 export class ThreadListComponent implements OnInit, OnDestroy {
 
-  threadData: GetThreadDataDtoRes[] = []
 
+  dataThread: GetAllThreadPageDtoRes[] = []
   //subscription
-  getThreadSubscription?: Subscription
+  getAllSubscription?: Subscription
+
+  maxPage: number = 10
+  totalRecords: number = 0
+  loading: boolean = true
 
   constructor(private router: Router, private threadService: ThreadService, private loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.getThreadSubscription = this.threadService.getThread().subscribe(result => {
-      this.threadData = result.data
+  }
+
+  loadData(event: LazyLoadEvent) {
+    console.log(event)
+    this.getData(event.first, event.rows)
+  }
+
+  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+    this.loading = true;
+
+    this.getAllSubscription = this.threadService.getThreadWithPage(startPage, maxPage).subscribe({
+      next: result => {
+        const resultData: any = result
+        this.dataThread = resultData.data
+        this.loading = false
+        this.totalRecords = resultData.total
+        console.log(resultData.total)
+      },
+      error: _ => this.loading = false
     })
   }
 
@@ -34,7 +57,7 @@ export class ThreadListComponent implements OnInit, OnDestroy {
         else {
           console.log("go member");
         }
-      } 
+      }
       else {
         this.router.navigateByUrl(`/login`)
       }
@@ -56,6 +79,6 @@ export class ThreadListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.getThreadSubscription?.unsubscribe()
+    this.getAllSubscription?.unsubscribe()
   }
 }

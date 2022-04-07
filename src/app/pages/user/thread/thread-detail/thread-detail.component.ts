@@ -165,6 +165,7 @@ export class ThreadDetailComponent implements OnInit, OnDestroy {
         this.insertLikeSubscription = this.likeService.insert(this.addLike).subscribe(result => {
           if (result) {
             this.getDataLike()
+            this.getData()
           }
         })
       }
@@ -172,6 +173,7 @@ export class ThreadDetailComponent implements OnInit, OnDestroy {
         this.deleteLikeSubscription = this.likeService.deleteById(this.idLike).subscribe(result => {
           if (result) {
             this.getDataLike()
+            this.getData()
           }
         })
       }
@@ -188,6 +190,7 @@ export class ThreadDetailComponent implements OnInit, OnDestroy {
         this.insertBookmarkSubscription = this.bookmarkService.insert(this.addBookmar).subscribe(result => {
           if (result) {
             this.getDataBookmark()
+            this.getData()
           }
         })
       }
@@ -195,6 +198,7 @@ export class ThreadDetailComponent implements OnInit, OnDestroy {
         this.deleteBookmarkSubscription = this.bookmarkService.deleteById(this.idBookmark).subscribe(result => {
           if (result) {
             this.getDataBookmark()
+            this.getData()
           }
         })
       }

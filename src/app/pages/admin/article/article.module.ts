@@ -12,12 +12,14 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { InputTextModule } from "primeng/inputtext";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { MultiSelectModule } from "primeng/multiselect";
+import { ArticleListNotAcceptComponent } from './article-list-not-accept/article-list-not-accept.component';
 
 @NgModule({
     declarations: [
         ArticleListComponent,
         ArticleNewComponent,
-        ArticleEditComponent
+        ArticleEditComponent,
+        ArticleListNotAcceptComponent
     ],
     imports: [
         ArticleRouter,
