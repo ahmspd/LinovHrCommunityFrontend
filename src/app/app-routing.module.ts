@@ -95,11 +95,16 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/article/article.module').then(m=>m.ArticleModule)
     },
     {
+        path: 'user/setting',
+        component: NavbarComponent,
+        loadChildren: () => import('./pages/user/profile/profile.module').then(m=>m.ProfileModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
     },
-        {
+    {
             path: '', component: AppMainComponent,
             children: [
                 { path: 'dashboard', component: DashboardComponent },
