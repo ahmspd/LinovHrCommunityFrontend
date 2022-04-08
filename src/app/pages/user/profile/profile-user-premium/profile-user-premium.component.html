@@ -107,7 +107,7 @@
                             </div>
 
                             <hr class="my-3 mx-0 border-top-1 border-none surface-border">
-                            <button pbutton="" pripple="" label="Buy Now"
+                            <button (click)="confirm('1')" pbutton="" pripple="" label="Buy Now"
                                 class="p-element p-ripple w-full mt-2 p-button p-component">
                                 <span class="p-button-label">Buy Now</span>
                                 <span class="p-ink"></span>
@@ -128,7 +128,7 @@
                             </div>
 
                             <hr class="my-3 mx-0 border-top-1 border-none surface-border">
-                            <button pbutton="" pripple="" label="Buy Now"
+                            <button (click)="confirm('2')" pbutton="" pripple="" label="Buy Now"
                                 class="p-element p-ripple w-full mt-2 p-button p-component">
                                 <span class="p-button-label">Buy Now</span>
                                 <span class="p-ink"></span>
@@ -148,11 +148,12 @@
                         class="block text-indigo-100 font-medium text-xl">Please complete your purchase then enjoy
                         premium feature with others premium members</span>
                     <div class="mt-5 mb-3 relative sm:w-20rem mx-auto">
-                        <p-fileUpload id="avatar" mode="basic" name="avatar" url="./upload.php" accept="image/*"
-                            maxfilesize="1000000" styleclass="p-button-outlined p-button-plain"
+                        <p-fileUpload (onSelect)="changeFile($event.files)" id="file" mode="basic" name="file"  accept="image/*"
+                        maxFileSize="2000000" styleclass="p-button-outlined p-button-plain"
                             chooseLabel="Upload Image" class="p-element" [auto]="true">
                         </p-fileUpload>
                     </div>
+                    <p-button (click)="onUploadInvoice()" label="Submit"></p-button>
                 </div>
             </div>
         </div>
@@ -183,3 +184,5 @@
 
     </div>
 </div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" rejectButtonStyleClass="p-button-outlined"> </p-confirmDialog>

@@ -14,6 +14,7 @@ import {MessageModule} from 'primeng/message';
 import {DividerModule} from 'primeng/divider';
 import { ProfileChangePasswordComponent } from './profile-change-password/profile-change-password.component';
 import {PasswordModule} from 'primeng/password';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {PasswordModule} from 'primeng/password';
     MessageModule,
     MessagesModule,
     DividerModule,
-    PasswordModule
+    PasswordModule,
+    ConfirmDialogModule
   ]
 })
 export class ProfileModule { }
