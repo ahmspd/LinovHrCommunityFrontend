@@ -1,0 +1,120 @@
+<div class="p-2">
+    <p-tabView>
+        <p-tabPanel header="Event" leftIcon="pi pi-ticket">
+            <p-dataView #dv [value]="events" [paginator]="true" [rows]="9" layout="grid">
+                <ng-template pTemplate="header">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </ng-template>
+                <ng-template let-event pTemplate="gridItem">
+                    <div class="col-4 p-1 my-2">
+                        <div class="p-3 shadow-2 border-round surface-card">
+                            <img src='http://localhost:1234/files/download/{{event.idFile}}' alt="Image" class="block w-full mb-3" style="height: 200px;">
+                            <div class="flex justify-content-between align-items-center text-900">
+                                <span class="inline-flex align-items-center">
+                                    <span>{{event.fullName}}</span>
+                                </span>
+                                <span>Event</span>
+                            </div>
+                            <p class="line-height-3 mt-3 mb-3 text-900 font-bold">{{event.title}}</p>
+                            <div class="mb-5">
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                        <span>{{event.eventCourseLocation}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                        <span>{{timeFormatter(event.timeStart)}} - {{timeFormatter(event.timeEnd)}}</span>
+                                    </span>
+                                </div>
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                        <span>{{dateFormatter(event.dateStart)}} - {{dateFormatter(event.dateEnd)}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                        <span>{{priceFormatter(event.price)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-4 flex flex-wrap align-items-center">
+                                <p-tag class="p-element mr-2" *ngFor="let category of event.dataCategoryDetail">
+                                    <span class="p-tag p-component">
+                                        <span class="p-tag-value">{{category.categoryName}}</span>
+                                    </span>
+                                </p-tag>
+                            </div>
+                            <button *ngIf="event.isJoin == null" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(event.title, event.id)" pButton label="Join"></button>
+                            <button *ngIf="event.isJoin" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                            <button *ngIf="event.isJoin == false" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template let-product pTemplate="listItem">
+
+                </ng-template>
+            </p-dataView>
+        </p-tabPanel>
+        <p-tabPanel header="Course" leftIcon="pi pi-briefcase">
+            <p-dataView #dv [value]="courses" [paginator]="true" [rows]="9" layout="grid">
+                <ng-template pTemplate="header">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </ng-template>
+                <ng-template let-course pTemplate="gridItem">
+                    <div class="col-4 p-1 my-2">
+                        <div class="p-3 shadow-2 border-round surface-card">
+                            <img src='http://localhost:1234/files/download/{{course.idFile}}' alt="Course Image" class="block w-full mb-3" style="height: 200px;">
+                            <div class="flex justify-content-between align-items-center text-900">
+                                <span class="inline-flex align-items-center">
+                                    <span>{{course.fullName}}</span>
+                                </span>
+                                <span>Course</span>
+                            </div>
+                            <p class="line-height-3 mt-3 mb-3 text-900 font-bold">{{course.title}}</p>
+                            <div class="mb-5">
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                        <span>{{course.eventCourseLocation}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                        <span>{{timeFormatter(course.timeStart)}} - {{timeFormatter(course.timeEnd)}}</span>
+                                    </span>
+                                </div>
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                        <span>{{dateFormatter(course.dateStart)}} - {{dateFormatter(course.dateEnd)}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                        <span>{{priceFormatter(course.price)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-4 flex flex-wrap align-items-center">
+                                <p-tag class="p-element mr-2 " *ngFor="let category of course.dataCategoryDetail ">
+                                    <span class="p-tag p-component ">
+                                        <span class="p-tag-value ">{{category.categoryName}}</span>
+                                    </span>
+                                </p-tag>
+                            </div>
+                            <button *ngIf="course.isJoin == null" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(course.title, course.id)" pButton label="Join"></button>
+                            <button *ngIf="course.isJoin" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(course.title, course.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                            <button *ngIf="course.isJoin == false" class="p-button-outlined p-button-rounded mb-2" (click)="confirm(course.title, course.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template let-product pTemplate="listItem ">
+
+                </ng-template>
+            </p-dataView>
+        </p-tabPanel>
+
+    </p-tabView>
+
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

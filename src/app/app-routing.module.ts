@@ -90,6 +90,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/category/category.module').then(m => m.CategoryModule)
     },
     {
+        path: 'event-course',
+        component: NavbarComponent,
+        loadChildren: () => import('./pages/user/event-course/event-course.module').then(m => m.EventCourseModule)
+    },
+    {
         path: 'article',
         component: AppMainComponent,
         loadChildren: () => import('./pages/admin/article/article.module').then(m=>m.ArticleModule)
@@ -98,6 +103,11 @@ const routes: Routes = [
         path: 'user/setting',
         component: NavbarComponent,
         loadChildren: () => import('./pages/user/profile/profile.module').then(m=>m.ProfileModule)
+    },
+    {
+        path: 'admin/event-course',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/event-course-admin/event-course-admin.module').then(m=>m.EventCourseAdminModule)
     },
     {
         path: '',

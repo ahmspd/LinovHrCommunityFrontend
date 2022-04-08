@@ -14,13 +14,13 @@
                 <label for="articleTitle" class="font-medium text-900">
                     Title <span style="color: red;">*</span>
                 </label>
-                <input class="p-inputtext p-component p-element" id="articleTitle" name="articleTitle" type="text" [(ngModel)]="insertArticle.title" required="true"minlength="5" maxlength="200">
+                <input class="p-inputtext p-component p-element" id="articleTitle" name="articleTitle" type="text" [(ngModel)]="insertArticle.title" required="true"minlength="10" maxlength="200">
             </div>
             <div class="field mb-4 col-12 md:col-12">
                 <label for="articleContent" class="font-medium text-900">
                     Article Contents <span style="color: red;">*</span>
                 </label>
-                <ckeditor name="articleContent" [editor]="editor" [(ngModel)]="insertArticle.contents"></ckeditor>
+                <ckeditor name="articleContent" [editor]="editor" [(ngModel)]="insertArticle.contents" required="true" minlength="50"></ckeditor>
                 <!-- <input class="p-inputtext p-component p-element" id="industryCode" name="industryCode" type="text" [(ngModel)]="category.code" required="true" minlength="5" maxlength="7"> -->
             </div>
             <div class="field mb-4 col-12 md:col-12">
@@ -28,7 +28,7 @@
                     Article Categories <span style="color: red;">*</span>
                 </label>
                 <p-multiSelect [options]="categories" [(ngModel)]="selectCategories" defaultLabel="Select a Country"
-                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect">
+                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect" required="true">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
                             *ngFor="let option of selectCategories">

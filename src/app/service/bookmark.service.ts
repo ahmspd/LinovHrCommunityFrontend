@@ -19,6 +19,7 @@ import { DeleteLikeDtoRes } from "../dto/like/delete-like-dto-res";
 import { GetLikeThreadDtoRes } from "../dto/like/get-like-thread-dto-res";
 import { InsertLikeDtoReq } from "../dto/like/insert-like-dto-req";
 import { InsertLikeDtoRes } from "../dto/like/insert-like-dto-res";
+import { GetAllThreadPageDtoRes } from "../dto/thread/get-all-thread-page-dto-res";
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,10 @@ export class BookmarkService {
 
     insert(data: InsertBookmarkDtoReq): Observable<InsertBookmarkDtoRes> {
         return this.http.post<InsertBookmarkDtoRes>('http://localhost:1234/bookmarks', data)
+    }
+
+    getThreadBookmarkByUser(startPage : number, maxPage : number) : Observable<GetAllThreadPageDtoRes>{
+        return this.http.get<GetAllThreadPageDtoRes>(`http://localhost:1234/bookmarks/user?start=${startPage}&max=${maxPage}`)
     }
  
     // update(industry: UpdateIndustryDtoReq): Observable<UpdateIndustryDtoRes> {

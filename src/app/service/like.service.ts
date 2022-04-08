@@ -15,6 +15,7 @@ import { DeleteLikeDtoRes } from "../dto/like/delete-like-dto-res";
 import { GetLikeThreadDtoRes } from "../dto/like/get-like-thread-dto-res";
 import { InsertLikeDtoReq } from "../dto/like/insert-like-dto-req";
 import { InsertLikeDtoRes } from "../dto/like/insert-like-dto-res";
+import { GetAllThreadPageDtoRes } from "../dto/thread/get-all-thread-page-dto-res";
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,10 @@ export class LikeService {
 
     deleteById(id: string): Observable<DeleteLikeDtoRes> {
         return this.http.delete<DeleteLikeDtoRes>(`http://localhost:1234/likes/${id}`)
+    }
+
+    getThreadLikeByUser(startPage : number, maxPage : number) : Observable<GetAllThreadPageDtoRes>{
+        return this.http.get<GetAllThreadPageDtoRes>(`http://localhost:1234/likes/user?start=${startPage}&max=${maxPage}`)
     }
 
     // deleteMultiple(industry: DeleteMultipleIndustryDtoReq): Observable<DeleteMultipleIndustryDtoRes> {
