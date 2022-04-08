@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { ProfileChangePasswordComponent } from "./profile-change-password/profile-change-password.component";
 import { ProfileDetailComponent } from "./profile-detail/profile-detail.component";
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
+import { ProfileForgotPasswordComponent } from "./profile-forgot-password/profile-forgot-password.component";
 import { ProfileThreadBookmarkComponent } from "./profile-thread-bookmark/profile-thread-bookmark.component";
 import { ProfileThreadLikeComponent } from "./profile-thread-like/profile-thread-like.component";
 import { ProfileThreadComponent } from "./profile-thread/profile-thread.component";
@@ -36,6 +37,10 @@ const routes: Routes = [
     {
         path: 'thread-bookmark',
         component: ProfileThreadBookmarkComponent
+    },
+    {
+        path: 'forgot-password',
+        component: ProfileForgotPasswordComponent
     }
 ]
 

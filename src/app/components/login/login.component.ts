@@ -59,6 +59,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  forgotPassword():void{
+    this.router.navigateByUrl(`user/setting/forgot-password`)
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

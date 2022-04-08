@@ -8,6 +8,11 @@
             <div class="font-bold text-lg text-900 ml-1">Settings</div>
         </div>
         <!-- nav item -->
+        <pre>
+            {{
+                userData | json
+            }}
+        </pre>
         <div class="surface-card shadow-2 border-round select-none">
             <ul class="list-none p-2 m-0">
                 <li (click)="toThread()">
@@ -65,96 +70,106 @@
             <div class="font-bold text-lg text-900 ml-1">Edit Profiles</div>
         </div>
         <!-- form -->
-        <div class="surface-card p-4 shadow-2 border-round">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12">
-                    <label for="fullname" class="font-medium">Fullname</label>
-                    <input id="fullname" name="fullname" type="text" class="p-inputtext p-component p-element">
-                </div>
-                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="email" class="font-medium">Email</label>
-                    <input id="email" type="email" name="email" pinputtext="" class="p-inputtext p-component p-element">
-                </div>
-                <div class="field mb-4 col-12 md:col-6"><label for="avatar" class="font-medium">Avatar</label>
-                    <div class="flex align-items-center"><img src="assets/images/blocks/avatars/circle/avatar-f-4.png"
-                            class="mr-4">
-                        <p-fileUpload id="avatar" mode="basic" name="avatar" url="./upload.php" accept="image/*"
-                            maxfilesize="1000000" styleclass="p-button-outlined p-button-plain"
-                            chooseLabel="Upload Image" class="p-element" [auto]="true">
-                        </p-fileUpload>
+        <form #formEdit="ngForm">
+            <div class="surface-card p-4 shadow-2 border-round">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-4 col-12">
+                        <label for="fullname" class="font-medium">Fullname</label>
+                        <input id="fullname" name="fullname" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.fullName">
                     </div>
-                </div>
-                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-
-                <div class="field mb-4 col-12 md:col-6"><label for="province" class="font-medium">Province</label>
-                    <p-dropdown id="province" name="province" optionlabel="name" filterby="name"
-                        placeholder="Select a Province">
-                    </p-dropdown>
-                </div>
-
-                <div class="field mb-4 col-12 md:col-6"><label for="city" class="font-medium">City</label>
-                    <p-dropdown id="city" name="city" optionlabel="name" filterby="name" placeholder="Select a City">
-                    </p-dropdown>
-                </div>
-
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="postalCode" class="font-medium">Postal Code</label>
-                    <input id="postalCode" name="postalCode" type="text" class="p-inputtext p-component p-element">
-                </div>
-
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="phoneNumber" class="font-medium">Phone Number</label>
-                    <div class="p-inputgroup"><span class="p-inputgroup-addon">🇮🇩</span>
-                        <input id="phoneNumber" name="phoneNumber" type="text"
-                            class="p-inputtext p-component p-element">
+                    <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="email" class="font-medium">Email</label>
+                        <input id="email" type="email" name="email" pinputtext="" class="p-inputtext p-component p-element"  [(ngModel)]="userData.email">
                     </div>
+                    <div class="field mb-4 col-12 md:col-6"><label for="avatar" class="font-medium">Avatar</label>
+                        <div class="flex align-items-center"><img src="assets/images/blocks/avatars/circle/avatar-f-4.png"
+                                class="mr-4">
+                            <p-fileUpload id="avatar" mode="basic" name="avatar" url="./upload.php" accept="image/*"
+                                maxfilesize="1000000" styleclass="p-button-outlined p-button-plain"
+                                chooseLabel="Upload Image" class="p-element" [auto]="true">
+                            </p-fileUpload>
+                        </div>
+                    </div>
+                    <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+    
+                    <div class="field mb-4 col-12 md:col-6"><label for="province" class="font-medium">Province</label>
+                        <p-dropdown [options]="provinceData" optionLabel="provinceName" optionValue="id"
+                            [(ngModel)]="userData.idProvince" name="provinceName"
+                            placeholder="Select a Province"
+                            class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true" >
+                        </p-dropdown>
+                    </div>
+    
+                    <div class="field mb-4 col-12 md:col-6"><label for="city" class="font-medium">City</label>
+                        <p-dropdown [options]="cityData" optionLabel="cityName" optionValue="id"
+                            [(ngModel)]="userData.idCity" name="cityName"
+                            placeholder="Select a City"
+                            class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true" >
+                        </p-dropdown>
+                    </div>
+    
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="postalCode" class="font-medium">Postal Code</label>
+                        <input id="postalCode" name="postalCode" type="text" class="p-inputtext p-component p-element"  [(ngModel)]="userData.postalCode">
+                    </div>
+    
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="phoneNumber" class="font-medium">Phone Number</label>
+                        <div class="p-inputgroup"><span class="p-inputgroup-addon">🇮🇩</span>
+                            <input id="phoneNumber" name="phoneNumber" type="text"
+                                class="p-inputtext p-component p-element" [(ngModel)]="userData.phoneNumber">
+                        </div>
+                    </div>
+    
+                    <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+    
+                    <div class="field mb-4 col-12">
+                        <label for="company" class="font-medium">Company</label>
+                        <input id="company" name="company" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element" [(ngModel)]="userData.company">
+                    </div>
+    
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="industry" class="block text-900 font-medium text-xl mb-2">Industry</label>
+                        <p-dropdown [options]="industryData" optionLabel="industryName" optionValue="id"
+                            [(ngModel)]="userData.idIndustry" name="industryName"
+                            placeholder="Select a Industry"
+                            class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true" >
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>
+                        <p-dropdown [options]="positionData" optionLabel="positionName" optionValue="id"
+                            [(ngModel)]="userData.idPosition" name="positionName"
+                            placeholder="Select a Position"
+                            class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true" >
+                        </p-dropdown>
+                    </div>
+    
+                    <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                    <div class="field mb-4 col-12">
+                        <label for="instagram" class="font-medium">Instagram</label>
+                        <input id="instagram" name="instagram" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.instagram" >
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="twitter" class="font-medium">Twitter</label>
+                        <input id="twitter" name="twitter" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.twitter">
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="facebook" class="font-medium">Facebook</label>
+                        <input id="facebook" name="facebook" type="text" pinputtext=""
+                            class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.facebook">
+                    </div>
+                    <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
+                    <div class="col-12"><button pbutton="" pripple="" label="Save Changes"
+                            class="p-ripple p-element w-auto mt-3 p-button p-component" (click)="update()"><span class="p-ink" ></span><span
+                                class="p-button-label">Save Changes</span></button></div>
                 </div>
-
-                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-
-                <div class="field mb-4 col-12">
-                    <label for="company" class="font-medium">Company</label>
-                    <input id="company" name="company" type="text" pinputtext=""
-                        class="p-inputtext p-component p-element">
-                </div>
-
-                <div class="field mb-4 col-12">
-                    <label for="industry" class="font-medium">Industry</label>
-                    <p-dropdown id="industry" name="industry" optionlabel="name" filterby="name"
-                        placeholder="Select a Industry">
-                    </p-dropdown>
-                </div>
-
-                <div class="field mb-4 col-12">
-                    <label for="position" class="font-medium">Position</label>
-                    <p-dropdown id="position" name="position" optionlabel="name" filterby="name"
-                        placeholder="Select a Position">
-                    </p-dropdown>
-                </div>
-
-                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-                <div class="field mb-4 col-12">
-                    <label for="instagram" class="font-medium">Instagram</label>
-                    <input id="instagram" name="instagram" type="text" pinputtext=""
-                        class="p-inputtext p-component p-element" placeholder="enter your username">
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="twitter" class="font-medium">Twitter</label>
-                    <input id="twitter" name="twitter" type="text" pinputtext=""
-                        class="p-inputtext p-component p-element" placeholder="enter your username">
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="facebook" class="font-medium">Facebook</label>
-                    <input id="facebook" name="facebook" type="text" pinputtext=""
-                        class="p-inputtext p-component p-element" placeholder="enter your username">
-                </div>
-                <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-                <div class="col-12"><button pbutton="" pripple="" label="Save Changes"
-                        class="p-ripple p-element w-auto mt-3 p-button p-component"><span class="p-ink"></span><span
-                            class="p-button-label">Save Changes</span></button></div>
             </div>
-        </div>
+        </form>
     </div>
 
 </div>

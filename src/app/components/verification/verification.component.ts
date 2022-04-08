@@ -60,7 +60,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(result=> {
       this.idUser = (result as any).id
       this.getByIdSubscription = this.userService.getById(this.idUser).subscribe(result =>{
-        this.userData = result
+        this.userData = result.data
       })
     })
   }

@@ -27,6 +27,7 @@ import { ProgressBarModule } from "primeng/progressbar";
 import { MultiSelectModule } from "primeng/multiselect";
 import { ProfileThreadLikeComponent } from './profile-thread-like/profile-thread-like.component';
 import { ProfileThreadBookmarkComponent } from './profile-thread-bookmark/profile-thread-bookmark.component';
+import { ProfileForgotPasswordComponent } from './profile-forgot-password/profile-forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ProfileThreadBookmarkComponent } from './profile-thread-bookmark/profil
     ProfileChangePasswordComponent,
     ProfileThreadComponent,
     ProfileThreadLikeComponent,
-    ProfileThreadBookmarkComponent
+    ProfileThreadBookmarkComponent,
+    ProfileForgotPasswordComponent
   ],
   imports: [
     ProfileRouter,

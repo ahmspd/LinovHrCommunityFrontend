@@ -30,6 +30,7 @@
                                         <span class="p-tag-value">{{dataCategory.categoryName}}</span>
                                     </span></p-tag>
                             </div>
+                            <div class="line-height-3 text-lg text-700 mb-4" [innerHTML]="data.contents.substring(0,100)"></div>
                             <div class="text-500 flex justify-content-end align-items-center">
                                 <p-button (click)="toArticleDetail(data.isPremium, data.id)" label="Read More" icon="pi pi-chevron-right"
                                     styleClass="p-button-link mr-2"></p-button>

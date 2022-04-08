@@ -6,24 +6,19 @@
         <div class="flex justify-content-start align-items-center mb-3">
             <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
                 style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
-            <div class="font-bold text-2xl text-900 ml-1">Create Threads & Discuss</div>
+            <div class="font-bold text-2xl text-900 ml-1">Create Article</div>
         </div>
         <div class="surface-card shadow-2 border-round p-3 flex-auto mb-3">
-            <form #formCreateThread="ngForm">
+            <form #formCreateArticle="ngForm">
                 <label for="title" class="block text-900 text-xl font-medium mb-2">Title</label>
                 <input id="title" name="title" type="text" placeholder="Thread Title" pInputText class="w-full mb-3"
-                    style="padding:1rem;" [(ngModel)]="insertArticle.title">
+                    style="padding:1rem;" [(ngModel)]="insertArticle.title" required="true" minlength="5" maxlength="200">
 
                 <label for="content" class="block text-900 text-xl font-medium mb-2">Content</label>
-                <ckeditor name="content" [editor]="editor" [(ngModel)]="insertArticle.contents"></ckeditor>
-                <pre>
-                    {{
-                        insertArticle | json
-                    }}
-                </pre>
+                <ckeditor name="content" [editor]="editor" [(ngModel)]="insertArticle.contents" required="true" minlength="50"></ckeditor>
                 <label for="category" class="block text-900 text-xl font-medium mb-2 mt-3">Category</label>
                 <p-multiSelect [options]="categories" [(ngModel)]="selectCategories" defaultLabel="Select a Country"
-                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect">
+                    optionLabel="categoryName" class="multiselect-custom" name="multiSelect" required="true">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
                             *ngFor="let option of selectCategories">
@@ -40,7 +35,7 @@
                     </ng-template>
                 </p-multiSelect>
                 <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
-                    <p-button id="createArticle" name="createArticle" (click)="onCreate()">Create Thread</p-button>
+                    <p-button id="createArticle" name="createArticle" (click)="onCreate()" [disabled]="formCreateArticle.form.invalid">Create Thread</p-button>
                 </div>
             </form>
         </div>
