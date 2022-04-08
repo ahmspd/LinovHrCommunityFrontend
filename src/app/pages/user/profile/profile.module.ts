@@ -14,6 +14,7 @@ import { MessageModule } from 'primeng/message';
 import { DividerModule } from 'primeng/divider';
 import { ProfileChangePasswordComponent } from './profile-change-password/profile-change-password.component';
 import { PasswordModule } from 'primeng/password';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProfileThreadComponent } from './profile-thread/profile-thread.component';
 import { TableModule } from "primeng/table";
 import { TagModule } from "primeng/tag";
@@ -28,6 +29,7 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { ProfileThreadLikeComponent } from './profile-thread-like/profile-thread-like.component';
 import { ProfileThreadBookmarkComponent } from './profile-thread-bookmark/profile-thread-bookmark.component';
 import { ProfileForgotPasswordComponent } from './profile-forgot-password/profile-forgot-password.component';
+
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { ProfileForgotPasswordComponent } from './profile-forgot-password/profil
     MessagesModule,
     DividerModule,
     PasswordModule,
+    ConfirmDialogModule,
     TableModule,
     TagModule,
     AvatarModule,
