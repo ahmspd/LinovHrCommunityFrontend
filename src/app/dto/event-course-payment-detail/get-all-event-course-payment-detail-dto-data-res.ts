@@ -1,3 +1,5 @@
+import { GetIdAndPriceDtoDataRes } from "./get-id-and-price-dto-data-res"
+
 export class GetAllEventCoursePaymentDetailDtoDataRes { 
 	 id?: string 
 	 idEventCourse?: string 
@@ -14,5 +16,6 @@ export class GetAllEventCoursePaymentDetailDtoDataRes {
 	 createdAt?: string 
 	 version?: number 
 	 isActive?: boolean 
+	 data!: GetIdAndPriceDtoDataRes
 } 
 
