@@ -47,7 +47,8 @@ export class AppMenuComponent implements OnInit {
                 label: 'Transaksi',
                 items: [
                     {label: 'Article', icon: 'pi pi-fw pi-youtube', routerLink: ['/article/list']},
-                    {label: 'Event Course', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/confirmation']}
+                    {label: 'Event Course', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/confirmation']},
+                    {label: 'User Member', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/user-member/list']}
                 ]
             },
             {

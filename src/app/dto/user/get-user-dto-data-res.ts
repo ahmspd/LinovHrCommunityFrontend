@@ -20,5 +20,7 @@ export class GetUserDtoDataRes {
 	twitter: string
 	facebook: string
 	company: string
+	statUserMember?: number
+	idOrder? : string
 }
 

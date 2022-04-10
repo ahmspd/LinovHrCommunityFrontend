@@ -9,5 +9,6 @@ export class GetAllEventCoursePaymentDtoDataRes {
 	 createdAt?: string 
 	 version?: number 
 	 isActive?: boolean 
+	 isAccept?: boolean
 } 
 

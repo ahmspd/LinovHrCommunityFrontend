@@ -22,7 +22,7 @@ export class ProfileThreadComponent implements OnInit , OnDestroy{
   loading: boolean = true
 
   idUser: string
-  constructor(private router : Router, private threadService : ThreadService, private loginService : LoginService) { }
+  constructor(public router : Router, private threadService : ThreadService, private loginService : LoginService) { }
 
 
   ngOnInit(): void {
@@ -54,29 +54,9 @@ export class ProfileThreadComponent implements OnInit , OnDestroy{
 
   }
 
-  toEdit(){
-    this.router.navigateByUrl("/user/setting/edit-profile")
-  }
-
-  toChangePass(){
-    this.router.navigateByUrl("/user/setting/change-password")
-  }
-
-  toPremium(){
-    this.router.navigateByUrl("/user/setting/premium")
-  }
-
   toLogout(){
+    this.loginService.clearData()
     this.router.navigateByUrl("/login")
-  }
-  toThread(){
-    this.router.navigateByUrl("/user/setting/thread")
-  }
-  toThreadLike(){
-    this.router.navigateByUrl("/user/setting/thread-like")
-  }
-  toThreadBookmark(){
-    this.router.navigateByUrl("/user/setting/thread-bookmark")
   }
 
   ngOnDestroy(): void {

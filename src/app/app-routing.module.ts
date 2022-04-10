@@ -110,6 +110,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/event-course-admin/event-course-admin.module').then(m=>m.EventCourseAdminModule)
     },
     {
+        path: 'admin/user-member',
+        component: AppMainComponent,
+        loadChildren: () => import('./pages/admin/user-member-admin/user-member-admin.module').then(m=>m.UserMemberAdminModule)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

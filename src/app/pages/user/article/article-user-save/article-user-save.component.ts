@@ -27,6 +27,8 @@ export class ArticleUserSaveComponent implements OnInit, OnDestroy {
   idThreadType: string = '2'
   isActive: boolean = false
 
+  file?: File
+
   constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService) { }
 
   ngOnInit(): void {
@@ -41,11 +43,15 @@ export class ArticleUserSaveComponent implements OnInit, OnDestroy {
     this.insertArticle.idThreadType = this.idThreadType
     this.insertArticle.dataCategory = this.selectCategories
     this.insertArticle.isActive = this.isActive
-    this.insertArticleSubscription = this.threadService.insert(this.insertArticle).subscribe(result => {
+    this.insertArticleSubscription = this.threadService.insert(this.insertArticle, this.file).subscribe(result => {
       if (result) {
         this.router.navigateByUrl('user/article/list')
       }
     })
+  }
+
+  changeFile(event: any): void {
+    this.file = event[0]
   }
 
   ngOnDestroy(): void {

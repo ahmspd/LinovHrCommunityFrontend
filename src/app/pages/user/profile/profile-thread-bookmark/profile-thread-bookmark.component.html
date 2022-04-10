@@ -10,37 +10,37 @@
         <!-- nav item -->
         <div class="surface-card shadow-2 border-round select-none">
             <ul class="list-none p-2 m-0">
-                <li (click)="toThread()">
+                <li (click)="router.navigate(['/user/setting/thread'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Thread</span>
                     </a>
                 </li>
-                <li (click)="toThreadLike()">
+                <li (click)="router.navigate(['/user/setting/thread-like'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Likes</span>
                     </a>
                 </li>
-                <li (click)="toThreadBookmark()">
+                <li (click)="router.navigate(['/user/setting/thread-bookmark'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-900">Bookmark</span>
+                        <span class="font-medium text-700">Bookmark</span>
                     </a>
                 </li>
-                <li (click)="toEdit()">
+                <li (click)="router.navigate(['/user/setting/edit-profile'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-700">Edit Profile</span>
+                        <span class="font-medium text-900">Edit Profile</span>
                     </a>
                 </li>
-                <li (click)="toChangePass()">
+                <li (click)="router.navigate(['/user/setting/change-password'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Password</span>
                     </a>
                 </li>
-                <li (click)="toPremium()">
+                <li (click)="router.navigate(['/user/setting/premium'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">👑Premium👑</span>

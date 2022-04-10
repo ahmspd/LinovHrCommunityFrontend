@@ -10,22 +10,40 @@
         <!-- nav item -->
         <div class="surface-card shadow-2 border-round select-none">
             <ul class="list-none p-2 m-0">
-                <li (click)="toEdit()">
+                <li (click)="router.navigate(['/user/setting/thread'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-700">Edit Profile</span>
+                        <span class="font-medium text-700">Thread</span>
                     </a>
                 </li>
-                <li (click)="toChangePass()">
+                <li (click)="router.navigate(['/user/setting/thread-like'])">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Likes</span>
+                    </a>
+                </li>
+                <li (click)="router.navigate(['/user/setting/thread-bookmark'])">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Bookmark</span>
+                    </a>
+                </li>
+                <li (click)="router.navigate(['/user/setting/edit-profile'])">
+                    <a pRipple=""
+                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-900">Edit Profile</span>
+                    </a>
+                </li>
+                <li (click)="router.navigate(['/user/setting/change-password'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Password</span>
                     </a>
                 </li>
-                <li (click)="toPremium()">
+                <li (click)="router.navigate(['/user/setting/premium'])">
                     <a pRipple=""
                         class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-900">👑Premium👑</span>
+                        <span class="font-medium text-700">👑Premium👑</span>
                     </a>
                 </li>
                 <p-divider></p-divider>
@@ -47,7 +65,7 @@
             <div class="font-bold text-lg text-900 ml-1">Edit Profiles</div>
         </div>
         <!-- pricing -->
-        <div class="surface-card px-4 py-8 md:px-6 lg:px-8">
+        <div class="surface-card px-4 py-8 md:px-6 lg:px-8" *ngIf="statPricing">
             <div class="grid">
                
                 <div class="col-12 p-1 mb-3 lg:mb-5">
@@ -140,7 +158,7 @@
         </div>
 
         <!-- After Purchase -->
-        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 ">
+        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statUpload">
             <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
                 <div class="py-6 px-3 md:px-6shadow-2 text-center"
                     style="background: linear-gradient(180deg, #6372C3 0%, #3F51B5 100%); border-radius: 1rem;">
@@ -159,7 +177,7 @@
         </div>
 
         <!-- Confirmation -->
-        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 ">
+        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statWaiting">
             <div class="align-items-center flex justify-content-center lg:px-8 md:px-6 px-4 py-8 ng-star-inserted">
                 <div class="surface-card border-round shadow-2 p-4 text-center"><img
                         src="assets/images/illustration/checkmark.png" width="250" alt="Image" class="mx-auto block mb-4">
@@ -171,7 +189,7 @@
         </div>
 
         <!-- Premium Status -->
-        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 ">
+        <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statPremium">
             <div class="align-items-center flex justify-content-center lg:px-8 md:px-6 px-4 py-8 ng-star-inserted">
                 <div class="surface-card border-round shadow-2 p-4 text-center"><img
                         src="assets/images/illustration/crown.png" width="250" alt="Image" class="mx-auto block mb-4">

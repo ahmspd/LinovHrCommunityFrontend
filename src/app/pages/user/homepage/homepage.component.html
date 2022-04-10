@@ -1,55 +1,41 @@
 <!-- articles -->
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
     <div class="font-bold text-5xl text-900 mb-3">Articles</div>
+    
     <div class="flex flex-column xl:flex-row">
-        <div class="flex shadow-2 surface-card border-round mr-0 xl:mr-4 mb-6 xl:mb-0 flex-column md:flex-row">
-            <img src="assets/images/blog/blog-4.jpg" alt="Image" class="border-round-left" style="max-height: 234px;">
-            <div class="p-4">
-                <a href="#">
-                    <div class="flex justify-content-between mb-3"><span class="text-orange-500 font-medum">Good
-                            News</span><span class="text-500 font-medium">3 days ago</span></div>
-                    <div class="font-medium text-900 mb-3 line-height-3">Our Four-Legged Warriors</div>
-                    <div class="line-height-3 text-700 text-sm mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit,
-                        sed do eiusmod tempor.</div>
+        <div class="flex shadow-2 surface-card border-round mr-0 xl:mr-4 mb-6 xl:mb-0 flex-column col-6 md:flex-row" *ngFor="let data of articleData; let i = index">
+            <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image" class="border-round-left justify-content-center " width="234" [preview]="true" *ngIf="i<2"></p-image>
+
+            <div class="p-4" *ngIf="i<2">
+                <a (click)="articleDetail(data.id)">
+                    <div class="flex justify-content-between mb-3">
+                        <div *ngFor="let dataCategory of data.dataCategoryDetail">
+                            <span class="text-orange-500 font-medum">{{dataCategory.categoryName}}</span>
+                        </div>
+                            
+                            <span class="text-500 font-medium">{{data.date}}</span></div>
+                    <div class="font-medium text-900 mb-3 line-height-3">{{data.title}}</div>
                 </a>
                 <div class="flex align-items-center">
-                    <span class="font-bold text-sm block ml-2 text-blue-600">Anna Lane</span>
-                </div>
-            </div>
-        </div>
-        <div class="flex shadow-2 surface-card border-round flex-column md:flex-row"><img
-                src="assets/images/blog/blog-5.jpg" alt="Image" class="border-round-left" style="max-height: 234px;">
-            <div class="p-4">
-                <a href="#">
-                    <div class="flex justify-content-between mb-3"><span
-                            class="text-orange-500 font-medum">Science</span><span class="text-500 font-medium">4 days
-                            ago</span></div>
-                    <div class="font-medium text-900 mb-3 line-height-3">Can We Learn From Horses?</div>
-                    <div class="line-height-3 text-700 text-sm mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit,
-                        sed do eiusmod tempor.</div>
-                </a>
-                <div class="flex align-items-center">
-                    <span class="font-bold text-sm block ml-2 text-blue-600">Arlene McCoy</span>
+                    <span class="font-bold text-sm block ml-2 text-blue-600">{{data.fullName}}</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="flex justify-content-end align-items-center">
-        <p-button label="More Articles" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
+        <p-button label="More Articles" icon="pi pi-chevron-right" styleClass="p-button-link" (click)="router.navigate(['/user/article/list'])"></p-button>
     </div>
 </div>
 
 <!-- Banner -->
 <div style="width: 100%"
-    class=" bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap">
+    class=" bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap" *ngIf="!isPremium">
     <div class="font-bold mr-8">🔥 Hot Deals!</div>
     <div class="align-items-center hidden lg:flex">
-        <span class="line-height-3">Libero voluptatum atque exercitationem praesentium provident odit.</span>
+        <span class="line-height-3">Get Premium For Your Account</span>
     </div>
     <a class="flex align-items-center ml-2 mr-8">
-        <a class="text-white" href="#"><span class="underline font-bold">Learn More</span></a>
+        <a class="text-white" (click)="router.navigate(['/user/setting/premium'])"><span class="underline font-bold">Learn More</span></a>
     </a>
     <a pRipple
         class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150"
@@ -62,26 +48,27 @@
 <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
     <div class="font-bold text-5xl text-900 mb-3">Recent Threads</div>
     <div class="grid nogutter">
-        <div class="col-12 lg:col-4 p-4">
-            <div class="border-top-3 border-blue-600"></div>
-            <div class="text-blue-600 font-medium my-2">Animals</div>
-            <a href="#">
-                <div class="text-900 font-medium text-xl line-height-3 mb-4">Why Earth's most beloved creatures are
-                    headed
-                    toward extinction</div>
-                <div class="font-sm text-700 line-height-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <div class="col-12 lg:col-4 p-4" *ngFor="let data of threadData; let i = index">
+            <div class="border-top-3 border-blue-600" *ngIf="i<3"></div>
+            <div *ngFor="let dataCategory of data.dataCategoryDetail">
+                <div class="text-blue-600 font-medium my-2" *ngIf="i<3">
+                    {{dataCategory.categoryName}}
+                </div>
+            </div>
+            <a (click)="threadDetail(data.id)" *ngIf="i<3">
+                <div class="text-900 font-medium text-xl line-height-3 mb-4">
+                    {{data.title}}
+                </div>
                 <div class="flex mt-4">
                     <div class="ml-2">
-                        <div class="text-xs font-bold text-900 mb-1">Anna Miles</div>
+                        <div class="text-xs font-bold text-900 mb-1">{{data.fullName}}</div>
                         <div class="text-xs flex align-items-center text-700"><i
-                                class="pi pi-calendar mr-1 text-xs"></i><span>Apr 9, 2021</span></div>
+                                class="pi pi-calendar mr-1 text-xs"></i><span>{{data.date}}</span></div>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-12 lg:col-4 p-4">
+        <!-- <div class="col-12 lg:col-4 p-4">
             <div class="border-top-3 border-pink-600"></div>
             <div class="text-pink-600 font-medium my-2">Oxygen</div>
             <div class="text-900 font-medium text-xl line-height-3 mb-4">Only one-third of tropical rainforests remain
@@ -112,7 +99,7 @@
                             class="pi pi-calendar mr-1 text-xs"></i><span>Apr 9, 2021</span></div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="flex justify-content-end align-items-center">
         <p-button (click)="toThread()" label="More Threads" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>

@@ -36,7 +36,7 @@ export class ProfileEditComponent implements OnInit , OnDestroy{
   getProvinceDataSubscription? : Subscription
   updateUserSubscription? : Subscription
 
-  constructor(private router : Router, private userService:UserService, private loginService:LoginService,private industryService : IndustryService,
+  constructor(public router : Router, private userService:UserService, private loginService:LoginService,private industryService : IndustryService,
     private positionService : PositionService, private cityService : CityService, private provinceService : ProvinceService) { }
 
 
@@ -62,30 +62,10 @@ export class ProfileEditComponent implements OnInit , OnDestroy{
       this.userData = result.data
     })
   }
-  toEdit(){
-    this.router.navigateByUrl("/user/setting/edit-profile")
-  }
-
-  toChangePass(){
-    this.router.navigateByUrl("/user/setting/change-password")
-  }
-
-  toPremium(){
-    this.router.navigateByUrl("/user/setting/premium")
-  }
 
   toLogout(){
+    this.loginService.clearData()
     this.router.navigateByUrl("/login")
-  }
-
-  toThread(){
-    this.router.navigateByUrl("/user/setting/thread")
-  }
-  toThreadLike(){
-    this.router.navigateByUrl("/user/setting/thread-like")
-  }
-  toThreadBookmark(){
-    this.router.navigateByUrl("/user/setting/thread-bookmark")
   }
 
   update():void{

@@ -28,7 +28,7 @@ export class EventCoursePaymentService {
         return this.http.put<UpdateEventCoursePaymentDtoRes>(`http://localhost:1234/event-course-payment`, updateData)
     }
     
-    getAllUnAccepted(): Observable<GetAllEventCoursePaymentDtoRes> {
-        return this.http.get<GetAllEventCoursePaymentDtoRes>(`http://localhost:1234/event-course-payment`)
+    getAllUnAccepted(isAccept : boolean, startPage: number, maxPage: number): Observable<GetAllEventCoursePaymentDtoRes> {
+        return this.http.get<GetAllEventCoursePaymentDtoRes>(`http://localhost:1234/event-course-payment?isAccept=${isAccept}&start=${startPage}&max=${maxPage}`)
     }
 }

@@ -13,6 +13,8 @@ import { InputTextModule } from "primeng/inputtext";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { MultiSelectModule } from "primeng/multiselect";
 import { ArticleListNotAcceptComponent } from './article-list-not-accept/article-list-not-accept.component';
+import { FileUploadModule } from "primeng/fileupload";
+import { ImageModule } from "primeng/image";
 
 @NgModule({
     declarations: [
@@ -31,7 +33,9 @@ import { ArticleListNotAcceptComponent } from './article-list-not-accept/article
         ConfirmDialogModule,
         InputTextModule,
         CKEditorModule,
-        MultiSelectModule
+        MultiSelectModule,
+        FileUploadModule,
+        ImageModule
     ],
     providers: []
 })

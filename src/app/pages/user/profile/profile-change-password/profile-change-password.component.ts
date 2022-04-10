@@ -20,25 +20,14 @@ export class ProfileChangePasswordComponent implements OnInit, OnDestroy {
   //subscription
   updatePasswordSubscription?: Subscription
 
-  constructor(private router: Router, private userService: UserService, private loginService : LoginService) { }
+  constructor(public router: Router, private userService: UserService, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.idUser = this.loginService.getData().data.id
   }
 
-  toEdit() {
-    this.router.navigateByUrl("/user/setting/edit-profile")
-  }
-
-  toChangePass() {
-    this.router.navigateByUrl("/user/setting/change-password")
-  }
-
-  toPremium() {
-    this.router.navigateByUrl("/user/setting/premium")
-  }
-
   toLogout() {
+    this.loginService.clearData()
     this.router.navigateByUrl("/login")
   }
 

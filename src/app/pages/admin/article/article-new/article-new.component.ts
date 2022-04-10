@@ -25,6 +25,9 @@ export class ArticleNewComponent implements OnInit , OnDestroy{
   getAllCategoriesSubscription?: Subscription
 
   idThreadType: string = '2'
+
+  file?: File
+
   constructor(private router:Router, private loginService : LoginService, private categoryService : CategoryService,
               private threadService : ThreadService) { }
 
@@ -35,11 +38,15 @@ export class ArticleNewComponent implements OnInit , OnDestroy{
     this.insertArticle.contents = ''
   }
 
+  changeFile(event: any): void {
+    this.file = event[0]
+  }
+
   insert(isValid: boolean){
     if(isValid){
       this.insertArticle.idThreadType = this.idThreadType
       this.insertArticle.dataCategory = this.selectCategories
-      this.insertArticleSubscription = this.threadService.insert(this.insertArticle).subscribe(result=>{
+      this.insertArticleSubscription = this.threadService.insert(this.insertArticle, this.file).subscribe(result=>{
         if(result){
           this.router.navigateByUrl('article/list')
         }

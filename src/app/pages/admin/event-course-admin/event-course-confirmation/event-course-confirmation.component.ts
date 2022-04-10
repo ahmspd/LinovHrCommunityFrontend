@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { GetAllEventCoursePaymentDtoDataRes } from 'src/app/dto/event-course-payment/get-all-event-course-payment-dto-data-res';
 import { UpdateEventCoursePaymentDtoReq } from 'src/app/dto/event-course-payment/update-event-course-payment-dto-req';
@@ -25,38 +25,38 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
   totalRecords: number = 0
   loading: boolean = true
 
+  //Subscription
+  getAllSubscription? : Subscription
+
   ngOnInit(): void {
     this.initData()
   }
 
   initData(): void {
-    this.paymentsSubs = this.eventCoursePaymentService.getAllUnAccepted().subscribe(result => {
-      this.payments = result.data
-    })
+    // this.paymentsSubs = this.eventCoursePaymentService.getAllUnAccepted(true).subscribe(result => {
+    //   this.payments = result.data
+    // })
   }
 
-  // loadData(event: LazyLoadEvent) {
-  //   console.log(event)
-  //   if(event.globalFilter){
-  //     this.filter(event.globalFilter)
-  //   }else {
-  //     this.getData(event.first, event.rows)
-  //   }
-  // }
+  loadData(event: LazyLoadEvent) {
+    console.log(event)
+    this.getData(event.first, event.rows)
+  }
 
-  // getData(startPage: number = 0, maxPage: number = this.maxPage): void {
-  //   this.loading = true;
+  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+    this.loading = true;
 
-  //   this.industryService.getAll(startPage, maxPage).subscribe({
-  //     next: result => {
-  //       const resultData: any = result
-  //       this.industries = resultData.data
-  //       this.loading = false
-  //       this.totalRecords = resultData.total
-  //     },
-  //     error: _ => this.loading = false
-  //   })
-  // }
+    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(true,startPage, maxPage).subscribe({
+      next: result => {
+        const resultData: any = result
+        this.payments = resultData.data
+        this.loading = false
+        this.totalRecords = resultData.total
+        console.log(resultData.total)
+      },
+      error: _ => this.loading = false
+    })
+  }
 
   // update(id: string): void {
   //   this.router.navigateByUrl(`/industry/${id}`)

@@ -17,6 +17,8 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { ProgressBarModule } from "primeng/progressbar";
 import { ArticleUserRouter } from "./article.router";
 import { TableModule } from "primeng/table";
+import { ImageModule } from "primeng/image";
+import { FileUploadModule } from "primeng/fileupload";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { TableModule } from "primeng/table";
     CommonModule,
     InputSwitchModule,
     MultiSelectModule,
-    ProgressBarModule
-]
+    ProgressBarModule,
+    FileUploadModule,
+    ImageModule
+  ]
 })
-export class ArticleUserModule {}
+export class ArticleUserModule { }

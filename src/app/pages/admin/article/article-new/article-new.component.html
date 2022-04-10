@@ -47,6 +47,10 @@
                     </ng-template>
                 </p-multiSelect>
             </div>
+            <div class="field mb-4 col-12 md:col-12">
+                <label for="file" class="block text-900 text-xl font-medium mb-2 mt-3">File</label>
+                <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
+            </div>
         </div>
 
     </form>
