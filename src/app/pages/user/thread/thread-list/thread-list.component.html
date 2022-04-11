@@ -150,28 +150,15 @@
                     style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
                 <div class="font-bold text-lg text-900 ml-1">Article</div>
             </div>
-            <div class="grid grid-nogutter">
+            <div class="grid grid-nogutter" *ngFor="let data of dataArticle">
                 <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
-                    <img src="assets/images/blog/blog-1.jpg" alt="Image" class="block w-full mb-3">
-                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world.
-                        Little actions will lead to huge differences.</p>
+                    <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image" class="block w-full mb-3" width="200" [preview]="true"></p-image>
+                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">{{data.title}}</p>
                     <div class="flex justify-content-between text-600">
-                        <span>Posted by <span class="font-bold">Admin LinovHR</span></span>
+                        <span>Posted by <span class="font-bold">{{data.fullName}}</span></span>
                     </div>
                     <div class="flex justify-content-between text-600">
-                        <span>3 Days Ago</span>
-                    </div>
-                </div>
-
-                <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
-                    <img src="assets/images/blog/blog-1.jpg" alt="Image" class="block w-full mb-3">
-                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world.
-                        Little actions will lead to huge differences.</p>
-                    <div class="flex justify-content-between text-600">
-                        <span>Posted by <span class="font-bold">Admin LinovHR</span></span>
-                    </div>
-                    <div class="flex justify-content-between text-600">
-                        <span>3 Days Ago</span>
+                        <span>{{data.date}}</span>
                     </div>
                 </div>
             </div>

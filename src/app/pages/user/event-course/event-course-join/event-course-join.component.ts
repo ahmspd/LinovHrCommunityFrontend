@@ -50,11 +50,11 @@ export class EventCourseJoinComponent implements OnInit, OnDestroy {
     this.joinSubscription = this.eventCourseService.joinEventCourse(this.idEvent).subscribe(result => {
       const idOrder: string = result.data.id
       this.insertPayment.idOrder = idOrder
+      this.insertPaymentSubs = this.eventCourseService.pay(this.insertPayment, this.file).subscribe(_ => {
+        this.router.navigateByUrl('/event-course/list')
+      })
     }) 
 
-    this.insertPaymentSubs = this.eventCourseService.pay(this.insertPayment, this.file).subscribe(_ => {
-      this.router.navigateByUrl('/event-course/list')
-    })
   }
 
   ngOnDestroy(): void {

@@ -16,16 +16,22 @@ export class ThreadListComponent implements OnInit, OnDestroy {
 
 
   dataThread: GetAllThreadPageDtoRes[] = []
+  dataArticle: GetThreadDataDtoRes[] = []
   //subscription
   getAllSubscription?: Subscription
+  getAllArticleSubscription?: Subscription
 
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
+  idType: string = '2'
 
   constructor(private router: Router, private threadService: ThreadService, private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
+      this.dataArticle = result.data
+    })
   }
 
   loadData(event: LazyLoadEvent) {
@@ -80,5 +86,6 @@ export class ThreadListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getAllSubscription?.unsubscribe()
+    this.getAllArticleSubscription?.unsubscribe()
   }
 }

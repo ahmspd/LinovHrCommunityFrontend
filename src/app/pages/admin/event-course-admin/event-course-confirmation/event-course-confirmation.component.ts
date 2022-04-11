@@ -46,7 +46,7 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
   getData(startPage: number = 0, maxPage: number = this.maxPage): void {
     this.loading = true;
 
-    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(true,startPage, maxPage).subscribe({
+    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(false,startPage, maxPage).subscribe({
       next: result => {
         const resultData: any = result
         this.payments = resultData.data
