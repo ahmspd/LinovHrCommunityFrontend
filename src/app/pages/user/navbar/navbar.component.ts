@@ -12,11 +12,15 @@ import { LoginService } from 'src/app/service/login.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   
-  config: AppConfig;  
+  config: AppConfig  
 
-  subscription: Subscription;
+  subscription: Subscription
   
   isLogin: boolean = false
+
+  fullname : string
+
+  avatar : string = 'assets/images/avatars/avatar.png'
 
   constructor(public configService: ConfigService, public router: Router, private loginService : LoginService) { }
 
@@ -27,6 +31,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
     if(this.loginService.getData().data!=null){
       this.isLogin = true
+      this.fullname = this.loginService.getData().data.fullName
+      if(this.loginService.getData().data.idFile != null){
+        
+        this.avatar = `http://localhost:1234/files/${this.loginService.getData().data.idFile}`
+
+      }
+
     }
   }
 
