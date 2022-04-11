@@ -9,6 +9,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { EventCourseAdminRouter } from "./event-course-admin.router";
 import { EventCourseConfirmationComponent } from './event-course-confirmation/event-course-confirmation.component';
 import { ImageModule } from 'primeng/image';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ImageModule } from 'primeng/image';
     FormsModule,
     ConfirmDialogModule,
     InputTextModule,
-    ImageModule
+    ImageModule,
+    RadioButtonModule
   ],
   providers: [],
 

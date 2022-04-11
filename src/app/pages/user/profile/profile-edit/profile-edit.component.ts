@@ -27,6 +27,7 @@ export class ProfileEditComponent implements OnInit , OnDestroy{
   provinceData : GetAllProvinceDtoDataRes[]=[]
 
   idUser : string
+  file: File
 
   //subscription
   getUserDataSubscription? : Subscription
@@ -69,11 +70,15 @@ export class ProfileEditComponent implements OnInit , OnDestroy{
   }
 
   update():void{
-    this.updateUserSubscription = this.userService.updateProfile(this.userData).subscribe(result => {
+    this.updateUserSubscription = this.userService.updateProfile(this.userData, this.file).subscribe(result => {
       if(result.data){
         this.getData()
       }
     })
+  }
+
+  changeFile(event: any): void {
+    this.file = event[0]
   }
 
   ngOnDestroy(): void {

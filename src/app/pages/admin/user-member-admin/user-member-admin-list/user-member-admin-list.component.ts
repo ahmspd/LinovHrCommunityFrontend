@@ -19,6 +19,7 @@ export class UserMemberAdminListComponent implements OnInit, OnDestroy {
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
+  isAccept: boolean = false
 
   //Subscription
   getAllSubscription?: Subscription
@@ -37,7 +38,7 @@ export class UserMemberAdminListComponent implements OnInit, OnDestroy {
   getData(startPage: number = 0, maxPage: number = this.maxPage): void {
     this.loading = true;
 
-    this.getAllSubscription = this.userMemberService.getAllUserMember(false, startPage, maxPage).subscribe({
+    this.getAllSubscription = this.userMemberService.getAllUserMember(this.isAccept, startPage, maxPage).subscribe({
       next: result => {
         const resultData: any = result
         this.userMemberData = resultData.data

@@ -5,6 +5,7 @@ export class GetAllEventCourseDtoDataRes {
 	 id?: string 
 	 contents?: string 
 	 title?: string 
+	 type?: string 
 	 eventCourseLocation?: string 
 	 price?: BigInteger 
 	 dateStart?: string 

@@ -28,6 +28,7 @@ import { EventCourseCreatedListComponent } from './event-course-created-list/eve
 import { ImageModule } from 'primeng/image';
 import { EventCourseCartComponent } from './event-course-cart/event-course-cart.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TableModule } from "primeng/table";
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { CheckboxModule } from 'primeng/checkbox';
         HttpClientModule,
         ConfirmDialogModule,
         ImageModule,
-        CheckboxModule
+        CheckboxModule,
+        TableModule
     ]
 })
 export class EventCourseModule { }

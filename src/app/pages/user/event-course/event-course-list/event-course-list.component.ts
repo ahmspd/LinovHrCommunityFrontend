@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
-import * as moment from 'moment'
+import * as moment from 'moment';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ThreadService } from 'src/app/service/thread.service';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 
 @Component({
   selector: 'app-event-course-list',
@@ -16,12 +18,18 @@ export class EventCourseListComponent implements OnInit, OnDestroy {
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
+  dataArticle: GetThreadDataDtoRes[] = []
+
 
   getEventsSubscription?: Subscription
   getCoursesSubscription?: Subscription
   joinSubscription?: Subscription
+  getAllArticleSubscription?: Subscription
 
-  constructor(private eventCourseService: EventCourseService, private confirmationService: ConfirmationService, private router: Router) { }
+  idType: string = '2'
+
+  constructor(private eventCourseService: EventCourseService, private confirmationService: ConfirmationService, 
+    private router: Router, private threadService: ThreadService) { }
 
   ngOnInit(): void {
     this.initData()
@@ -31,8 +39,13 @@ export class EventCourseListComponent implements OnInit, OnDestroy {
     this.getEventsSubscription = this.eventCourseService.getActiveEventCourse('Event').subscribe(result => {
       this.events = result.data
     })
+
     this.getCoursesSubscription = this.eventCourseService.getActiveEventCourse('Course').subscribe(result => {
       this.courses = result.data
+    })
+
+    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
+      this.dataArticle = result.data
     })
   }
 
@@ -45,7 +58,7 @@ export class EventCourseListComponent implements OnInit, OnDestroy {
   }
 
   priceFormatter(price: any): String {
-    return `Rp ${price}`
+    return price.toLocaleString('en-ID',{style: 'currency', currency: 'IDR'})
   }
 
   joinVal(isJoin: boolean): boolean {

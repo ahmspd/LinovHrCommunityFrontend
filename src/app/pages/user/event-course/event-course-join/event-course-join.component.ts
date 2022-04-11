@@ -2,11 +2,13 @@ import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { GetByIdEventCourseDtoDataRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-data-res';
 import { PayJoinEventCourseDtoReq } from 'src/app/dto/event-course/pay-join-event-course-dto-req';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { OrderService } from 'src/app/service/order.service';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event-course-join',
@@ -16,13 +18,15 @@ import { PaymentMethodService } from 'src/app/service/payment-method.service';
 export class EventCourseJoinComponent implements OnInit, OnDestroy {
 
   paymentMethods: GetAllPaymentMethodDtoDataRes[] = []
-  idEvent!: string
+  eventCourse: GetByIdEventCourseDtoDataRes = new GetByIdEventCourseDtoDataRes()
   insertPayment: PayJoinEventCourseDtoReq = new PayJoinEventCourseDtoReq()
   activatedRouteSubs?: Subscription
   getByIdOrderSubs?: Subscription
+  getByIEventCourseSubs?: Subscription
   getAllPaymentMethodSubs?: Subscription
   insertPaymentSubs?: Subscription
   joinSubscription?: Subscription
+  idEvent!: string
   file?: File
 
   constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService, private router: Router, 
@@ -39,6 +43,10 @@ export class EventCourseJoinComponent implements OnInit, OnDestroy {
 
     this.getAllPaymentMethodSubs = this.paymentMethodService.findAll().subscribe(result => {
       this.paymentMethods = result.data
+    })
+
+    this.getByIEventCourseSubs = this.eventCourseService.getByIdEventCourse(this.idEvent).subscribe(result => {
+      this.eventCourse = result.data
     })
   }
 
@@ -57,12 +65,24 @@ export class EventCourseJoinComponent implements OnInit, OnDestroy {
 
   }
 
+  dateFormatter(date: moment.MomentInput): String {
+    return moment(date).format('ddd, DD MMM YY')
+  }
+
+  timeFormatter(time: String): String {
+    return time.substring(0, 5)
+  }
+
+  priceFormatter(price: any): String {
+    return price.toLocaleString('en-ID',{style: 'currency', currency: 'IDR'})
+  }
+
   ngOnDestroy(): void {
-      this.activatedRouteSubs.unsubscribe()
-      this.getByIdOrderSubs.unsubscribe()
-      this.getAllPaymentMethodSubs.unsubscribe()
-      this.insertPaymentSubs.unsubscribe()
-      this.joinSubscription.unsubscribe()
+      this.activatedRouteSubs?.unsubscribe()
+      this.getByIdOrderSubs?.unsubscribe()
+      this.getAllPaymentMethodSubs?.unsubscribe()
+      this.insertPaymentSubs?.unsubscribe()
+      this.joinSubscription?.unsubscribe()
   }
 
 }

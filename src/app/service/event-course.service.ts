@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ConfirmPayJoinEventCourseDtoRes } from "../dto/event-course/confirm-pay-join-event-course-dto-res";
 import { GetAllEventCourseDtoRes } from "../dto/event-course/get-all-event-course-dto-res";
+import { GetByIdEventCourseDtoRes } from "../dto/event-course/get-by-id-event-course-dto-res";
 import { GetOrderEventCourseDtoRes } from "../dto/event-course/get-order-event-course-dto-res";
 import { GetProfileJoinEventCourseDtoRes } from "../dto/event-course/get-profile-join-event-course-dto-res";
 import { InsertEventCourseDtoReq } from "../dto/event-course/insert-event-course-dto-req";
@@ -50,6 +51,10 @@ export class EventCourseService {
 
     getOrderEventCourse(id: String): Observable<GetOrderEventCourseDtoRes> {
         return this.http.get<GetOrderEventCourseDtoRes>(`http://localhost:1234/event-course/order-list/${id}`)
+    }
+
+    getByIdEventCourse(id: String): Observable<GetByIdEventCourseDtoRes> {
+        return this.http.get<GetByIdEventCourseDtoRes>(`http://localhost:1234/event-course/id/${id}`)
     }
 
     joinEventCourse(id: String): Observable<JoinEventCourseDtoRes> {

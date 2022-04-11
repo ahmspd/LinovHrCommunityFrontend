@@ -5,6 +5,10 @@ import { GetOrderEventCourseDtoDataRes } from 'src/app/dto/event-course/get-orde
 import { EventCourseService } from 'src/app/service/event-course.service';
 import * as moment from 'moment';
 import { ConfirmationService } from 'primeng/api';
+import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { ThreadService } from 'src/app/service/thread.service';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { GetByIdEventCourseDtoDataRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-data-res';
 
 @Component({
   selector: 'app-event-course-order-list',
@@ -14,13 +18,19 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class EventCourseOrderListComponent implements OnInit, OnDestroy {
 
-  idEvent: String
   orders: GetOrderEventCourseDtoDataRes[] = []
+  dataArticle: GetThreadDataDtoRes[] = []
+  dataEventCourse: GetByIdEventCourseDtoDataRes = new GetByIdEventCourseDtoDataRes()
   activatedRouteSubs: Subscription
+  dataEventCourseSubs: Subscription
   getOrderEventCourseSubs: Subscription
   confirmPaymentEventCourseSubs: Subscription
+  getAllArticleSubscription?: Subscription
+  idEvent: String
+  idType: string = '2'
 
-  constructor(private activatedRoute: ActivatedRoute, private eventcourseService: EventCourseService, private confirmationService: ConfirmationService) { }
+  constructor(private activatedRoute: ActivatedRoute, private eventcourseService: EventCourseService, 
+    private confirmationService: ConfirmationService, private threadService: ThreadService) { }
 
   ngOnInit(): void {
     this.initData()
@@ -31,8 +41,16 @@ export class EventCourseOrderListComponent implements OnInit, OnDestroy {
       this.idEvent = (result as any).id
     })
 
+    this.dataEventCourseSubs = this.eventcourseService.getByIdEventCourse(this.idEvent).subscribe(result => {
+      this.dataEventCourse = result.data
+    })
+
     this.getOrderEventCourseSubs = this.eventcourseService.getOrderEventCourse(this.idEvent).subscribe(result => {
       this.orders = result.data
+    })
+
+    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
+      this.dataArticle = result.data
     })
   }
 

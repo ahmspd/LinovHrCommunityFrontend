@@ -1,16 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
-  selector: 'app-event-course-created-list',
-  templateUrl: './event-course-created-list.component.html',
-  styleUrls: ['./event-course-created-list.component.scss']
+  selector: 'app-profile-event-course',
+  templateUrl: './profile-event-course.component.html',
+  styleUrls: ['./profile-event-course.component.scss']
 })
-export class EventCourseCreatedListComponent implements OnInit, OnDestroy {
+export class ProfileEventCourseComponent implements OnInit, OnDestroy {
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
@@ -19,7 +20,7 @@ export class EventCourseCreatedListComponent implements OnInit, OnDestroy {
   getCoursesSubscription?: Subscription
   joinSubscription?: Subscription
 
-  constructor(private eventCourseService: EventCourseService, private router: Router) { }
+  constructor(private eventCourseService: EventCourseService, public router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.initData()
@@ -50,8 +51,9 @@ export class EventCourseCreatedListComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/event-course/order-list/${idEvent}`)
   }
 
-  pay(): void {
-    
+  toLogout(){
+    this.loginService.clearData()
+    this.router.navigateByUrl("/login")
   }
 
   ngOnDestroy(): void {

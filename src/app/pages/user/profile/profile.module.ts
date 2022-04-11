@@ -29,7 +29,10 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { ProfileThreadLikeComponent } from './profile-thread-like/profile-thread-like.component';
 import { ProfileThreadBookmarkComponent } from './profile-thread-bookmark/profile-thread-bookmark.component';
 import { ProfileForgotPasswordComponent } from './profile-forgot-password/profile-forgot-password.component';
-
+import { ProfileJoinedEventCourseComponent } from "./profile-joined-event-course/profile-joined-event-course.component";
+import { ProfileEventCourseComponent } from './profile-event-course/profile-event-course.component';
+import { TabViewModule } from "primeng/tabview";
+import { DataViewModule } from "primeng/dataview";
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { ProfileForgotPasswordComponent } from './profile-forgot-password/profil
     ProfileThreadComponent,
     ProfileThreadLikeComponent,
     ProfileThreadBookmarkComponent,
-    ProfileForgotPasswordComponent
+    ProfileForgotPasswordComponent,
+    ProfileJoinedEventCourseComponent,
+    ProfileEventCourseComponent
   ],
   imports: [
     ProfileRouter,
@@ -66,7 +71,9 @@ import { ProfileForgotPasswordComponent } from './profile-forgot-password/profil
     CommonModule,
     InputSwitchModule,
     MultiSelectModule,
-    ProgressBarModule
+    ProgressBarModule,
+    TabViewModule,
+    DataViewModule
   ]
 })
 export class ProfileModule { }

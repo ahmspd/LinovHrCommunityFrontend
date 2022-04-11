@@ -9,6 +9,7 @@ import { TableModule } from "primeng/table";
 import { ToolbarModule } from "primeng/toolbar";
 import { UserMemberAdminListComponent } from './user-member-admin-list/user-member-admin-list.component';
 import { UserMemberAdminRouter } from "./user-member-router";
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserMemberAdminRouter } from "./user-member-router";
       FormsModule,
       ConfirmDialogModule,
       InputTextModule,
-      ImageModule
+      ImageModule,
+      RadioButtonModule
     ],
     providers: [],
 })

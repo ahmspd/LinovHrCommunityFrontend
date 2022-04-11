@@ -20,22 +20,17 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
   payments: GetAllEventCoursePaymentDtoDataRes[] = []
   paymentsSubs?: Subscription
   confirmPaymentSubs?: Subscription
-  // industrySubsDeleteMultiple?: Subscription
+  getAllSubscription? : Subscription
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
-
-  //Subscription
-  getAllSubscription? : Subscription
+  isAccept: boolean = false
 
   ngOnInit(): void {
     this.initData()
   }
 
   initData(): void {
-    // this.paymentsSubs = this.eventCoursePaymentService.getAllUnAccepted(true).subscribe(result => {
-    //   this.payments = result.data
-    // })
   }
 
   loadData(event: LazyLoadEvent) {
@@ -46,7 +41,7 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
   getData(startPage: number = 0, maxPage: number = this.maxPage): void {
     this.loading = true;
 
-    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(false,startPage, maxPage).subscribe({
+    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(this.isAccept,startPage, maxPage).subscribe({
       next: result => {
         const resultData: any = result
         this.payments = resultData.data
@@ -58,13 +53,6 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
     })
   }
 
-  // update(id: string): void {
-  //   this.router.navigateByUrl(`/industry/${id}`)
-  // }
-
-  // filter(text: string):void{
-  //   this.industries = this.industries.filter(industry=>industry.industryName.includes(text))
-  // }
   confirm(idPayment: string): void {
     this.confirmPayment.id = idPayment
     this.confirmationService.confirm({
@@ -81,27 +69,11 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
     });
   }
 
-  // doDelete(): void {
-  //   const deleteData: DeleteMultipleIndustryDtoDataReq[] = []
-
-  //   this.deleteIds.forEach(value => {
-  //     const deleteIndustryId: DeleteMultipleIndustryDtoDataReq = new DeleteMultipleIndustryDtoDataReq()
-  //     deleteIndustryId.id = value
-  //     deleteData.push(deleteIndustryId)
-  //   })
-
-  //   this.deleteIndustry.data = deleteData
-  //   this.industrySubsDeleteMultiple = this.industryService.deleteMultiple(this.deleteIndustry).subscribe(result => {
-  //     this.getData()
-  //   })
-  // }
   priceFormatter(price: any): String {
     return price.toLocaleString('en-ID',{style: 'currency', currency: 'IDR'})
   }
 
   ngOnDestroy(): void {
-    // this.industrySubsGetAll?.unsubscribe()
-    // this.industrySubsDeleteMultiple?.unsubscribe()
     this.paymentsSubs?.unsubscribe()
     this.confirmPaymentSubs?.unsubscribe()
   }

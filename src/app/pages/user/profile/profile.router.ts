@@ -3,7 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 import { ProfileChangePasswordComponent } from "./profile-change-password/profile-change-password.component";
 import { ProfileDetailComponent } from "./profile-detail/profile-detail.component";
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
+import { ProfileEventCourseComponent } from "./profile-event-course/profile-event-course.component";
 import { ProfileForgotPasswordComponent } from "./profile-forgot-password/profile-forgot-password.component";
+import { ProfileJoinedEventCourseComponent } from "./profile-joined-event-course/profile-joined-event-course.component";
 import { ProfileThreadBookmarkComponent } from "./profile-thread-bookmark/profile-thread-bookmark.component";
 import { ProfileThreadLikeComponent } from "./profile-thread-like/profile-thread-like.component";
 import { ProfileThreadComponent } from "./profile-thread/profile-thread.component";
@@ -41,6 +43,14 @@ const routes: Routes = [
     {
         path: 'forgot-password',
         component: ProfileForgotPasswordComponent
+    },
+    {
+        path: 'joined-event-course',
+        component: ProfileJoinedEventCourseComponent
+    },
+    {
+        path: 'event-course',
+        component: ProfileEventCourseComponent
     }
 ]
 
