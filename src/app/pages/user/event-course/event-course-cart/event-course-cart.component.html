@@ -1,20 +1,30 @@
 <div class="lg:px-8 md:px-6 px-4 py-5 ng-star-inserted card m-5">
-    <div class="text-900 text-xl mb-5 text-left font-medium">Total Price : {{getTotal()}}</div>
-    <label for="paymentMethod" class="block text-900 text-xl font-medium mb-3">Payment Method</label>
-    <p-dropdown [options]="paymentMethods" [(ngModel)]="insertPayment.idPaymentMethod" optionLabel="paymentName" optionValue="id" id="paymentMethod" name="paymentMethod" optionlabel="name" styleclass="w-100">
-        <div class="ng-tns-c41-2 w-full p-dropdown p-component p-dropdown-clearable">
-            <div role="button" aria-label="dropdown trigger" aria-haspopup="listbox" class="p-dropdown-trigger ng-tns-c41-2">
-                <span class="p-dropdown-trigger-icon ng-tns-c41-2 pi pi-chevron-down"></span>
+    <form #formEventCourseCart="ngForm">
+        <div class="flex justify-content-between">
+            <div class="text-900 text-xl mb-5 text-left font-medium">Total Price : {{getTotal()}}</div>
+            <div>
+                <p-button (onClick)="pay()" label="Pay" [disabled]="formEventCourseCart.form.invalid || !idAndPrices || !file"></p-button>
             </div>
         </div>
-    </p-dropdown>
-    <div class="col-12 lg:col-6 field mb-4">
-        <label for="file" class="block text-900 text-xl font-medium mb-3">File</label>
-        <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
-    </div>
-    <div class="mt-5">
-        <p-button (onClick)="pay()" label="Pay"></p-button>
-    </div>
+
+        <label for="paymentMethod" class="block text-900 text-xl font-medium mb-3">Payment Method</label>
+        <p-dropdown [options]="paymentMethods" [(ngModel)]="insertPayment.idPaymentMethod" optionLabel="paymentName" optionValue="id" id="paymentMethod" name="paymentMethod" optionlabel="name" styleclass="w-100" required="true">
+            <div class="ng-tns-c41-2 w-full p-dropdown p-component p-dropdown-clearable">
+                <div role="button" aria-label="dropdown trigger" aria-haspopup="listbox" class="p-dropdown-trigger ng-tns-c41-2">
+                    <span class="p-dropdown-trigger-icon ng-tns-c41-2 pi pi-chevron-down"></span>
+                </div>
+            </div>
+        </p-dropdown>
+
+        <div class="col-12 lg:col-6 field mb-4">
+            <label for="file" class="block text-900 text-xl font-medium mb-3 mt-3">File</label>
+            <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" (onRemove)="removeFile()" [auto]="true" chooseLabel="Browse">
+                <ng-template pTemplate="content">
+                    <span *ngIf="!file" class="flex justify-content-center">Drag and Drop here</span>
+                </ng-template>
+            </p-fileUpload>
+        </div>
+    </form>
 </div>
 <div class="lg:px-8 md:px-6 px-4 py-5 ng-star-inserted card mx-5">
     <div class="text-900 text-xl mb-5 text-left font-medium">Choose your Event or Course</div>

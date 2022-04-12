@@ -3,53 +3,55 @@
     <div class="col-12 md:col-6 lg:col-3 p-3">
         <!-- title -->
         <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+            <div class="flex justify-content-center align-items-center bg-blue-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
             <div class="font-bold text-lg text-900 ml-1">Settings</div>
         </div>
         <!-- nav item -->
         <div class="surface-card shadow-2 border-round select-none">
             <ul class="list-none p-2 m-0">
                 <li (click)="router.navigate(['/user/setting/thread'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Thread</span>
                     </a>
                 </li>
+                <li (click)="router.navigate(['/user/setting/event-course'])">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Event & Course</span>
+                    </a>
+                </li>
                 <li (click)="router.navigate(['/user/setting/thread-like'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Likes</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/thread-bookmark'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Bookmark</span>
                     </a>
                 </li>
+                <li (click)="router.navigate(['/user/setting/joined-event-course'])">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Joined Event & Course</span>
+                    </a>
+                </li>
                 <li (click)="router.navigate(['/user/setting/edit-profile'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-900">Edit Profile</span>
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Edit Profile</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/change-password'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Password</span>
                     </a>
                 </li>
-                <li (click)="router.navigate(['/user/setting/premium'])">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-700">👑Premium👑</span>
+                <li>
+                    <a pRipple="" class="p-element flex align-items-center p-3 border-round surface-200">
+                        <span class="font-medium text-900">👑Premium👑</span>
                     </a>
                 </li>
                 <p-divider></p-divider>
                 <li (click)="toLogout()">
-                    <a pRipple=""
-                        class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-pink-500">Logout</span>
                     </a>
                 </li>
@@ -60,56 +62,45 @@
     <div class="col-12 md:col-6 lg:col-9 p-3">
         <!-- title -->
         <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
             <div class="font-bold text-lg text-900 ml-1">Edit Profiles</div>
         </div>
         <!-- pricing -->
         <div class="surface-card px-4 py-8 md:px-6 lg:px-8" *ngIf="statPricing">
             <div class="grid">
-               
+
                 <div class="col-12 p-1 mb-3 lg:mb-5">
                     <div class="text-900 font-bold text-6xl mb-4">Pricing</div>
-                    <div class="text-700 text-xl line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Velit numquam eligendi quos.</div>
+                    <div class="text-700 text-xl line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
                 </div>
-                
+
                 <div class="col-12 lg:col-6 md:mb-3">
                     <div class="h-full">
                         <div class="flex flex-column justify-content-center h-full" style="border-radius: 6px;">
-                            <div class="flex flex-row p-3 mb-3"><span
-                                    class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle"
-                                    style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-users"></i></span>
+                            <div class="flex flex-row p-3 mb-3"><span class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle" style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-users"></i></span>
                                 <div class="ml-3">
-                                    <div class="text-900 font-medium text-xl mb-2">Unlimited Users</div><span
-                                        class="text-600 line-height-3">Auctor augue mauris augue neque gravida in
+                                    <div class="text-900 font-medium text-xl mb-2">Unlimited Users</div><span class="text-600 line-height-3">Auctor augue mauris augue neque gravida in
                                         fermentum et sollicitudin. Ornare massa eget egestas purus viverra
                                         accumsan.</span>
                                 </div>
                             </div>
-                            <div class="flex flex-row p-3 mb-3"><span
-                                    class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle"
-                                    style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-comments"></i></span>
+                            <div class="flex flex-row p-3 mb-3"><span class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle" style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-comments"></i></span>
                                 <div class="ml-3">
-                                    <div class="text-900 font-medium text-xl mb-2">Unlimited Inbox</div><span
-                                        class="text-600 line-height-3">Lorem ipsum dolor sit amet consectetur
+                                    <div class="text-900 font-medium text-xl mb-2">Unlimited Inbox</div><span class="text-600 line-height-3">Lorem ipsum dolor sit amet consectetur
                                         adipisicing elit. Quo perspiciatis error possimus ipsam omnis libero
                                         dolorum.</span>
                                 </div>
                             </div>
-                            <div class="flex flex-row p-3"><span
-                                    class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle"
-                                    style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-moon"></i></span>
+                            <div class="flex flex-row p-3"><span class="inline-flex align-items-center justify-content-center text-blue-900 bg-blue-100 border-circle" style="min-width: 2.25rem; height: 2.25rem;"><i class="pi pi-moon"></i></span>
                                 <div class="ml-3">
-                                    <div class="text-900 font-medium text-xl mb-2">Dark Mode</div><span
-                                        class="text-600 line-height-3">Quidem delectus ad est illo ipsam fugiat voluptas
+                                    <div class="text-900 font-medium text-xl mb-2">Dark Mode</div><span class="text-600 line-height-3">Quidem delectus ad est illo ipsam fugiat voluptas
                                         tempora. At a veritatis obcaecati ipsam id eius aut at error modi.</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-12 lg:col-6">
                     <div class="h-full pl-3">
                         <div class="surface-card shadow-2 p-5 mb-4" style="border-radius: 6px;">
@@ -118,15 +109,13 @@
                                     <div class="text-900 font-bold text-2xl mb-2">1 Month</div>
                                     <div class="text-500 text-xl">Id diam vel quam elementum.</div>
                                 </div>
-                                <div
-                                    class="flex align-items-center w-auto lg:w-9rem lg:justify-content-end mt-3 lg:mt-0">
+                                <div class="flex align-items-center w-auto lg:w-9rem lg:justify-content-end mt-3 lg:mt-0">
                                     <span class="font-bold text-4xl text-900">$15</span>
                                 </div>
                             </div>
 
                             <hr class="my-3 mx-0 border-top-1 border-none surface-border">
-                            <button (click)="confirm('1')" pbutton="" pripple="" label="Buy Now"
-                                class="p-element p-ripple w-full mt-2 p-button p-component">
+                            <button (click)="confirm('1')" pbutton="" pripple="" label="Buy Now" class="p-element p-ripple w-full mt-2 p-button p-component">
                                 <span class="p-button-label">Buy Now</span>
                                 <span class="p-ink"></span>
                             </button>
@@ -138,16 +127,13 @@
                                     <div class="text-900 font-bold text-2xl mb-2">3 Month</div>
                                     <div class="text-500 text-xl">Id diam vel quam elementum.</div>
                                 </div>
-                                <div
-                                    class="flex align-items-center w-auto lg:w-9rem lg:justify-content-end mt-3 lg:mt-0">
-                                    <span class="font-bold text-4xl text-900">$9</span><span
-                                        class="text-700 text-xl ml-2 line-height-3">per month</span>
+                                <div class="flex align-items-center w-auto lg:w-9rem lg:justify-content-end mt-3 lg:mt-0">
+                                    <span class="font-bold text-4xl text-900">$9</span><span class="text-700 text-xl ml-2 line-height-3">per month</span>
                                 </div>
                             </div>
 
                             <hr class="my-3 mx-0 border-top-1 border-none surface-border">
-                            <button (click)="confirm('2')" pbutton="" pripple="" label="Buy Now"
-                                class="p-element p-ripple w-full mt-2 p-button p-component">
+                            <button (click)="confirm('2')" pbutton="" pripple="" label="Buy Now" class="p-element p-ripple w-full mt-2 p-button p-component">
                                 <span class="p-button-label">Buy Now</span>
                                 <span class="p-ink"></span>
                             </button>
@@ -160,15 +146,11 @@
         <!-- After Purchase -->
         <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statUpload">
             <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-                <div class="py-6 px-3 md:px-6shadow-2 text-center"
-                    style="background: linear-gradient(180deg, #6372C3 0%, #3F51B5 100%); border-radius: 1rem;">
-                    <div class="text-white font-bold text-2xl mb-3">Please Upload Your Payment</div><span
-                        class="block text-indigo-100 font-medium text-xl">Please complete your purchase then enjoy
+                <div class="py-6 px-3 md:px-6shadow-2 text-center" style="background: linear-gradient(180deg, #6372C3 0%, #3F51B5 100%); border-radius: 1rem;">
+                    <div class="text-white font-bold text-2xl mb-3">Please Upload Your Payment</div><span class="block text-indigo-100 font-medium text-xl">Please complete your purchase then enjoy
                         premium feature with others premium members</span>
                     <div class="mt-5 mb-3 relative sm:w-20rem mx-auto">
-                        <p-fileUpload (onSelect)="changeFile($event.files)" id="file" mode="basic" name="file"  accept="image/*"
-                        maxFileSize="2000000" styleclass="p-button-outlined p-button-plain"
-                            chooseLabel="Upload Image" class="p-element" [auto]="true">
+                        <p-fileUpload (onSelect)="changeFile($event.files)" id="file" mode="basic" name="file" accept="image/*" maxFileSize="2000000" styleclass="p-button-outlined p-button-plain" chooseLabel="Upload Image" class="p-element" [auto]="true">
                         </p-fileUpload>
                     </div>
                     <p-button (click)="onUploadInvoice()" label="Submit"></p-button>
@@ -179,8 +161,7 @@
         <!-- Confirmation -->
         <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statWaiting">
             <div class="align-items-center flex justify-content-center lg:px-8 md:px-6 px-4 py-8 ng-star-inserted">
-                <div class="surface-card border-round shadow-2 p-4 text-center"><img
-                        src="assets/images/illustration/checkmark.png" width="250" alt="Image" class="mx-auto block mb-4">
+                <div class="surface-card border-round shadow-2 p-4 text-center"><img src="assets/images/illustration/checkmark.png" width="250" alt="Image" class="mx-auto block mb-4">
                     <div class="text-900 font-medium mb-3 text-xl">Thankyou For Purchasing</div>
                     <p class="mt-0 mb-4 p-0 line-height-3">Please Wait. Our system will check your payment first.
                     </p>
@@ -191,8 +172,7 @@
         <!-- Premium Status -->
         <div class="surface-card px-4 py-8 md:px-6 lg:px-8 " *ngIf="statPremium">
             <div class="align-items-center flex justify-content-center lg:px-8 md:px-6 px-4 py-8 ng-star-inserted">
-                <div class="surface-card border-round shadow-2 p-4 text-center"><img
-                        src="assets/images/illustration/crown.png" width="250" alt="Image" class="mx-auto block mb-4">
+                <div class="surface-card border-round shadow-2 p-4 text-center"><img src="assets/images/illustration/crown.png" width="250" alt="Image" class="mx-auto block mb-4">
                     <div class="text-900 font-medium mb-3 text-xl">👑Premium Member👑</div>
                     <p class="mt-0 mb-4 p-0 line-height-3">30 Days
                     </p>

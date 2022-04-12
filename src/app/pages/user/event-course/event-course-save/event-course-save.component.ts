@@ -8,6 +8,8 @@ import { EventCourseTypeService } from 'src/app/service/event-course-type.servic
 import * as moment from 'moment'
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { Router } from '@angular/router';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { ThreadService } from 'src/app/service/thread.service';
 
 @Component({
   selector: 'app-event-course-save',
@@ -21,14 +23,20 @@ export class EventCourseSaveComponent implements OnInit, OnDestroy {
   insertEventCourse: InsertEventCourseDtoReq = new InsertEventCourseDtoReq()
   selectCategories: GetAllCategoryDtoDataRes[] = []
   insertCategories: String[] = []
+  dataArticle: GetThreadDataDtoRes[] = []
+
   minDate: Date = new Date()
   file?: File
+  idType: string = '2'
+  isOffline: boolean = false
 
   getAllCategoriesSubscription?: Subscription
   getAllTypesSubscription?: Subscription
   insertEventCourseSubscription?: Subscription
+  getAllArticleSubscription?: Subscription
 
-  constructor(private categoryService: CategoryService, private eventCourseTypeService: EventCourseTypeService, private eventCourseService: EventCourseService, private router: Router) { }
+  constructor(private categoryService: CategoryService, private eventCourseTypeService: EventCourseTypeService, private eventCourseService: EventCourseService, 
+    private router: Router, private threadService: ThreadService) { }
 
   ngOnInit(): void {
     this.getAllCategoriesSubscription = this.categoryService.getAllCategories().subscribe(result => {
@@ -37,6 +45,10 @@ export class EventCourseSaveComponent implements OnInit, OnDestroy {
 
     this.getAllTypesSubscription = this.eventCourseTypeService.getAll().subscribe(result => {
       this.types = result.data
+    })
+
+    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
+      this.dataArticle = result.data
     })
   }
   
@@ -57,14 +69,22 @@ export class EventCourseSaveComponent implements OnInit, OnDestroy {
       this.insertEventCourse.idPriceList = '4'
     }
 
+    if(!this.isOffline) {
+      this.insertEventCourse.eventCourseLocation = 'Online'
+    }
+
     this.insertEventCourseSubscription = this.eventCourseService.insert(this.insertEventCourse, this.file).subscribe(result => {
-      this.router.navigateByUrl('/event-course/list')
+      this.router.navigateByUrl('/event-course/cart')
     })
 
   }
 
   changeFile(event: any): void {
     this.file = event[0]
+  }
+
+  removeFile(): void {
+    this.file = null
   }
 
   ngOnDestroy(): void {

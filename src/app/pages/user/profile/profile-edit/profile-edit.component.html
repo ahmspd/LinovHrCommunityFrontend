@@ -14,6 +14,11 @@
                         <span class="font-medium text-700">Thread</span>
                     </a>
                 </li>
+                <li (click)="router.navigate(['/user/setting/event-course'])">
+                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Event & Course</span>
+                    </a>
+                </li>
                 <li (click)="router.navigate(['/user/setting/thread-like'])">
                     <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Likes</span>
@@ -24,8 +29,13 @@
                         <span class="font-medium text-700">Bookmark</span>
                     </a>
                 </li>
-                <li (click)="router.navigate(['/user/setting/edit-profile'])">
+                <li (click)="router.navigate(['/user/setting/joined-event-course'])">
                     <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+                        <span class="font-medium text-700">Joined Event & Course</span>
+                    </a>
+                </li>
+                <li>
+                    <a pRipple="" class="p-element flex align-items-center p-3 border-round surface-200">
                         <span class="font-medium text-900">Edit Profile</span>
                     </a>
                 </li>

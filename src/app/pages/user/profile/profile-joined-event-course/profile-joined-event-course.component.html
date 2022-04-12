@@ -29,14 +29,14 @@
                         <span class="font-medium text-700">Bookmark</span>
                     </a>
                 </li>
-                <li (click)="router.navigate(['/user/setting/joined-event-course'])">
-                    <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-700">Joined Event & Course</span>
+                <li>
+                    <a pRipple="" class="p-element flex align-items-center p-3 border-round surface-200">
+                        <span class="font-medium text-900">Joined Event & Course</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/edit-profile'])">
                     <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-900">Edit Profile</span>
+                        <span class="font-medium text-700">Edit Profile</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/change-password'])">
@@ -63,7 +63,7 @@
         <!-- title -->
         <div class="flex justify-content-start align-items-center mb-3">
             <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
-            <div class="font-bold text-lg text-900 ml-1">Edit Profiles</div>
+            <div class="font-bold text-lg text-900 ml-1">Joined Event & Course</div>
         </div>
         <!-- form -->
         <p-table #dt [value]="dataEventCourse" responsiveLayout="scroll">

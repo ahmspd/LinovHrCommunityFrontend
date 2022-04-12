@@ -3,29 +3,26 @@
     <!-- Main Content -->
     <div class="col-12 md:col-6 lg:col-9 mb-2">
         <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+            <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
             <div class="font-bold text-2xl text-900 ml-1">Threads</div>
         </div>
         <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-            <div class="text-600 text-sm mb-3"><span>Published </span><span
-                    class="font-bold">{{threadDetailData.date}}</span><span>
+            <div class="text-600 text-sm mb-3"><span>Published </span><span class="font-bold">{{threadDetailData.date}}</span><span>
                     by </span><span class="font-bold">{{threadDetailData.fullName}}</span></div>
             <div class="border-blue-600 font-medium text-2xl p-3 mb-3 text-900" style="border-left: 8px solid;">
                 {{threadDetailData.title}}</div>
             <div class="mb-5">
-                <p-tag class="p-element mr-2" *ngFor="let data of threadDetailData.dataCategoryDetail"><span
-                        class="p-tag p-component">
+                <p-tag class="p-element mr-2" *ngFor="let data of threadDetailData.dataCategoryDetail"><span class="p-tag p-component">
                         <span class="p-tag-value">{{data.categoryName}}</span>
-                    </span></p-tag>
+                    </span>
+                </p-tag>
             </div>
             <div class="line-height-3 text-lg text-700 mb-4" [innerHTML]="threadDetailData.contents">
             </div>
-            <div *ngIf="voteStatus">
+            <div class="card" *ngIf="voteStatus">
                 <h5>{{threadDetailData.pollingName}}</h5>
 
-                <div class="line-height-3 text-lg text-700 mb-4"
-                    *ngFor="let dataPol of threadDetailData.dataThreadPolling">
+                <div class="line-height-3 text-lg text-700 mb-4" *ngFor="let dataPol of threadDetailData.dataThreadPolling">
                     <p-button name="commetBtn" id="commnetBtn" (click)="doVote(dataPol.id)">{{dataPol.pollingName}}
                     </p-button>
                 </div>
@@ -56,9 +53,8 @@
             </div>
         </div>
 
-        <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-purple-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-comment text-lg"></i></div>
+        <div class="flex justify-content-start align-items-center my-3">
+            <div class="flex justify-content-center align-items-center bg-purple-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-comment text-lg"></i></div>
             <div class="font-bold text-lg text-900 ml-1">Comments</div>
         </div>
         <!-- comment form -->
@@ -66,12 +62,10 @@
             <div class="surface-card p-4 mb-3">
                 <form #formSubmit="ngForm">
                     <div class="flex justify-content-between align-items-center text-900">
-                        <ckeditor [editor]="editor" [(ngModel)]="threadCommentData.contents" name="ckComment"
-                            id="ckComment" required="true"></ckeditor>
+                        <ckeditor [editor]="editor" [(ngModel)]="threadCommentData.contents" name="ckComment" id="ckComment" required="true"></ckeditor>
                     </div>
                     <div class="text-500 flex justify-content-end align-items-center mr-3 mt-3">
-                        <p-button [disabled]="formSubmit.form.invalid" name="commetBtn" id="commnetBtn"
-                            (click)="doComment(formSubmit.form.valid)">ADD COMMENTS</p-button>
+                        <p-button [disabled]="formSubmit.form.invalid" name="commetBtn" id="commnetBtn" (click)="doComment(formSubmit.form.valid)">ADD COMMENTS</p-button>
                     </div>
                 </form>
 
@@ -95,8 +89,7 @@
         <!-- event course -->
         <div class="mb-5">
             <div class="flex justify-content-start align-items-center mb-3">
-                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle"
-                    style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
                 <div class="font-bold text-lg text-900 ml-1">Event & Course</div>
             </div>
             <div class="grid grid-nogutter">
@@ -134,8 +127,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
-                            style="border-radius: 30px;">Self Improvement</span>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Self Improvement</span>
                     </div>
                 </div>
 
@@ -173,8 +165,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2"
-                            style="border-radius: 30px;">Self Improvement</span>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Self Improvement</span>
                     </div>
                 </div>
             </div>
@@ -182,15 +173,13 @@
         <!-- articles -->
         <div>
             <div class="flex justify-content-start align-items-center my-5">
-                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle"
-                    style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
                 <div class="font-bold text-lg text-900 ml-1">Article</div>
             </div>
             <div class="grid grid-nogutter">
                 <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
                     <img src="assets/images/blog/blog-1.jpg" alt="Image" class="block w-full mb-3">
-                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world.
-                        Little actions will lead to huge differences.</p>
+                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world. Little actions will lead to huge differences.</p>
                     <div class="flex justify-content-between text-600">
                         <span>Posted by <span class="font-bold">Admin LinovHR</span></span>
                     </div>
@@ -201,8 +190,7 @@
 
                 <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
                     <img src="assets/images/blog/blog-1.jpg" alt="Image" class="block w-full mb-3">
-                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world.
-                        Little actions will lead to huge differences.</p>
+                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">It is time to step up and protect our world. Little actions will lead to huge differences.</p>
                     <div class="flex justify-content-between text-600">
                         <span>Posted by <span class="font-bold">Admin LinovHR</span></span>
                     </div>

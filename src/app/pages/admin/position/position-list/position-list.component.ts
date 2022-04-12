@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, firstValueFrom } from 'rxjs';
 import { DeleteMultiplePositionDtoDataReq } from 'src/app/dto/position/delete-multiple-position-dto-data-req';
 import { DeleteMultiplePositionDtoReq } from 'src/app/dto/position/delete-multiple-position-dto-req';
 import { GetAllPositionPageDtoDataRes } from 'src/app/dto/position/get-all-position-page-dto-data-res';
+import { GetAllPositionPageDtoRes } from 'src/app/dto/position/get-all-position-page-dto-res';
 import { PositionService } from 'src/app/service/position.service';
 
 @Component({
@@ -13,15 +14,14 @@ import { PositionService } from 'src/app/service/position.service';
   styleUrls: ['./position-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class PositionListComponent implements OnInit , OnDestroy{
+export class PositionListComponent implements OnInit {
 
   constructor(private positionService: PositionService, private router: Router, private confirmationService: ConfirmationService) { }
 
   positions: GetAllPositionPageDtoDataRes[] = []
+  positionGetAll: GetAllPositionPageDtoRes
   deleteIds: string[] = []
   deletePosition: DeleteMultiplePositionDtoReq = new DeleteMultiplePositionDtoReq()
-  positionSubsGetAll?: Subscription
-  positionSubsDeleteMultiple?: Subscription
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -34,18 +34,18 @@ export class PositionListComponent implements OnInit , OnDestroy{
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.positionSubsGetAll = this.positionService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.positions = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.positionGetAll = await firstValueFrom(this.positionService.getAll(startPage, maxPage))
+      this.positions = this.positionGetAll.data
+      this.loading = false
+      this.totalRecords = this.positionGetAll.total
+      
+    } catch (error) {
+      this.loading = false
+    }
   }
 
   update(id: string): void {
@@ -65,7 +65,7 @@ export class PositionListComponent implements OnInit , OnDestroy{
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultiplePositionDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -75,13 +75,13 @@ export class PositionListComponent implements OnInit , OnDestroy{
     })
 
     this.deletePosition.data = deleteData
-    this.positionSubsDeleteMultiple = this.positionService.deleteMultiple(this.deletePosition).subscribe(result => {
+
+    try {
+      await firstValueFrom(this.positionService.deleteMultiple(this.deletePosition))
       this.getData()
-    })
+    } catch (error) {
+      
+    }
   }
 
-  ngOnDestroy(): void {
-    this.positionSubsGetAll?.unsubscribe()
-    this.positionSubsDeleteMultiple?.unsubscribe()
-  }
 }

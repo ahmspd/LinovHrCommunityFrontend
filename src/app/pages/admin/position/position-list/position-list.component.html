@@ -8,6 +8,9 @@
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" routerLink="/position/new"></button>
         </ng-template>
     </p-toolbar>
+    <ng-container>
+
+    </ng-container>
     <p-table #dt [value]="positions" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10,25,50]" selectionMode="single" [(selection)]="deleteIds">
         <ng-template pTemplate="caption">
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">

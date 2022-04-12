@@ -29,6 +29,7 @@ import { ImageModule } from 'primeng/image';
 import { EventCourseCartComponent } from './event-course-cart/event-course-cart.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from "primeng/table";
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import { TableModule } from "primeng/table";
         ConfirmDialogModule,
         ImageModule,
         CheckboxModule,
-        TableModule
+        TableModule,
+        RadioButtonModule
     ]
 })
 export class EventCourseModule { }

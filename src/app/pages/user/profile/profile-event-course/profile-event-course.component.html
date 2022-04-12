@@ -1,4 +1,5 @@
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
+    <!-- left nav -->
     <div class="col-12 md:col-6 lg:col-3 p-3">
         <!-- title -->
         <div class="flex justify-content-start align-items-center mb-3">
@@ -11,6 +12,11 @@
                 <li (click)="router.navigate(['/user/setting/thread'])">
                     <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
                         <span class="font-medium text-700">Thread</span>
+                    </a>
+                </li>
+                <li>
+                    <a pRipple="" class="p-element flex align-items-center p-3 border-round surface-200">
+                        <span class="font-medium text-900">Event & Course</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/thread-like'])">
@@ -30,7 +36,7 @@
                 </li>
                 <li (click)="router.navigate(['/user/setting/edit-profile'])">
                     <a pRipple="" class="p-ripple p-element flex align-items-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
-                        <span class="font-medium text-900">Edit Profile</span>
+                        <span class="font-medium text-700">Edit Profile</span>
                     </a>
                 </li>
                 <li (click)="router.navigate(['/user/setting/change-password'])">
@@ -53,6 +59,16 @@
         </div>
     </div>
     <div class="col-12 md:col-6 lg:col-9 p-3">
+        <div class="grid">
+            <div class="flex justify-content-start align-items-center mb-3 col-6">
+                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+                <div class="font-bold text-lg text-900 ml-1">Event & Course</div>
+            </div>
+            <div class="flex justify-content-end align-items-center mb-3 col-6">
+                <p-button class="mr-3" label="Create" icon="pi pi-plus" routerLink="/event-course/save"></p-button>
+                <p-button label="Cart" icon="pi pi-shopping-cart" routerLink="/event-course/cart"></p-button>
+            </div>
+        </div>
         <p-tabView>
             <p-tabPanel header="Event" leftIcon="pi pi-ticket">
                 <p-dataView #dv [value]="events" [paginator]="true" [rows]="9" layout="grid">

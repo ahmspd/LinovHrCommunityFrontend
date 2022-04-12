@@ -77,6 +77,10 @@ export class EventCourseCartComponent implements OnInit, OnDestroy {
     this.file = event[0]
   }
 
+  removeFile(): void {
+    this.file = null
+  }
+
   pay(): void {
     this.insertPayment.idEvenCoursePaymentDetails = []
     this.idAndPrices.forEach(idAndPrice => {
@@ -85,7 +89,7 @@ export class EventCourseCartComponent implements OnInit, OnDestroy {
     })
     this.insertPayment.totalPrice = this.totalPrice
     this.insertPaymentSubs = this.eventCoursePaymentService.pay(this.insertPayment, this.file).subscribe(_=> {
-      this.router.navigateByUrl('/event-course/created')
+      this.router.navigateByUrl('/user/setting/event-course')
     })
   }
 
