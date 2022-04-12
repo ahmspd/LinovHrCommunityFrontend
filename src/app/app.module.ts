@@ -86,7 +86,6 @@ import { TreeModule } from 'primeng/tree';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
-import { BlockViewer } from './components/blockviewer/blockviewer.component';
  
 import { AppCodeModule } from './components/app-code/app.code.component';
 import { AppComponent } from './app.component';
@@ -97,34 +96,7 @@ import { AppMenuComponent } from './app.menu.component';
 import { AppMenuitemComponent } from './app.menuitem.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TreeComponent } from './components/tree/tree.component';
-import { PanelsComponent } from './components/panels/panels.component';
-import { OverlaysComponent } from './components/overlays/overlays.component';
-import { MediaComponent } from './components/media/media.component';
-import { MenusComponent } from './components/menus/menus.component';
-import { MessagesComponent } from './components/messages/messages.component';
-import { MiscComponent } from './components/misc/misc.component';
-import { EmptyComponent } from './components/empty/empty.component';
-import { ChartsComponent } from './components/charts/charts.component';
-import { FileComponent } from './components/file/file.component';
-import { DocumentationComponent } from './components/documentation/documentation.component';
-import { CrudComponent } from './components/crud/crud.component';
-import { TimelineComponent } from './components/timeline/timeline.component';
-import { IconsComponent } from './components/icons/icons.component';
-import { BlocksComponent } from './components/blocks/blocks.component';
-import { PaymentComponent} from './components/menus/payment.component';
-import { ConfirmationComponent } from './components/menus/confirmation.component';
-import { PersonalComponent } from './components/menus/personal.component';
-import { SeatComponent } from './components/menus/seat.component';
-import { LandingComponent } from './components/landing/landing.component';
 
-import { CountryService } from './service/countryservice';
-import { CustomerService } from './service/customerservice';
-import { EventService } from './service/eventservice';
-import { IconService } from './service/iconservice';
-import { NodeService } from './service/nodeservice';
-import { PhotoService } from './service/photoservice';
-import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
 import { LoginComponent } from './components/login/login.component';
@@ -235,28 +207,6 @@ import { VerificationComponent } from './components/verification/verification.co
         AppMenuComponent,
         AppMenuitemComponent,
         DashboardComponent,
-        TreeComponent,
-        PanelsComponent,
-        OverlaysComponent,
-        MenusComponent,
-        MessagesComponent,
-        MessagesComponent,
-        MiscComponent,
-        ChartsComponent,
-        EmptyComponent,
-        FileComponent,
-        IconsComponent,
-        DocumentationComponent,
-        CrudComponent,
-        TimelineComponent,
-        BlocksComponent,
-        BlockViewer,
-        MediaComponent,
-        PaymentComponent,
-        ConfirmationComponent,
-        PersonalComponent,
-        SeatComponent,
-        LandingComponent,
         LoginComponent,
         ErrorComponent,
         NotfoundComponent,
@@ -265,8 +215,7 @@ import { VerificationComponent } from './components/verification/verification.co
         VerificationComponent
     ],
     providers: [
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService, MessageService,
+        MenuService, ConfigService, MessageService,
         {
             provide : HTTP_INTERCEPTORS,
             useClass : HttpHandlerCommunity,
