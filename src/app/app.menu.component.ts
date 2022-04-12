@@ -52,6 +52,13 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Report',
+                items: [
+                    {label: 'Event Course User', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/report/join']},
+                    {label: 'Event Course Payment', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/report/payment']},
+                ]
+            },
+            {
                 label: 'UI Components',
                 items: [
                     {label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']},

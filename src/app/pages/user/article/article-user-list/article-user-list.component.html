@@ -2,10 +2,14 @@
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
     <!-- Main Content -->
     <div class="col-12 md:col-6 lg:col-9">
-        <div class="flex justify-content-start align-items-center mb-3">
-            <div class="flex justify-content-center align-items-center bg-green-500 border-circle"
-                style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
-            <div class="font-bold text-2xl text-900 ml-1">Article</div>
+        <div class="grid">
+            <div class="flex justify-content-start align-items-center mb-3 col-6">
+                <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
+                <div class="font-bold text-lg text-900 ml-1">Threads</div>
+            </div>
+            <div class="flex justify-content-end align-items-center mb-3 col-6">
+                <p-button class="mr-3" label="Create" icon="pi pi-plus" routerLink="/user/article/new"></p-button>
+            </div>
         </div>
         <p-table #dt [value]="dataArticle" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
             [paginator]="true" [rows]="maxPage" [totalRecords]="totalRecords" [loading]="loading"

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { GetAllEventCoursePaymentDtoRes } from "../dto/event-course-payment/get-all-event-course-payment-dto-res";
+import { GetReportEventCoursePaymentDtoRes } from "../dto/event-course-payment/get-report-event-course-payment-dto-res";
 import { InsertEventCoursePaymentDtoReq } from "../dto/event-course-payment/insert-event-course-payment-dto-req";
 import { InsertEventCoursePaymentDtoRes } from "../dto/event-course-payment/insert-event-course-payment-dto-res";
 import { UpdateEventCoursePaymentDtoReq } from "../dto/event-course-payment/update-event-course-payment-dto-req";
@@ -30,5 +31,9 @@ export class EventCoursePaymentService {
     
     getAllUnAccepted(isAccept : boolean, startPage: number, maxPage: number): Observable<GetAllEventCoursePaymentDtoRes> {
         return this.http.get<GetAllEventCoursePaymentDtoRes>(`http://localhost:1234/event-course-payment?isAccept=${isAccept}&start=${startPage}&max=${maxPage}`)
+    }
+
+    getReportPaymentByAdmin(startPage: number, maxPage: number): Observable<GetReportEventCoursePaymentDtoRes> {
+        return this.http.get<GetReportEventCoursePaymentDtoRes>(`http://localhost:1234/event-course-payment/page/report/admin/payment?start=${startPage}&max=${maxPage}`)
     }
 }

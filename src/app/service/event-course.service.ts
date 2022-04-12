@@ -6,6 +6,7 @@ import { GetAllEventCourseDtoRes } from "../dto/event-course/get-all-event-cours
 import { GetByIdEventCourseDtoRes } from "../dto/event-course/get-by-id-event-course-dto-res";
 import { GetOrderEventCourseDtoRes } from "../dto/event-course/get-order-event-course-dto-res";
 import { GetProfileJoinEventCourseDtoRes } from "../dto/event-course/get-profile-join-event-course-dto-res";
+import { GetReportEventCourseByIdRes } from "../dto/event-course/get-report-event-course-by-id-res";
 import { InsertEventCourseDtoReq } from "../dto/event-course/insert-event-course-dto-req";
 import { InsertEventCourseDtoRes } from "../dto/event-course/insert-event-course-dto-res";
 import { JoinEventCourseDtoRes } from "../dto/event-course/join-event-course-dto-res";
@@ -74,4 +75,13 @@ export class EventCourseService {
         return this.http.put<ConfirmPayJoinEventCourseDtoRes>(`http://localhost:1234/event-course/confirm/${id}`, id)
     }
 
+    // @GetMapping("page/report/admin")
+	// public ResponseEntity<GetReportEventCourseByIdRes> getReportUserJoinByAdmin(@RequestParam int start, @RequestParam int max) throws Exception {
+	// 	GetReportEventCourseByIdRes res = eventCourseService.getReportUserJoinByAdmin(start, max);
+	// 	return new ResponseEntity<GetReportEventCourseByIdRes>(res, HttpStatus.OK);
+	// }
+
+    getReportPageUserJoinByAdmin(startPage: number, maxPage: number): Observable<GetReportEventCourseByIdRes> {
+        return this.http.get<GetReportEventCourseByIdRes>(`http://localhost:1234/event-course/page/report/admin?start=${startPage}&max=${maxPage}`)
+    }
 }
