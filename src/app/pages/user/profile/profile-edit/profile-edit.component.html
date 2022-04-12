@@ -72,8 +72,8 @@
                     <div class="field mb-4 col-12">
                         <label for="avatar" class="font-medium">Avatar</label>
                         <div class="flex align-items-center">
-                            <img *ngIf="userData.idFile == null" src="../../../../../assets/images/avatars/avatar.png" class="mr-4" style="width: 75px;">
-                            <img *ngIf="userData.idFile !== null" src='http://localhost:1234/files/download/{{userData.idFile}}' class="mr-4" style="width: 75px;">
+                            <img *ngIf="!userData.idFile" src="../../../../../assets/images/avatars/avatar.png" class="mr-4" style="width: 75px;">
+                            <img *ngIf="userData.idFile" src='http://localhost:1234/files/download/{{userData.idFile}}' class="mr-4" style="width: 75px;">
                             <p-fileUpload #fubauto mode="basic" name="avatar" id="avatar" url="./upload.php" accept="image/*" maxFileSize="1000000" [auto]="false" chooseLabel="Browse" (onSelect)="changeFile($event.files)"></p-fileUpload>
                         </div>
                     </div>

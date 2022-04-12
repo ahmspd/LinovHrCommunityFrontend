@@ -1,12 +1,12 @@
-<div class="surface-ground px-4 py-8 md:px-6 lg:px-8 grid">
-    <div class="col-12 md:col-6 lg:col-9">
+<div class="surface-ground px-4 py-6 md:px-6 lg:px-8 grid">
+    <div class="col-12">
         <div class="flex justify-content-start align-items-center mb-4">
             <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-plus text-xl"></i></div>
             <div class="font-bold text-2xl text-900 ml-1">Create Event & Course</div>
         </div>
         <div class="surface-card shadow-2 border-round p-5 flex-auto mb-3">
             <form #formCreateEventCourse="ngForm">
-                <p-selectButton styleClass="mb-3" id="evtType" name="evtType" [options]="types" optionLabel="eventTypeName" optionValue="id" [(ngModel)]="insertEventCourse.idEventCourseType" required="true"></p-selectButton>
+                <p-selectButton styleClass="mb-3 col-6" id="evtType" name="evtType" [options]="types" optionLabel="eventTypeName" optionValue="id" [(ngModel)]="insertEventCourse.idEventCourseType" required="true"></p-selectButton>
 
                 <label for="title" class="block text-900 text-xl font-medium mb-2">Title<span style="color: red;">*</span></label>
                 <input id="title" name="title" type="text" pInputText class="w-full mb-3" style="padding:1rem;" [(ngModel)]="insertEventCourse.title" required="true">
@@ -29,7 +29,7 @@
                         <p-radioButton styleClass="ml-3" name="offline" [value]=true [(ngModel)]="isOffline" inputId="offline"></p-radioButton>
                         <label class="ml-2" for="offline">Offline</label>
 
-                        <textarea *ngIf="isOffline" class="mb-3 mt-3" id="location" name="location" rows="5" cols="43" pInputTextarea autoResize="autoResize" [(ngModel)]="insertEventCourse.eventCourseLocation" required="true"></textarea>
+                        <textarea *ngIf="isOffline" class="mb-3 mt-3" id="location" name="location" rows="5" cols="43" pInputTextarea autoResize="autoResize" [(ngModel)]="insertEventCourse.eventCourseLocation" required="true" required="true"></textarea>
                     </div>
                 </div>
 
@@ -87,27 +87,6 @@
                     </p-button>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-3 p-3">
-        <!-- articles -->
-        <div>
-            <div class="flex justify-content-start align-items-center mb-3">
-                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
-                <div class="font-bold text-lg text-900 ml-1">Article</div>
-            </div>
-            <div class="grid grid-nogutter" *ngFor="let data of dataArticle">
-                <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
-                    <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image" class="block w-full mb-3" width="200" [preview]="true"></p-image>
-                    <p class="line-height-3 mt-3 mb-5 text-900 font-medium">{{data.title}}</p>
-                    <div class="flex justify-content-between text-600">
-                        <span>Posted by <span class="font-bold">{{data.fullName}}</span></span>
-                    </div>
-                    <div class="flex justify-content-between text-600">
-                        <span>{{data.date}}</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

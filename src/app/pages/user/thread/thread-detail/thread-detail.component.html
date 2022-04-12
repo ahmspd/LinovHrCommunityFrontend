@@ -21,20 +21,28 @@
             </div>
             <div class="card" *ngIf="voteStatus">
                 <h5>{{threadDetailData.pollingName}}</h5>
-
+                <div class="border-bottom-2 surface-border mb-4"></div>
                 <div class="line-height-3 text-lg text-700 mb-4" *ngFor="let dataPol of threadDetailData.dataThreadPolling">
-                    <p-button name="commetBtn" id="commnetBtn" (click)="doVote(dataPol.id)">{{dataPol.pollingName}}
-                    </p-button>
+                    <div class="grid">
+                        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded col-2 ml-3">
+                        </button>
+                        <!-- <button pButton pRipple type="button" label="{{dataPol.pollingName}}" class="p-button-outlined p-button-rounded"></button> -->
+                        <span class="flex justify-content-start align-items-center col-10">{{dataPol.pollingName}}</span>
+                    </div>
+                    <!-- <p-button name="commetBtn" id="commnetBtn" (click)="doVote(dataPol.id)">{{dataPol.pollingName}}
+                    </p-button> -->
                 </div>
             </div>
 
             <div class="card" *ngIf="!voteStatus">
                 <h5>{{threadDetailData.pollingName}}</h5>
+                <div class="border-bottom-2 surface-border mb-4"></div>
+
                 <div class="grid" *ngFor="let dataVote of voteData.data">
                     <div class="col">
-
                         <span>{{dataVote.name}}</span>
-                        <p-progressBar [value]="dataVote.total/voteData.total*100" [showValue]="true">{{data.name}}
+                        <p-progressBar [value]="dataVote.total/voteData.total*100" [showValue]="true">
+                            {{data.name}}
                         </p-progressBar>
                     </div>
                 </div>
@@ -62,10 +70,10 @@
             <div class="surface-card p-4 mb-3">
                 <form #formSubmit="ngForm">
                     <div class="flex justify-content-between align-items-center text-900">
-                        <ckeditor [editor]="editor" [(ngModel)]="threadCommentData.contents" name="ckComment" id="ckComment" required="true"></ckeditor>
+                        <ckeditor class="w-full" [editor]="editor" [(ngModel)]="threadCommentData.contents" name="ckComment" id="ckComment" required="true"></ckeditor>
                     </div>
                     <div class="text-500 flex justify-content-end align-items-center mr-3 mt-3">
-                        <p-button [disabled]="formSubmit.form.invalid" name="commetBtn" id="commnetBtn" (click)="doComment(formSubmit.form.valid)">ADD COMMENTS</p-button>
+                        <p-button [disabled]="formSubmit.form.invalid" name="commetBtn" id="commnetBtn" (click)="doComment(formSubmit.form.valid)">Add Comments</p-button>
                     </div>
                 </form>
 

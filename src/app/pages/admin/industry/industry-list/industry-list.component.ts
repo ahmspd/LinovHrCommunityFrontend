@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { DeleteMultipleIndustryDtoDataReq } from 'src/app/dto/industry/delete-multiple-industry-dto-data-req';
 import { DeleteMultipleIndustryDtoReq } from 'src/app/dto/industry/delete-multiple-industry-dto-req';
 import { GetAllIndustryPageDtoDataRes } from 'src/app/dto/industry/get-all-industry-page-dto-data-res';
+import { GetAllIndustryPageDtoRes } from 'src/app/dto/industry/get-all-industry-page-dto-res';
 import { IndustryService } from 'src/app/service/industry.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class IndustryListComponent implements OnInit , OnDestroy{
   constructor(private industryService: IndustryService, private router: Router, private confirmationService: ConfirmationService) { }
 
   industries: GetAllIndustryPageDtoDataRes[] = []
+  industryGetAll: GetAllIndustryPageDtoRes
   deleteIds: string[] = []
   deleteIndustry: DeleteMultipleIndustryDtoReq = new DeleteMultipleIndustryDtoReq()
   industrySubsGetAll?: Subscription
@@ -38,18 +40,17 @@ export class IndustryListComponent implements OnInit , OnDestroy{
     }
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void>  {
     this.loading = true;
 
-    this.industryService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.industries = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.industryGetAll = await firstValueFrom(this.industryService.getAll(startPage, maxPage))
+      this.industries = this.industryGetAll.data
+      this.loading = false
+      this.totalRecords = this.industryGetAll.total
+    } catch (error) {
+      this.loading = false
+    }
   }
 
   update(id: string): void {

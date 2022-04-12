@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.fullname = this.loginService.getData().data.fullName
       if(this.loginService.getData().data.idFile != null){
         
-        this.avatar = `http://localhost:1234/files/${this.loginService.getData().data.idFile}`
+        this.avatar = `http://localhost:1234/files/download/${this.loginService.getData().data.idFile}`
 
       }
 

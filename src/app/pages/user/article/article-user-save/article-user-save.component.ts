@@ -54,6 +54,10 @@ export class ArticleUserSaveComponent implements OnInit, OnDestroy {
     this.file = event[0]
   }
 
+  removeFile(): void {
+    this.file = null
+  }
+
   ngOnDestroy(): void {
     this.getAllCategoriesSubscription?.unsubscribe()
     this.insertArticleSubscription?.unsubscribe()

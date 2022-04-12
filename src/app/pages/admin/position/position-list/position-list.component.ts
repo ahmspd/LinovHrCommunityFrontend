@@ -39,6 +39,7 @@ export class PositionListComponent implements OnInit {
 
     try {
       this.positionGetAll = await firstValueFrom(this.positionService.getAll(startPage, maxPage))
+      console.log(this.positionGetAll)
       this.positions = this.positionGetAll.data
       this.loading = false
       this.totalRecords = this.positionGetAll.total
