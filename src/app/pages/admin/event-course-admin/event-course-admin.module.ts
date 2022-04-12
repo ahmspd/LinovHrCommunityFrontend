@@ -10,10 +10,14 @@ import { EventCourseAdminRouter } from "./event-course-admin.router";
 import { EventCourseConfirmationComponent } from './event-course-confirmation/event-course-confirmation.component';
 import { ImageModule } from 'primeng/image';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { EventCourseReportJoinComponent } from './event-course-report-join/event-course-report-join.component';
+import { EventCourseReportPaymentComponent } from './event-course-report-payment/event-course-report-payment.component';
 
 @NgModule({
   declarations: [
-    EventCourseConfirmationComponent
+    EventCourseConfirmationComponent,
+    EventCourseReportJoinComponent,
+    EventCourseReportPaymentComponent
   ],
   imports: [
     EventCourseAdminRouter,
