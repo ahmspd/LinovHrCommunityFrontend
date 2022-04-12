@@ -97,13 +97,6 @@ import { AppMenuComponent } from './app.menu.component';
 import { AppMenuitemComponent } from './app.menuitem.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { FormLayoutComponent } from './components/formlayout/formlayout.component';
-import { FloatLabelComponent } from './components/floatlabel/floatlabel.component';
-import { InvalidStateComponent } from './components/invalidstate/invalidstate.component';
-import { InputComponent } from './components/input/input.component';
-import { ButtonComponent } from './components/button/button.component';
-import { TableComponent } from './components/table/table.component';
-import { ListComponent } from './components/list/list.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { PanelsComponent } from './components/panels/panels.component';
 import { OverlaysComponent } from './components/overlays/overlays.component';
@@ -242,13 +235,6 @@ import { VerificationComponent } from './components/verification/verification.co
         AppMenuComponent,
         AppMenuitemComponent,
         DashboardComponent,
-        FormLayoutComponent,
-        FloatLabelComponent,
-        InvalidStateComponent,
-        InputComponent,
-        ButtonComponent,
-        TableComponent,
-        ListComponent,
         TreeComponent,
         PanelsComponent,
         OverlaysComponent,
