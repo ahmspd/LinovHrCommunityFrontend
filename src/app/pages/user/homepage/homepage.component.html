@@ -1,35 +1,32 @@
 <!-- articles -->
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
     <div class="font-bold text-5xl text-900 mb-3">Articles</div>
-    
     <div class="flex flex-column xl:flex-row">
-        <div class="flex shadow-2 surface-card border-round mr-0 xl:mr-4 mb-6 xl:mb-0 flex-column col-6 md:flex-row" *ngFor="let data of articleData; let i = index">
-            <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image" class="border-round-left justify-content-center " width="234" [preview]="true" *ngIf="i<2"></p-image>
-
+        <div (click)="articleDetail(data.id)" class="cursor-pointer flex shadow-2 surface-card border-round mr-0 xl:mr-3 mb-6 xl:mb-0 flex-column col-6 md:flex-row" *ngFor="let data of articleData; let i = index">
+            <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image" class="flex justify-content-center align-items-center" width="200" *ngIf="i<2"></p-image>
             <div class="p-4" *ngIf="i<2">
-                <a (click)="articleDetail(data.id)">
+                <div>
                     <div class="flex justify-content-between mb-3">
                         <div *ngFor="let dataCategory of data.dataCategoryDetail">
                             <span class="text-orange-500 font-medum">{{dataCategory.categoryName}}</span>
                         </div>
-                            
-                            <span class="text-500 font-medium">{{data.date}}</span></div>
+
+                        <span class="text-500 font-medium">{{data.date}}</span></div>
                     <div class="font-medium text-900 mb-3 line-height-3">{{data.title}}</div>
-                </a>
+                </div>
                 <div class="flex align-items-center">
                     <span class="font-bold text-sm block ml-2 text-blue-600">{{data.fullName}}</span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="flex justify-content-end align-items-center">
+    <div class="flex justify-content-end align-items-center mt-2">
         <p-button label="More Articles" icon="pi pi-chevron-right" styleClass="p-button-link" (click)="router.navigate(['/user/article/list'])"></p-button>
     </div>
 </div>
 
 <!-- Banner -->
-<div style="width: 100%"
-    class=" bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap" *ngIf="!isPremium">
+<div style="width: 100%" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap" *ngIf="!isPremium">
     <div class="font-bold mr-8">🔥 Hot Deals!</div>
     <div class="align-items-center hidden lg:flex">
         <span class="line-height-3">Get Premium For Your Account</span>
@@ -37,9 +34,7 @@
     <a class="flex align-items-center ml-2 mr-8">
         <a class="text-white" (click)="router.navigate(['/user/setting/premium'])"><span class="underline font-bold">Learn More</span></a>
     </a>
-    <a pRipple
-        class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150"
-        style="width:2rem; height: 2rem">
+    <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem">
         <i class="pi pi-times"></i>
     </a>
 </div>
@@ -62,44 +57,11 @@
                 <div class="flex mt-4">
                     <div class="ml-2">
                         <div class="text-xs font-bold text-900 mb-1">{{data.fullName}}</div>
-                        <div class="text-xs flex align-items-center text-700"><i
-                                class="pi pi-calendar mr-1 text-xs"></i><span>{{data.date}}</span></div>
+                        <div class="text-xs flex align-items-center text-700"><i class="pi pi-calendar mr-1 text-xs"></i><span>{{data.date}}</span></div>
                     </div>
                 </div>
             </a>
         </div>
-        <!-- <div class="col-12 lg:col-4 p-4">
-            <div class="border-top-3 border-pink-600"></div>
-            <div class="text-pink-600 font-medium my-2">Oxygen</div>
-            <div class="text-900 font-medium text-xl line-height-3 mb-4">Only one-third of tropical rainforests remain
-                intact, study says </div>
-            <div class="font-sm text-700 line-height-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
-            <div class="flex mt-4">
-
-                <div class="ml-2">
-                    <div class="text-xs font-bold text-900 mb-1">Arlene Miles</div>
-                    <div class="text-xs flex align-items-center text-700"><i
-                            class="pi pi-calendar mr-1 text-xs"></i><span>Apr 9, 2021</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 lg:col-4 p-4">
-            <div class="border-top-3 border-orange-600"></div>
-            <div class="text-orange-600 font-medium my-2">Nature</div>
-            <div class="text-900 font-medium text-xl line-height-3 mb-4">Does planting a tree really offset your carbon
-                footprint?</div>
-            <div class="font-sm text-700 line-height-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
-            <div class="flex mt-4">
-
-                <div class="ml-2">
-                    <div class="text-xs font-bold text-900 mb-1">Diane Miles</div>
-                    <div class="text-xs flex align-items-center text-700"><i
-                            class="pi pi-calendar mr-1 text-xs"></i><span>Apr 9, 2021</span></div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <div class="flex justify-content-end align-items-center">
         <p-button (click)="toThread()" label="More Threads" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
@@ -108,47 +70,46 @@
 
 <!-- Event Course -->
 <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
-    <div class="font-bold text-5xl text-900 mb-3">Event Course</div>
+    <div class="font-bold text-5xl text-900 mb-3">Events</div>
     <div class="grid">
-        <div class="col-12 lg:col-6 pr-0 lg:pr-4 mb-6 lg:mb-0">
-            <div class="mb-6 p-3 flex flex-column justify-content-between"
-                style="min-height: 350px; background: url('assets/images/blog/blog-12.jpg') no-repeat; background-size: cover;">
-                <div class="flex align-items-center mb-3"><span
-                        class="bg-teal-100 text-teal-600 text-sm block py-1 px-2 border-round mr-3 font-medium">Science</span><span
-                        class="bg-orange-100 text-orange-600 text-sm block py-1 px-2 border-round font-medium">Travel</span>
+        <div class="col-12 lg:col-6" *ngFor="let event of events; let i = index">
+            <div class="flex flex-column justify-content-between" style="min-height: 350px; background: url('http://localhost:1234/files/download/{{event.idFile}}') no-repeat center; background-size: contain;" *ngIf="i<2">
+                <div class="flex align-items-center p-2">
+                    <div *ngFor="let dataCategory of event.dataCategoryDetail">
+                        <span class="bg-teal-100 text-teal-600 text-sm block py-1 px-2 border-round mr-2 font-medium">{{dataCategory.categoryName}}</span>
+                    </div>
                 </div>
-                <div>
+                <div class="p-2" style="background: rgba(63, 63, 63, 0.796)">
                     <a>
-                        <div class="text-white font-medium text-xl mb-3">Lorem ipsum dolor amet</div>
-                        <p class="text-gray-200 line-height-3 mt-0 mb-3">Bibendum ut tristique et egestas. Massa
-                            tincidunt
-                            nunc pulvinar sapien et ligula ullamcorper malesuada proin.</p><span
-                            class="text-gray-300 font-medium">4 days ago</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 pl-2 lg:pl-4">
-            <div class="p-3 flex flex-column justify-content-between"
-                style="min-height: 350px; background: url('assets/images/blog/blog-13.jpg') no-repeat; background-size: cover;">
-                <div class="flex align-items-center mb-3">
-                    <span class="bg-teal-100 text-teal-600 text-sm block py-1 px-2 border-round mr-3 font-medium">Science</span>
-                        <span class="bg-orange-100 text-orange-600 text-sm block py-1 px-2 border-round font-medium">Travel</span>
-                </div>
-                <div>
-                    <a>
-                        <div class="text-white font-medium text-xl mb-3">Sed ullamcorper morbi tincidunt</div>
-                        <p class="text-gray-200 line-height-3 mt-0 mb-3">Adipiscing diam donec adipiscing tristique
-                            risus
-                            nec feugiat in fermentum. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus.
-                        </p>
-                        <span class="text-gray-300 font-medium">4 days ago</span>
+                        <div class="text-white-alpha-90 font-medium text-xl mb-3">{{event.title}}</div>
+                        <p class="text-white-alpha-60 line-height-3 mt-0 mb-3">{{event.contents}}</p><span class="text-gray-300 font-medium">{{event.createdAt}}</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
     <div class="flex justify-content-end align-items-center">
-        <p-button label="More Event" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
+        <p-button routerLink="/event-course/list" label="More Event" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
+    </div>
+    <div class="font-bold text-5xl text-900 mb-3">Courses</div>
+    <div class="grid">
+        <div class="col-12 lg:col-6" *ngFor="let course of courses; let i = index">
+            <div class="flex flex-column justify-content-between" style="min-height: 350px; background: url('http://localhost:1234/files/download/{{course.idFile}}') no-repeat center; background-size: contain;" *ngIf="i<2">
+                <div class="flex align-items-center p-2">
+                    <div *ngFor="let dataCategory of course.dataCategoryDetail">
+                        <span class="bg-teal-100 text-teal-600 text-sm block py-1 px-2 border-round mr-2 font-medium">{{dataCategory.categoryName}}</span>
+                    </div>
+                </div>
+                <div class="p-2" style="background: rgba(63, 63, 63, 0.796)">
+                    <a>
+                        <div class="text-white-alpha-90 font-medium text-xl mb-3">{{course.title}}</div>
+                        <p class="text-white-alpha-60 line-height-3 mt-0 mb-3">{{course.contents}}</p><span class="text-gray-300 font-medium">{{course.createdAt}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-content-end align-items-center">
+        <p-button routerLink="/event-course/list" label="More Course" icon="pi pi-chevron-right" styleClass="p-button-link"></p-button>
     </div>
 </div>

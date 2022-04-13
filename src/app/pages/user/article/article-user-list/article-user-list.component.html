@@ -5,7 +5,7 @@
         <div class="grid">
             <div class="flex justify-content-start align-items-center mb-3 col-6">
                 <div class="flex justify-content-center align-items-center bg-green-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-book text-xl"></i></div>
-                <div class="font-bold text-lg text-900 ml-1">Threads</div>
+                <div class="font-bold text-lg text-900 ml-1">Articles</div>
             </div>
             <div class="flex justify-content-end align-items-center mb-3 col-6">
                 <p-button class="mr-3" label="Create" icon="pi pi-plus" routerLink="/user/article/new"></p-button>
@@ -32,10 +32,12 @@
                                 </div>
                             </div>
                             <div class="mb-5">
-                                <p-tag class="p-element mr-2" *ngFor="let dataCategory of data.dataCategoryDetail"><span class="p-tag p-component">
-                                        <span class="p-tag-value">{{dataCategory.categoryName}}</span>
-                                    </span>
-                                </p-tag>
+                                <div class="flex align-items-start mb-2">
+                                    <div *ngFor="let dataCategory of data.dataCategoryDetail">
+                                        <p-tag class="p-element mr-2" [rounded]="true" severity="success" value="{{dataCategory.categoryName}}">
+                                        </p-tag>
+                                    </div>
+                                </div>
                             </div>
                             <div class="line-height-3 text-lg text-700 mb-4" [innerHTML]="data.contents.substring(0,100)"></div>
                             <div class="text-500 flex justify-content-end align-items-center">
@@ -51,88 +53,107 @@
     <div class="col-12 md:col-6 lg:col-3 p-3">
         <!-- event course -->
         <div class="mb-5">
-            <div class="flex justify-content-start align-items-center mb-3">
-                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-calendar text-lg"></i></div>
+            <div class="flex justify-content-start align-items-center mb-4">
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle" style="width: 2.2rem; height: 2.2rem;"><i class="text-50 pi pi-fw pi-ticket text-lg"></i></div>
                 <div class="font-bold text-lg text-900 ml-1">Event & Course</div>
             </div>
             <div class="grid grid-nogutter">
-                <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
-                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
-                    <div class="flex justify-content-between align-items-center text-900">
-                        <span class="inline-flex align-items-center">
-                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
-                            </p-avatar>
-                            <span>LanaDelRey</span>
-                        </span>
-                        <span>Training / Event</span>
-                    </div>
-                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
-                    <div class="mb-5">
-                        <div class="mb-3 flex justify-content-between align-items-center text-900">
-                            <span>
-                                <i class="pi pi-globe mr-2 text-blue-600"></i>
-                                <span>Online</span>
-                            </span>
-                            <span>
-                                <i class="pi pi-clock mr-2 text-blue-600"></i>
-                                <span>19.30 - 22.00</span>
-                            </span>
+                <div *ngFor="let event of events; let i = index">
+                    <div *ngIf="i<2">
+                        <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
+                            <img src='http://localhost:1234/files/download/{{event.idFile}}' alt="Image" class="block w-full mb-3">
+                            <div class="flex justify-content-between align-items-center text-900">
+                                <span class="inline-flex align-items-center">
+                                    <!-- <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                                    </p-avatar> -->
+                                    <span>{{event.fullName}}</span>
+                                </span>
+                                <span>{{event.type}}</span>
+                            </div>
+                            <p class="line-height-3 mt-3 mb-3 text-900 font-bold">{{event.title}}</p>
+                            <div class="mb-5">
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                        <span>{{event.eventCourseLocation}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                        <span>{{timeFormatter(event.timeStart)}} - {{timeFormatter(event.timeEnd)}}</span>
+                                    </span>
+                                </div>
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                        <span>{{dateFormatter(event.dateStart)}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                        <span>{{priceFormatter(event.price)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex align-items-start mb-2">
+                                <div *ngFor="let category of event.dataCategoryDetail">
+                                    <span class="bg-blue-100 text-blue-600 font-medium py-2 px-3 mr-2" style="border-radius: 30px;">{{category.categoryName}}</span>
+                                </div>
+                            </div>
+                            <button *ngIf="event.isJoin == null" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton label="Join"></button>
+                            <button *ngIf="event.isJoin" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                            <button *ngIf="event.isJoin == false" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
                         </div>
-                        <div class="mb-3 flex justify-content-between align-items-center text-900">
-                            <span>
-                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
-                                <span>Mar 30</span>
-                            </span>
-                            <span>
-                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
-                                <span>Rp. 50.000</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Self Improvement</span>
                     </div>
                 </div>
 
-                <div class="p-3 shadow-2 border-round surface-card h-full">
-                    <img src="assets/images/blog/blog-6.png" alt="Image" class="block w-full mb-3">
-                    <div class="flex justify-content-between align-items-center text-900">
-                        <span class="inline-flex align-items-center">
-                            <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
-                            </p-avatar>
-                            <span>LanaDelRey</span>
-                        </span>
-                        <span>Training / Event</span>
-                    </div>
-                    <p class="line-height-3 mt-3 mb-3 text-900 font-bold">Title of Event or Course</p>
-                    <div class="mb-5">
-                        <div class="mb-3 flex justify-content-between align-items-center text-900">
-                            <span>
-                                <i class="pi pi-globe mr-2 text-blue-600"></i>
-                                <span>Online</span>
-                            </span>
-                            <span>
-                                <i class="pi pi-clock mr-2 text-blue-600"></i>
-                                <span>19.30 - 22.00</span>
-                            </span>
+                <div *ngFor="let course of courses; let i = index">
+                    <div *ngIf="i<2">
+                        <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
+                            <img src='http://localhost:1234/files/download/{{course.idFile}}' alt="Image" class="block w-full mb-3">
+                            <div class="flex justify-content-between align-items-center text-900">
+                                <span class="inline-flex align-items-center">
+                                    <!-- <p-avatar image="assets/images/avatars/avatar-f-1.png" styleClass="mr-1" shape="circle">
+                                    </p-avatar> -->
+                                    <span>{{course.fullName}}</span>
+                                </span>
+                                <span>{{course.type}}</span>
+                            </div>
+                            <p class="line-height-3 mt-3 mb-3 text-900 font-bold">{{course.title}}</p>
+                            <div class="mb-5">
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-globe mr-2 text-blue-600"></i>
+                                        <span>{{course.eventCourseLocation}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-clock mr-2 text-blue-600"></i>
+                                        <span>{{timeFormatter(course.timeStart)}} - {{timeFormatter(course.timeEnd)}}</span>
+                                    </span>
+                                </div>
+                                <div class="mb-3 flex justify-content-between align-items-center text-900">
+                                    <span>
+                                        <i class="pi pi-calendar mr-2 text-blue-600"></i>
+                                        <span>{{dateFormatter(course.dateStart)}}</span>
+                                    </span>
+                                    <span>
+                                        <i class="pi pi-ticket mr-2 text-blue-600"></i>
+                                        <span>{{priceFormatter(course.price)}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex align-items-start mb-2">
+                                <div *ngFor="let category of course.dataCategoryDetail">
+                                    <span class="bg-blue-100 text-blue-600 font-medium py-2 px-3 mr-2" style="border-radius: 30px;">{{category.categoryName}}</span>
+                                </div>
+                            </div>
+                            <button *ngIf="course.isJoin == null" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton label="Join"></button>
+                            <button *ngIf="course.isJoin" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                            <button *ngIf="course.isJoin == false" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
                         </div>
-                        <div class="mb-3 flex justify-content-between align-items-center text-900">
-                            <span>
-                                <i class="pi pi-calendar mr-2 text-blue-600"></i>
-                                <span>Mar 30</span>
-                            </span>
-                            <span>
-                                <i class="pi pi-ticket mr-2 text-blue-600"></i>
-                                <span>Rp. 50.000</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2" style="border-radius: 30px;">Self Improvement</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

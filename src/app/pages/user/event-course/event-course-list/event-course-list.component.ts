@@ -68,7 +68,7 @@ export class EventCourseListComponent implements OnInit, OnDestroy {
     return null
   }
 
-  confirm(event: String, idEvent: String) {
+  join(event: String, idEvent: String) {
     this.confirmationService.confirm({
       message: `Are you sure that you want to join ${event} ?`,
       header: 'Confirmation',

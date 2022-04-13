@@ -18,6 +18,7 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { ProgressBarModule } from "primeng/progressbar";
 import { TableModule } from "primeng/table";
 import { ImageModule } from "primeng/image";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { ImageModule } from "primeng/image";
         InputSwitchModule,
         MultiSelectModule,
         ProgressBarModule,
-        ImageModule
+        ImageModule,
+        ConfirmDialogModule
     ]
 })
 export class ThreadModule { }

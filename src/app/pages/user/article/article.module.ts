@@ -19,6 +19,7 @@ import { ArticleUserRouter } from "./article.router";
 import { TableModule } from "primeng/table";
 import { ImageModule } from "primeng/image";
 import { FileUploadModule } from "primeng/fileupload";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FileUploadModule } from "primeng/fileupload";
     MultiSelectModule,
     ProgressBarModule,
     FileUploadModule,
-    ImageModule
+    ImageModule,
+    ConfirmDialogModule
   ]
 })
 export class ArticleUserModule { }
