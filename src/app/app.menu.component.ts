@@ -34,28 +34,28 @@ export class AppMenuComponent implements OnInit {
                 label: 'Master',
                 items: [
                     {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
-                    {label: 'Industry', icon: 'pi pi-fw pi-youtube', routerLink: ['/industry/list']},
-                    {label: 'Position', icon: 'pi pi-fw pi-youtube', routerLink: ['/position/list']},
-                    {label: 'Payment Method', icon: 'pi pi-fw pi-youtube', routerLink: ['/payment-method/list']},
-                    {label: 'Price Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-type/list']},
-                    {label: 'Price List', icon: 'pi pi-fw pi-youtube', routerLink: ['/price-list/list']},
-                    {label: 'Thread Type', icon: 'pi pi-fw pi-youtube', routerLink: ['/thread-type/list']},
-                    {label: 'Category', icon: 'pi pi-fw pi-youtube', routerLink: ['/category/list']}
+                    {label: 'Industry', icon: 'pi pi-fw pi-building', routerLink: ['/industry/list']},
+                    {label: 'Position', icon: 'pi pi-fw pi-id-card', routerLink: ['/position/list']},
+                    {label: 'Payment Method', icon: 'pi pi-fw pi-wallet', routerLink: ['/payment-method/list']},
+                    {label: 'Price Type', icon: 'pi pi-fw pi-credit-card', routerLink: ['/price-type/list']},
+                    {label: 'Price List', icon: 'pi pi-fw pi-money-bill', routerLink: ['/price-list/list']},
+                    {label: 'Thread Type', icon: 'pi pi-fw pi-clone', routerLink: ['/thread-type/list']},
+                    {label: 'Category', icon: 'pi pi-fw pi-list', routerLink: ['/category/list']}
                 ]
             },
             {
                 label: 'Transaksi',
                 items: [
-                    {label: 'Article', icon: 'pi pi-fw pi-youtube', routerLink: ['/article/list']},
-                    {label: 'Event Course', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/confirmation']},
-                    {label: 'User Member', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/user-member/list']}
+                    {label: 'Article', icon: 'pi pi-fw pi-server', routerLink: ['/article/list']},
+                    {label: 'Event Course', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/event-course/confirmation']},
+                    {label: 'User Member', icon: 'pi pi-fw pi-users', routerLink: ['/admin/user-member/list']}
                 ]
             },
             {
                 label: 'Report',
                 items: [
-                    {label: 'Event Course User', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/report/join']},
-                    {label: 'Event Course Payment', icon: 'pi pi-fw pi-youtube', routerLink: ['/admin/event-course/report/payment']},
+                    {label: 'Event Course User', icon: 'pi pi-fw pi-file', routerLink: ['/admin/event-course/report/join']},
+                    {label: 'Event Course Payment', icon: 'pi pi-fw pi-file', routerLink: ['/admin/event-course/report/payment']},
                 ]
             },
         ];
