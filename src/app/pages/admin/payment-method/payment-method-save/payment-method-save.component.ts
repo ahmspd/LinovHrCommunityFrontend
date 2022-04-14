@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { InsertPaymentMethodDtoReq } from 'src/app/dto/payment-method/insert-payment-method-dto-req';
+import { InsertPaymentMethodDtoRes } from 'src/app/dto/payment-method/insert-payment-method-dto-res';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
 
 @Component({
@@ -11,26 +12,23 @@ import { PaymentMethodService } from 'src/app/service/payment-method.service';
   styleUrls: ['./payment-method-save.component.scss'],
   providers: [ConfirmationService]
 })
-export class PaymentMethodSaveComponent implements OnInit , OnDestroy{
+export class PaymentMethodSaveComponent implements OnInit{
 
   paymentMethod : InsertPaymentMethodDtoReq = new InsertPaymentMethodDtoReq()
-  
-  saveSubscription? : Subscription
+  patmentMethodData : InsertPaymentMethodDtoRes
 
   constructor(private paymentMethodService: PaymentMethodService, private router: Router, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
   }
 
-  insert(isValid : boolean) {
+ async insert(isValid : boolean) : Promise<void> {
     if(isValid){
-      this.saveSubscription = this.paymentMethodService.insert(this.paymentMethod).subscribe(result=>{
-        this.router.navigateByUrl('/payment-method/list')
-      })
+      this.patmentMethodData = await firstValueFrom(this.paymentMethodService.insert(this.paymentMethod))
+      if(this.patmentMethodData.data){
+        this.router.navigateByUrl(`/payment-method/list`)
+      }
     }
   }
 
-  ngOnDestroy(): void {
-    this.saveSubscription?.unsubscribe()
-  }
 }

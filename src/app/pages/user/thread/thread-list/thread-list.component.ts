@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
@@ -9,6 +9,7 @@ import { EventCourseService } from 'src/app/service/event-course.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as moment from 'moment';
+import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
 
 @Component({
   selector: 'app-thread-list',
@@ -16,43 +17,42 @@ import * as moment from 'moment';
   styleUrls: ['./thread-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class ThreadListComponent implements OnInit, OnDestroy {
+export class ThreadListComponent implements OnInit {
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
-  dataThread: GetAllThreadPageDtoRes[] = []
+  eventData: GetAllEventCourseDtoRes
+  courseData: GetAllEventCourseDtoRes
+
+  dataThread: GetThreadDataDtoRes[] = []
+  thread : GetAllThreadPageDtoRes
   dataArticle: GetThreadDataDtoRes[] = []
-  //subscription
-  getEventsSubscription?: Subscription
-  getCoursesSubscription?: Subscription
-  getAllSubscription?: Subscription
-  getAllArticleSubscription?: Subscription
+  article: GetAllThreadPageDtoRes
 
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
   idType: string = '2'
 
+  idUser? : string
+
   constructor(private router: Router, private confirmationService: ConfirmationService, private threadService: ThreadService, 
     private loginService: LoginService, private eventCourseService: EventCourseService) { }
 
   ngOnInit(): void {
     this.initData()
+    if(this.loginService.getData()!=null){
+      this.idUser = this.loginService.getData().data.id
+    }
   }
 
-  initData(): void {
-    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
-      this.dataArticle = result.data
-    })
-
-    this.getEventsSubscription = this.eventCourseService.getActiveEventCourse('Event').subscribe(result => {
-      this.events = result.data
-    })
-
-    this.getCoursesSubscription = this.eventCourseService.getActiveEventCourse('Course').subscribe(result => {
-      this.courses = result.data
-    })
-
+  async initData(): Promise<void> {
+    this.article = await firstValueFrom(this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true))
+    this.dataArticle = this.article.data
+    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.events = this.eventData.data
+    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courses = this.courseData.data
   }
 
   loadData(event: LazyLoadEvent) {
@@ -60,19 +60,18 @@ export class ThreadListComponent implements OnInit, OnDestroy {
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getAllSubscription = this.threadService.getThreadWithPage(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.dataThread = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try{
+      this.thread = await firstValueFrom(this.threadService.getThreadWithPage(startPage, maxPage))
+      this.dataThread = this.thread.data
+      this.loading = false
+      this.totalRecords = this.thread.total
+    }
+    catch(error){
+      this.loading = false
+    }
   }
 
   toThreadDetail(isPremium: boolean, id: string) {
@@ -120,8 +119,4 @@ export class ThreadListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.getAllSubscription?.unsubscribe()
-    this.getAllArticleSubscription?.unsubscribe()
-  }
 }

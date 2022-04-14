@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { UserForgotPasswordDtoReq } from 'src/app/dto/user/user-forgot-password-dto-req';
+import { UserForgotPasswordDtoRes } from 'src/app/dto/user/user-forgot-password-dto-res';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -26,29 +27,23 @@ import { UserService } from 'src/app/service/user.service';
     }
   `]
 })
-export class ProfileForgotPasswordComponent implements OnInit , OnDestroy{
+export class ProfileForgotPasswordComponent implements OnInit{
 
   reqData : UserForgotPasswordDtoReq = new UserForgotPasswordDtoReq()
-
-  //subscription
-  forgotPasswordSubscription? : Subscription
+  updateData : UserForgotPasswordDtoRes
 
   constructor(private userService:UserService, private route:Router) { }
 
   ngOnInit(): void {
   }
 
-  update(isValid : boolean) : void {
+  async update(isValid : boolean) : Promise<void> {
     if(isValid){
-      this.forgotPasswordSubscription = this.userService.forgotPassword(this.reqData).subscribe(result=> {
-        if(result.data){
-          this.route.navigateByUrl(`/login`)
-        }
-      })
+      this.updateData = await firstValueFrom(this.userService.forgotPassword(this.reqData))
+      if(this.updateData.data){
+        this.route.navigateByUrl(`/login`)
+      }
     }
   }
 
-  ngOnDestroy(): void {
-    this.forgotPasswordSubscription?.unsubscribe()
-  }
 }

@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { DeleteMultiplePaymentMethodDtoDataReq } from 'src/app/dto/payment-method/delete-multiple-payment-method-dto-data-req';
 import { DeleteMultiplePaymentMethodDtoReq } from 'src/app/dto/payment-method/delete-multiple-payment-method-dto-req';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
+import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
+import { GetAllPaymentMethodPageDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-page-dto-res';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
 
 @Component({
@@ -13,16 +15,15 @@ import { PaymentMethodService } from 'src/app/service/payment-method.service';
   styleUrls: ['./payment-method-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class PaymentMethodListComponent implements OnInit , OnDestroy{
+export class PaymentMethodListComponent implements OnInit{
 
   constructor(private paymentMethodService : PaymentMethodService, private router: Router, private confirmationService: ConfirmationService) { }
 
   paymentMethodData?: GetAllPaymentMethodDtoDataRes[]=[]
+  paymentMethodGetAll : GetAllPaymentMethodPageDtoRes
+
   deleteIds: string[] = []
   deleteMultiple: DeleteMultiplePaymentMethodDtoReq = new DeleteMultiplePaymentMethodDtoReq()
-  paymentMethodSubsGetAll?: Subscription
-  paymentMethodSubsDeleteMultiple?: Subscription
-
 
   maxPage: number = 10
   totalRecords: number = 0
@@ -32,22 +33,29 @@ export class PaymentMethodListComponent implements OnInit , OnDestroy{
   }
 
   loadData(event: LazyLoadEvent) {
-    console.log(event)
-    this.getData(event.first, event.rows)
+    if(event.globalFilter){
+      this.filter(event.globalFilter)
+    }else {
+      this.getData(event.first, event.rows)
+    }
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  filter(text: string):void{
+    this.paymentMethodData = this.paymentMethodData.filter(paymentMethod=>paymentMethod.paymentName.includes(text))
+  }
+
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.paymentMethodSubsGetAll = this.paymentMethodService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.paymentMethodData = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.paymentMethodGetAll = await firstValueFrom(this.paymentMethodService.getAll(startPage, maxPage))
+      this.paymentMethodData = this.paymentMethodGetAll.data
+      this.loading = false
+      this.totalRecords = this.paymentMethodGetAll.total
+      
+    } catch (error) {
+      this.loading = false
+    }
   }
 
   confirm(): void {
@@ -63,7 +71,7 @@ export class PaymentMethodListComponent implements OnInit , OnDestroy{
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultiplePaymentMethodDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -73,19 +81,16 @@ export class PaymentMethodListComponent implements OnInit , OnDestroy{
     })
 
     this.deleteMultiple.data = deleteData
-    this.paymentMethodSubsDeleteMultiple = this.paymentMethodService.deleteMultiple(this.deleteMultiple).subscribe(result => {
-      if(result){
-        this.getData()
-      }
-    })
+
+    try {
+      await firstValueFrom(this.paymentMethodService.deleteMultiple(this.deleteMultiple))
+      this.getData()
+    } catch (error) {
+      
+    }
   }
 
   update(id: string): void {
     this.router.navigateByUrl(`/payment-method/${id}`)
-  }
-
-  ngOnDestroy(): void {
-    this.paymentMethodSubsGetAll?.unsubscribe()
-    this.paymentMethodSubsDeleteMultiple?.unsubscribe()
   }
 }

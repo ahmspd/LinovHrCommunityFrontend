@@ -14,7 +14,7 @@ import { IndustryService } from 'src/app/service/industry.service';
   styleUrls: ['./industry-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class IndustryListComponent implements OnInit , OnDestroy{
+export class IndustryListComponent implements OnInit{
 
   constructor(private industryService: IndustryService, private router: Router, private confirmationService: ConfirmationService) { }
 
@@ -22,8 +22,6 @@ export class IndustryListComponent implements OnInit , OnDestroy{
   industryGetAll: GetAllIndustryPageDtoRes
   deleteIds: string[] = []
   deleteIndustry: DeleteMultipleIndustryDtoReq = new DeleteMultipleIndustryDtoReq()
-  industrySubsGetAll?: Subscription
-  industrySubsDeleteMultiple?: Subscription
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -73,7 +71,7 @@ export class IndustryListComponent implements OnInit , OnDestroy{
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultipleIndustryDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -83,13 +81,15 @@ export class IndustryListComponent implements OnInit , OnDestroy{
     })
 
     this.deleteIndustry.data = deleteData
-    this.industrySubsDeleteMultiple = this.industryService.deleteMultiple(this.deleteIndustry).subscribe(result => {
+    try {
+      await firstValueFrom(this.industryService.deleteMultiple(this.deleteIndustry))
       this.getData()
-    })
-  }
+    }
+    catch(error){
 
-  ngOnDestroy(): void {
-    this.industrySubsGetAll?.unsubscribe()
-    this.industrySubsDeleteMultiple?.unsubscribe()
+    }
+    // this.industrySubsDeleteMultiple = this.industryService.deleteMultiple(this.deleteIndustry).subscribe(result => {
+    //   this.getData()
+    // })
   }
 }

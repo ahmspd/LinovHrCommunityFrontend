@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
-import { DeleteMultipleIndustryDtoReq } from 'src/app/dto/industry/delete-multiple-industry-dto-req';
-import { GetAllPaymentMethodPageDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-page-dto-data-res';
+import { firstValueFrom } from 'rxjs';
 import { DeleteMultiplePriceTypeDtoDataReq } from 'src/app/dto/price-type/delete-multiple-price-type-dto-data-req';
 import { DeleteMultiplePriceTypeDtoReq } from 'src/app/dto/price-type/delete-multiple-price-type-dto-req';
 import { GetAllPriceTypePageDtoDataRes } from 'src/app/dto/price-type/get-all-price-type-page-dto-data-res';
+import { GetAllPriceTypePageDtoRes } from 'src/app/dto/price-type/get-all-price-type-page-dto-res';
 import { PriceTypeService } from 'src/app/service/price-type.service';
 
 @Component({
@@ -15,14 +14,15 @@ import { PriceTypeService } from 'src/app/service/price-type.service';
   styleUrls: ['./price-type-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class PriceTypeListComponent implements OnInit , OnDestroy{
+export class PriceTypeListComponent implements OnInit {
 
   priceTypes: GetAllPriceTypePageDtoDataRes[]=[]
+  priceTypeData : GetAllPriceTypePageDtoRes
+
   deleteIds: string[]=[]
 
   deletePriceType: DeleteMultiplePriceTypeDtoReq = new DeleteMultiplePriceTypeDtoReq()
-  priceTypeGetAll? : Subscription
-  priceTypeDeleteMultipleSubscription? : Subscription
+
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -33,22 +33,28 @@ export class PriceTypeListComponent implements OnInit , OnDestroy{
   }
 
   loadData(event: LazyLoadEvent) {
-    console.log(event)
-    this.getData(event.first, event.rows)
+    if(event.globalFilter){
+      this.filter(event.globalFilter)
+    }else {
+      this.getData(event.first, event.rows)
+    }
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
-    this.loading = true;
+  filter(text: string):void{
+    this.priceTypes = this.priceTypes.filter(priceType=>priceType.priceTypeName.includes(text))
+  }
 
-    this.priceTypeGetAll = this.priceTypeService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.priceTypes = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
+    this.loading = true;
+    try{
+      this.priceTypeData = await firstValueFrom(this.priceTypeService.getAll(startPage, maxPage))
+      this.priceTypes = this.priceTypeData.data
+      this.loading = false
+      this.totalRecords = this.priceTypeData.total 
+    }
+    catch(error){
+      this.loading = false
+    }
   }
 
   update(id: string): void {
@@ -68,7 +74,7 @@ export class PriceTypeListComponent implements OnInit , OnDestroy{
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultiplePriceTypeDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -78,13 +84,12 @@ export class PriceTypeListComponent implements OnInit , OnDestroy{
     })
 
     this.deletePriceType.data = deleteData
-    this.priceTypeDeleteMultipleSubscription = this.priceTypeService.deleteMultiple(this.deletePriceType).subscribe(result => {
-      this.getData()
-    })
-  }
 
-  ngOnDestroy(): void {
-    this.priceTypeGetAll?.unsubscribe()
-    this.priceTypeDeleteMultipleSubscription?.unsubscribe()
+    try {
+      await firstValueFrom(this.priceTypeService.deleteMultiple(this.deletePriceType))
+      this.getData()
+    }catch(error){
+
+    }
   }
 }

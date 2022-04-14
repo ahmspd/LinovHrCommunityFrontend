@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllEventCoursePaymentDtoDataRes } from 'src/app/dto/event-course-payment/get-all-event-course-payment-dto-data-res';
+import { GetAllEventCoursePaymentDtoRes } from 'src/app/dto/event-course-payment/get-all-event-course-payment-dto-res';
 import { UpdateEventCoursePaymentDtoReq } from 'src/app/dto/event-course-payment/update-event-course-payment-dto-req';
+import { UpdateEventCoursePaymentDtoRes } from 'src/app/dto/event-course-payment/update-event-course-payment-dto-res';
 import { EventCoursePaymentService } from 'src/app/service/event-course-payment.service';
 
 @Component({
@@ -12,15 +14,16 @@ import { EventCoursePaymentService } from 'src/app/service/event-course-payment.
   styleUrls: ['./event-course-confirmation.component.scss'],
   providers: [ConfirmationService]
 })
-export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
+export class EventCourseConfirmationComponent implements OnInit {
 
   constructor(private eventCoursePaymentService: EventCoursePaymentService, private router: Router, private confirmationService: ConfirmationService) { }
 
   confirmPayment: UpdateEventCoursePaymentDtoReq = new UpdateEventCoursePaymentDtoReq()
   payments: GetAllEventCoursePaymentDtoDataRes[] = []
-  paymentsSubs?: Subscription
-  confirmPaymentSubs?: Subscription
-  getAllSubscription? : Subscription
+  paymentData : GetAllEventCoursePaymentDtoRes
+
+  paymentUpdate : UpdateEventCoursePaymentDtoRes
+
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -38,19 +41,18 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getAllSubscription = this.eventCoursePaymentService.getAllUnAccepted(this.isAccept,startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.payments = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.paymentData = await firstValueFrom(this.eventCoursePaymentService.getAllUnAccepted(this.isAccept, startPage, maxPage))
+      this.payments = this.paymentData.data
+      this.loading = false
+      this.totalRecords = this.paymentData.total
+    }
+    catch(error){
+      this.loading = false
+    }
   }
 
   confirm(idPayment: string): void {
@@ -59,23 +61,23 @@ export class EventCourseConfirmationComponent implements OnInit, OnDestroy {
       key: 'confirm',
       message: 'Are you sure to confirm this payment?',
       accept: () => {
-        this.confirmPaymentSubs = this.eventCoursePaymentService.confirmPayment(this.confirmPayment).subscribe(_=> {
-          this.initData()
-        })
+        this.UpdateData() 
       },
       reject: () => {
         this.initData()
       }
     });
   }
+  
+  async UpdateData() : Promise<void>{
+    this.paymentUpdate = await firstValueFrom(this.eventCoursePaymentService.confirmPayment(this.confirmPayment))
+    if(this.paymentUpdate.data){
+      this.getData()
+    }
+  }
 
   priceFormatter(price: any): String {
     return price.toLocaleString('en-ID',{style: 'currency', currency: 'IDR'})
-  }
-
-  ngOnDestroy(): void {
-    this.paymentsSubs?.unsubscribe()
-    this.confirmPaymentSubs?.unsubscribe()
   }
 
 }

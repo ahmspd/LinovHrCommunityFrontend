@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { DeleteMultipleThreadTypeDtoDataReq } from 'src/app/dto/thread-type/delete-multiple-thread-type-dto-data-req';
 import { DeleteMultipleThreadTypeDtoReq } from 'src/app/dto/thread-type/delete-multiple-thread-type-dto-req';
 import { GetAllThreadTypePageDtoDataRes } from 'src/app/dto/thread-type/get-all-thread-type-page-dto-data-res';
+import { GetAllThreadTypePageDtoRes } from 'src/app/dto/thread-type/get-all-thread-type-page-dto-res';
 import { ThreadTypeService } from 'src/app/service/thread-type.service';
 
 @Component({
@@ -13,14 +14,13 @@ import { ThreadTypeService } from 'src/app/service/thread-type.service';
   styleUrls: ['./thread-type-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class ThreadTypeListComponent implements OnInit, OnDestroy {
+export class ThreadTypeListComponent implements OnInit {
 
   threadTypes: GetAllThreadTypePageDtoDataRes[] = []
+  threadTypeData: GetAllThreadTypePageDtoRes
   deleteIds: string[] = []
   deleteThreadType: DeleteMultipleThreadTypeDtoReq = new DeleteMultipleThreadTypeDtoReq()
 
-  threadTypeGetAllSubscription?: Subscription
-  deleteMultipleSubscription?: Subscription
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -30,22 +30,28 @@ export class ThreadTypeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   loadData(event: LazyLoadEvent) {
-    console.log(event)
-    this.getData(event.first, event.rows)
+   if(event.globalFilter){
+     this.filter(event.globalFilter)
+   } else {
+     this.getData(event.first, event.rows)
+   }
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  filter(text: string){
+    this.threadTypes = this.threadTypes.filter(list=>list.threadTypeName.includes(text))
+  }
+
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.threadTypeGetAllSubscription = this.threadTypeService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.threadTypes = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.threadTypeData = await firstValueFrom(this.threadTypeService.getAll(startPage, maxPage))
+      this.threadTypes = this.threadTypeData.data
+      this.loading = false
+      this.totalRecords = this.threadTypeData.total
+    } catch(error){
+      this.loading = false
+    }
   }
 
   update(id: string): void {
@@ -65,7 +71,7 @@ export class ThreadTypeListComponent implements OnInit, OnDestroy {
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultipleThreadTypeDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -75,12 +81,12 @@ export class ThreadTypeListComponent implements OnInit, OnDestroy {
     })
 
     this.deleteThreadType.data = deleteData
-    this.deleteMultipleSubscription = this.threadTypeService.deleteMultiple(this.deleteThreadType).subscribe(result => {
+    try {
+      await firstValueFrom(this.threadTypeService.deleteMultiple(this.deleteThreadType))
       this.getData()
-    })
+    } catch(error) {
+
+    }
   }
-  ngOnDestroy(): void {
-    this.threadTypeGetAllSubscription?.unsubscribe()
-    this.deleteMultipleSubscription?.unsubscribe()
-  }
+  
 }

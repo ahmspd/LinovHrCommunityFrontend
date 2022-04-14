@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 import { UpdateThreadStatusDtoReq } from 'src/app/dto/thread/update-thread-status-dto-req';
+import { UpdateThreadStatusDtoRes } from 'src/app/dto/thread/update-thread-status-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
 
@@ -13,13 +15,11 @@ import { ThreadService } from 'src/app/service/thread.service';
   styleUrls: ['./article-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class ArticleListComponent implements OnInit , OnDestroy {
-  dataArticle : GetAllThreadPageDtoRes[]=[]
+export class ArticleListComponent implements OnInit {
+  dataArticle : GetThreadDataDtoRes[]=[]
+  aritcleData  : GetAllThreadPageDtoRes
 
-  //subscription
-  getThreadSubscription? : Subscription
-  getAllSubscription?: Subscription
-  updateStatusSubscription? : Subscription
+  updateArticleData : UpdateThreadStatusDtoRes
 
   maxPage: number = 10
   totalRecords: number = 0
@@ -33,44 +33,48 @@ export class ArticleListComponent implements OnInit , OnDestroy {
   }
 
   loadData(event: LazyLoadEvent) {
-    console.log(event)
-    this.getData(event.first, event.rows)
+    if (event.globalFilter) {
+      this.filter(event.globalFilter)
+    } else {
+      this.getData(event.first, event.rows)
+    }
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  filter(text: string): void {
+    this.dataArticle = this.dataArticle.filter(list => list.title.includes(text))
+  }
+
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getAllSubscription = this.threadService.getArticleWithPage(this.idType,startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.dataArticle = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try {
+      this.aritcleData = await firstValueFrom(this.threadService.getArticleWithPage(this.idType, startPage, maxPage))
+      this.dataArticle = this.aritcleData.data
+      this.loading = false
+      this.totalRecords = this.aritcleData.total
+    }
+    catch (error){
+      this.loading = false
+    }
   }
 
-  updateIsActive(id:string,isActive:boolean):void{
+  async updateIsActive(id:string,isActive:boolean): Promise<void>{
     const threadData : UpdateThreadStatusDtoReq = new UpdateThreadStatusDtoReq()
     if(isActive){
       threadData.id = id
       threadData.isActive = false
-      this.updateStatusSubscription = this.threadService.updateStatusArticle(threadData).subscribe(result=>{
-        if(result){
-          this.getData()
-        }
-      })
+      this.updateArticleData = await firstValueFrom(this.threadService.updateStatusArticle(threadData))
+      if(this.updateArticleData.data){
+        this.getData()
+      }
     }
     else {
       threadData.id = id
       threadData.isActive = true
-      this.updateStatusSubscription = this.threadService.updateStatusArticle(threadData).subscribe(result=>{
-        if(result){
-          this.getData()
-        }
-      })
+      this.updateArticleData = await firstValueFrom(this.threadService.updateStatusArticle(threadData))
+      if(this.updateArticleData.data){
+        this.getData()
+      }
     }
   }
 
@@ -80,11 +84,5 @@ export class ArticleListComponent implements OnInit , OnDestroy {
 
   detailArticle(id: string):void {
     this.router.navigate([]).then(result => {  window.open(`user/article/${id}`, '_blank'); })
-  }
-
-  ngOnDestroy(): void {
-    this.getThreadSubscription?.unsubscribe()
-    this.getAllSubscription?.unsubscribe()
-    this.updateStatusSubscription?.unsubscribe()
   }
 }

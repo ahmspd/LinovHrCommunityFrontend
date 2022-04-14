@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import * as moment from 'moment';
@@ -7,6 +7,9 @@ import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ThreadService } from 'src/app/service/thread.service';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
+import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-event-course-list',
@@ -14,39 +17,35 @@ import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res'
   styleUrls: ['./event-course-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class EventCourseListComponent implements OnInit, OnDestroy {
+export class EventCourseListComponent implements OnInit {
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
+  eventData: GetAllEventCourseDtoRes
+  courseData: GetAllEventCourseDtoRes
   dataArticle: GetThreadDataDtoRes[] = []
-
-
-  getEventsSubscription?: Subscription
-  getCoursesSubscription?: Subscription
-  joinSubscription?: Subscription
-  getAllArticleSubscription?: Subscription
+  article: GetAllThreadPageDtoRes
 
   idType: string = '2'
+  idUser: string
 
   constructor(private eventCourseService: EventCourseService, private confirmationService: ConfirmationService, 
-    private router: Router, private threadService: ThreadService) { }
+    private router: Router, private threadService: ThreadService, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.initData()
+    if(this.loginService.getData()!=null){
+      this.idUser = this.loginService.getData().data.id
+    }
   }
 
-  initData(): void {
-    this.getEventsSubscription = this.eventCourseService.getActiveEventCourse('Event').subscribe(result => {
-      this.events = result.data
-    })
-
-    this.getCoursesSubscription = this.eventCourseService.getActiveEventCourse('Course').subscribe(result => {
-      this.courses = result.data
-    })
-
-    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
-      this.dataArticle = result.data
-    })
+  async initData(): Promise<void> {
+    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.events = this.eventData.data
+    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courses = this.courseData.data
+    this.article = await firstValueFrom(this.threadService.getArticleActiveWithPage(this.idType, 0,2, true))
+    this.dataArticle = this.article.data
   }
 
   dateFormatter(date: moment.MomentInput): String {
@@ -80,12 +79,6 @@ export class EventCourseListComponent implements OnInit, OnDestroy {
         this.initData()
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.getCoursesSubscription?.unsubscribe()
-    this.getEventsSubscription?.unsubscribe()
-    this.joinSubscription?.unsubscribe()
   }
 
 }

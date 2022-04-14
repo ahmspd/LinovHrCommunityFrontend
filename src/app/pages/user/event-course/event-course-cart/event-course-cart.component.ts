@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllEventCoursePaymentDetailDtoDataRes } from 'src/app/dto/event-course-payment-detail/get-all-event-course-payment-detail-dto-data-res';
 import { EventCoursePaymentDetailService } from 'src/app/service/event-course-payment-detail.service';
 import * as moment from 'moment';
@@ -9,22 +9,28 @@ import { PaymentMethodService } from 'src/app/service/payment-method.service';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
 import { EventCoursePaymentService } from 'src/app/service/event-course-payment.service';
 import { Router } from '@angular/router';
+import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
+import { GetAllEventCoursePaymentDetailDtoRes } from 'src/app/dto/event-course-payment-detail/get-all-event-course-payment-detail-dto-res';
+import { InsertEventCoursePaymentDtoRes } from 'src/app/dto/event-course-payment/insert-event-course-payment-dto-res';
 
 @Component({
   selector: 'app-event-course-cart',
   templateUrl: './event-course-cart.component.html',
   styleUrls: ['./event-course-cart.component.scss']
 })
-export class EventCourseCartComponent implements OnInit, OnDestroy {
+export class EventCourseCartComponent implements OnInit {
 
   insertPayment: InsertEventCoursePaymentDtoReq = new InsertEventCoursePaymentDtoReq()
   paymentMethods: GetAllPaymentMethodDtoDataRes[] = []
+  paymentMethodsData : GetAllPaymentMethodDtoRes
+
   unpaidEventCourses: GetAllEventCoursePaymentDetailDtoDataRes[] = []
+  unpaidEventCourseData : GetAllEventCoursePaymentDetailDtoRes
+
+  insertPaymentData : InsertEventCoursePaymentDtoRes
+
   idAndPrices: GetIdAndPriceDtoDataRes[] = []
   totalPrice: number = 0
-  getUnpaidEventCourses?: Subscription
-  getAllPaymentMethodSubs?: Subscription
-  insertPaymentSubs?: Subscription
   file?: File
   
   constructor(private eventCoursePaymentDetailService: EventCoursePaymentDetailService, private eventCoursePaymentService: EventCoursePaymentService,
@@ -35,13 +41,14 @@ export class EventCourseCartComponent implements OnInit, OnDestroy {
   }
 
   initData(): void {
-    this.getUnpaidEventCourses = this.eventCoursePaymentDetailService.getUnpaidEventCourse().subscribe(result => {
-      this.unpaidEventCourses = result.data
-    })
+    this.getData()
+  }
 
-    this.getAllPaymentMethodSubs = this.paymentMethodService.findAll().subscribe(result => {
-      this.paymentMethods = result.data
-    })
+  async getData(): Promise<void> {
+    this.paymentMethodsData = await firstValueFrom(this.paymentMethodService.findAll())
+    this.paymentMethods = this.paymentMethodsData.data
+    this.unpaidEventCourseData = await firstValueFrom(this.eventCoursePaymentDetailService.getUnpaidEventCourse())
+    this.unpaidEventCourses = this.unpaidEventCourseData.data
   }
 
   dateFormatter(date: moment.MomentInput): String {
@@ -81,22 +88,17 @@ export class EventCourseCartComponent implements OnInit, OnDestroy {
     this.file = null
   }
 
-  pay(): void {
+  async pay(): Promise<void> {
     this.insertPayment.idEvenCoursePaymentDetails = []
     this.idAndPrices.forEach(idAndPrice => {
       this.insertPayment.idEvenCoursePaymentDetails.push(idAndPrice.id)
       this.totalPrice += idAndPrice.price
     })
     this.insertPayment.totalPrice = this.totalPrice
-    this.insertPaymentSubs = this.eventCoursePaymentService.pay(this.insertPayment, this.file).subscribe(_=> {
+    this.insertPaymentData = await firstValueFrom(this.eventCoursePaymentService.pay(this.insertPayment, this.file))
+    if(this.insertPaymentData.data){
       this.router.navigateByUrl('/user/setting/event-course')
-    })
-  }
-
-  ngOnDestroy(): void {
-      this.getUnpaidEventCourses?.unsubscribe()
-      this.getAllPaymentMethodSubs?.unsubscribe()
-      this.insertPaymentSubs?.unsubscribe()
+    }
   }
 
 }

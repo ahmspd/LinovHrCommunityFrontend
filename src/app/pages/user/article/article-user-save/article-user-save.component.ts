@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllCategoryDtoDataRes } from 'src/app/dto/category/get-all-category-dto-data-res';
+import { GetAllCategoryDtoRes } from 'src/app/dto/category/get-all-category-dto-res';
 import { GetAllCategoryThreadDetail } from 'src/app/dto/category/get-all-category-thread-detail';
+import { GetByIdCategoryDtoRes } from 'src/app/dto/category/get-by-id-category-dto-res';
 import { InsertThreadDtoReq } from 'src/app/dto/thread/insert-thread-dto-req';
+import { InsertThreadDtoRes } from 'src/app/dto/thread/insert-thread-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
@@ -13,15 +16,14 @@ import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
   templateUrl: './article-user-save.component.html',
   styleUrls: ['./article-user-save.component.scss']
 })
-export class ArticleUserSaveComponent implements OnInit, OnDestroy {
+export class ArticleUserSaveComponent implements OnInit {
   editor: any = ClassicEditor;
 
   insertArticle: InsertThreadDtoReq = new InsertThreadDtoReq()
-
-  getAllCategoriesSubscription?: Subscription
-  insertArticleSubscription?: Subscription
+  insert : InsertThreadDtoRes
 
   categories: GetAllCategoryDtoDataRes[] = []
+  categoryData : GetAllCategoryDtoRes
   selectCategories: GetAllCategoryThreadDetail[] = []
 
   idThreadType: string = '2'
@@ -32,22 +34,22 @@ export class ArticleUserSaveComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private categoryService: CategoryService, private threadService: ThreadService) { }
 
   ngOnInit(): void {
-    this.getAllCategoriesSubscription = this.categoryService.getAllCategories().subscribe(result => {
-      this.categories = result.data
-    })
     this.insertArticle.contents = ''
-
+    this.getData()
   }
 
-  onCreate() {
+  async getData(): Promise<void> {
+    this.categoryData = await firstValueFrom(this.categoryService.getAllCategories())
+    this.categories = this.categoryData.data
+  }
+  async onCreate() : Promise<void> {
     this.insertArticle.idThreadType = this.idThreadType
     this.insertArticle.dataCategory = this.selectCategories
     this.insertArticle.isActive = this.isActive
-    this.insertArticleSubscription = this.threadService.insert(this.insertArticle, this.file).subscribe(result => {
-      if (result) {
-        this.router.navigateByUrl('user/article/list')
-      }
-    })
+    this.insert = await firstValueFrom(this.threadService.insert(this.insertArticle, this.file))
+    if(this.insert.data){
+      this.router.navigateByUrl('user/article/list')
+    }
   }
 
   changeFile(event: any): void {
@@ -56,10 +58,5 @@ export class ArticleUserSaveComponent implements OnInit, OnDestroy {
 
   removeFile(): void {
     this.file = null
-  }
-
-  ngOnDestroy(): void {
-    this.getAllCategoriesSubscription?.unsubscribe()
-    this.insertArticleSubscription?.unsubscribe()
   }
 }

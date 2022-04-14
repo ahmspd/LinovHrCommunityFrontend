@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { GetAllThreadTypeDtoDataRes } from 'src/app/dto/thread-type/get-all-thread-type-dto-data-res';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
 
@@ -11,11 +13,9 @@ import { ThreadService } from 'src/app/service/thread.service';
   templateUrl: './profile-thread.component.html',
   styleUrls: ['./profile-thread.component.scss']
 })
-export class ProfileThreadComponent implements OnInit , OnDestroy{
-  dataThread: GetAllThreadPageDtoRes[] = []
-
-  //subscription
-  getThreadByUserSubscription? : Subscription
+export class ProfileThreadComponent implements OnInit{
+  threadData: GetAllThreadPageDtoRes
+  dataThread: GetThreadDataDtoRes[]=[]
 
   maxPage: number = 10
   totalRecords: number = 0
@@ -34,24 +34,22 @@ export class ProfileThreadComponent implements OnInit , OnDestroy{
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getThreadByUserSubscription = this.threadService.getThreadByUser(this.idUser,startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.dataThread = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try{
+      this.threadData = await firstValueFrom(this.threadService.getThreadByUser(this.idUser, startPage, maxPage))
+      this.dataThread = this.threadData.data
+      this.loading = false
+      this.totalRecords = this.threadData.total
+    }
+    catch(error){
+      this.loading=false
+    }
   }
 
   toThreadDetail(id: string):void {
     this.router.navigateByUrl(`/thread/${id}`)
-
   }
 
   toLogout(){
@@ -59,7 +57,4 @@ export class ProfileThreadComponent implements OnInit , OnDestroy{
     this.router.navigateByUrl("/login")
   }
 
-  ngOnDestroy(): void {
-    this.getThreadByUserSubscription?.unsubscribe()
-  }
 }

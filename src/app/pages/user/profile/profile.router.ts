@@ -41,10 +41,6 @@ const routes: Routes = [
         component: ProfileThreadBookmarkComponent
     },
     {
-        path: 'forgot-password',
-        component: ProfileForgotPasswordComponent
-    },
-    {
         path: 'joined-event-course',
         component: ProfileJoinedEventCourseComponent
     },

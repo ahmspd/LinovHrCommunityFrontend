@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 import { LikeService } from 'src/app/service/like.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
@@ -12,12 +13,10 @@ import { ThreadService } from 'src/app/service/thread.service';
   templateUrl: './profile-thread-like.component.html',
   styleUrls: ['./profile-thread-like.component.scss']
 })
-export class ProfileThreadLikeComponent implements OnInit , OnDestroy{
+export class ProfileThreadLikeComponent implements OnInit{
 
-  dataThread: GetAllThreadPageDtoRes[] = []
-
-  //subscription
-  getThreadByUserSubscription? : Subscription
+  threadData: GetAllThreadPageDtoRes
+  dataThread: GetThreadDataDtoRes[] = []
 
   maxPage: number = 10
   totalRecords: number = 0
@@ -36,19 +35,18 @@ export class ProfileThreadLikeComponent implements OnInit , OnDestroy{
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getThreadByUserSubscription = this.likeService.getThreadLikeByUser(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.dataThread = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try{
+      this.threadData = await firstValueFrom(this.likeService.getThreadLikeByUser(startPage, maxPage))
+      this.dataThread = this.threadData.data
+      this.loading = false
+      this.totalRecords = this.threadData.total
+    }
+    catch(error){
+      this.loading = false
+    }
   }
 
   toThreadDetail(id: string):void {
@@ -59,10 +57,6 @@ export class ProfileThreadLikeComponent implements OnInit , OnDestroy{
   toLogout(){
     this.loginService.clearData()
     this.router.navigateByUrl("/login")
-  }
-
-  ngOnDestroy(): void {
-    this.getThreadByUserSubscription?.unsubscribe()
   }
 
 }

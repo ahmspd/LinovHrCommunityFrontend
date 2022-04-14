@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { InsertUserMemberDtoReq } from 'src/app/dto/user-member/insert-user-member-dto-req';
+import { InsertUserMemberDtoRes } from 'src/app/dto/user-member/insert-user-member-dto-res';
 import { UpdateUserMemberPaymentDtoReq } from 'src/app/dto/user-member/update-user-member-payment-dto-req';
+import { UpdateUserMemberPaymentDtoRes } from 'src/app/dto/user-member/update-user-member-payment-dto-res';
 import { GetUserDtoDataRes } from 'src/app/dto/user/get-user-dto-data-res';
+import { GetUserDtoRes } from 'src/app/dto/user/get-user-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { UserMemberService } from 'src/app/service/user-member.service';
 import { UserService } from 'src/app/service/user.service';
@@ -15,20 +18,20 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./profile-user-premium.component.scss'],
   providers: [ConfirmationService]
 })
-export class ProfileUserPremiumComponent implements OnInit, OnDestroy {
+export class ProfileUserPremiumComponent implements OnInit {
   status: number
   duration: number
   regisPremium: InsertUserMemberDtoReq = new InsertUserMemberDtoReq()
   updateInvoice: UpdateUserMemberPaymentDtoReq = new UpdateUserMemberPaymentDtoReq()
   userData: GetUserDtoDataRes = new GetUserDtoDataRes()
-  regisPremiumSubs?: Subscription
-  updateInvoiceSubs?: Subscription
-  getUserDataSubscription?: Subscription
+  datas: GetUserDtoRes
   idOrder: string
   idUserMember: string
   file?: File
 
   idUser: string
+  insertData : InsertUserMemberDtoRes
+  updateData : UpdateUserMemberPaymentDtoRes
 
   statPricing: boolean = false
   statUpload: boolean = false
@@ -43,34 +46,33 @@ export class ProfileUserPremiumComponent implements OnInit, OnDestroy {
     this.getDataUser()
   }
 
-  getDataUser(): void {
-    this.getUserDataSubscription = this.userService.getById(this.idUser).subscribe(result => {
-      this.userData = result.data
-      if (this.userData.statUserMember === 0) {
-        this.statPricing = true
-        this.statUpload = false
-        this.statWaiting = false
-        this.statPremium = false
-      }
-      if (this.userData.statUserMember === 1) {
-        this.statPricing = false
-        this.statUpload = true
-        this.statWaiting = false
-        this.statPremium = false
-      }
-      if (this.userData.statUserMember === 2) {
-        this.statPricing = false
-        this.statUpload = false
-        this.statWaiting = true
-        this.statPremium = false
-      }
-      if (this.userData.statUserMember === 3) {
-        this.statPricing = false
-        this.statUpload = false
-        this.statWaiting = false
-        this.statPremium = true
-      }
-    })
+  async getDataUser(): Promise<void> {
+    this.datas = await firstValueFrom(this.userService.getById(this.idUser))
+    this.userData = this.datas.data
+    if (this.userData.statUserMember === 0) {
+      this.statPricing = true
+      this.statUpload = false
+      this.statWaiting = false
+      this.statPremium = false
+    }
+    if (this.userData.statUserMember === 1) {
+      this.statPricing = false
+      this.statUpload = true
+      this.statWaiting = false
+      this.statPremium = false
+    }
+    if (this.userData.statUserMember === 2) {
+      this.statPricing = false
+      this.statUpload = false
+      this.statWaiting = true
+      this.statPremium = false
+    }
+    if (this.userData.statUserMember === 3) {
+      this.statPricing = false
+      this.statUpload = false
+      this.statWaiting = false
+      this.statPremium = true
+    }
   }
   confirm(idPriceList: string): void {
     this.regisPremium.idPriceList = idPriceList
@@ -83,14 +85,13 @@ export class ProfileUserPremiumComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCreate() {
-    this.regisPremiumSubs = this.userMemberService.insert(this.regisPremium).subscribe(result => {
-      if (result.data) {
-        this.idOrder = result.data.idOrder
-        this.idUserMember = result.data.id
-        this.getDataUser()
-      }
-    })
+  async onCreate() : Promise<void> {
+    this.insertData = await firstValueFrom(this.userMemberService.insert(this.regisPremium))
+    if(this.insertData.data){
+      this.idOrder = this.insertData.data.idOrder
+      this.idUserMember = this.insertData.data.id
+      this.getDataUser()
+    }
   }
 
   changeFile(event: any) {
@@ -98,22 +99,15 @@ export class ProfileUserPremiumComponent implements OnInit, OnDestroy {
     this.updateInvoice.idOrder = this.userData.idOrder
   }
 
-  onUploadInvoice() {
-    this.updateInvoiceSubs = this.userMemberService.updateInvoice(this.updateInvoice, this.file).subscribe(result => {
-      if (result.data) {
-        this.getDataUser()
-      }
-    })
+  async onUploadInvoice() : Promise<void> {
+    this.updateData = await firstValueFrom(this.userMemberService.updateInvoice(this.updateInvoice, this.file))
+    if(this.updateData.data){
+      this.getDataUser()
+    }
   }
 
   toLogout() {
     this.loginService.clearData()
     this.router.navigateByUrl("/login")
   }
-
-  ngOnDestroy(): void {
-    this.regisPremiumSubs?.unsubscribe()
-    this.updateInvoiceSubs?.unsubscribe()
-  }
-
 }

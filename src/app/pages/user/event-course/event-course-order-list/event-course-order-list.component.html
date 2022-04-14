@@ -2,20 +2,25 @@
     <div class="col-12 md:col-6 lg:col-9">
         <div class="grid">
             <div class="flex justify-content-start align-items-center mb-4 col-6">
-                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle " style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle "
+                    style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
                 <div class="font-bold text-lg text-900 ml-1 ">Order List - {{dataEventCourse.title}} </div>
             </div>
             <div class="flex justify-content-end align-items-center mb-3 col-6">
-                <p-button label="Report" icon="pi pi-file" routerLink="/event-course/save"></p-button>
+                <a href="http://localhost:1234/event-course/report/{{idEvent}}">
+                    <p-button label="Report" icon="pi pi-file"></p-button>
+                </a>
             </div>
         </div>
         <p-dataView #dv [value]="orders" [paginator]="true" [rows]="9" layout="grid">
             <ng-template let-order pTemplate="gridItem">
                 <div class="col12 md:col-4 p-2">
                     <div class=" p-3 shadow-2 border-round surface-card " style="border-radius: 6px;">
-                        <div class="flex justify-content-center align-items-center" style="width: 240px; height: 240px;">
+                        <div class="flex justify-content-center align-items-center"
+                            style="width: 240px; height: 240px;">
                             <!-- <p-image src='http://localhost:1234/files/download/{{order.idFile}}' alt="No Image" style="width: 240px; height: 240px; object-fit: contain;" [preview]="true "></p-image> -->
-                            <img src='http://localhost:1234/files/download/{{order.idFile}}' alt="No Image" style="width: 230px; height: 240px; object-fit: contain;">
+                            <img src='http://localhost:1234/files/download/{{order.idFile}}' alt="No Image"
+                                style="width: 230px; height: 240px; object-fit: contain;">
                         </div>
                         <div class="flex justify-content-between align-items-start ">
                             <div>
@@ -24,14 +29,31 @@
                             </div>
                         </div>
                         <ul class="list-none m-0 p-0 ">
-                            <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border "><span class="text-600 font-medium text-sm ">Created</span><span class="text-900 font-medium text-sm ">{{timeFormatter(order.createdAt)}}</span></li>
-                            <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border "><span class="text-600 font-medium text-sm ">Phone Number</span><span class="text-900 font-medium text-sm ">{{order.phoneNumber}}</span></li>
-                            <li class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border "><span class="text-600 font-medium text-sm ">Payment Method</span><span class="text-900 font-medium text-sm ">{{order.paymentName}}</span></li>
-                            <li *ngIf="order.isAccept " class="px-0 py-2 flex justify-content-between align-items-center mb-2 "><span class="text-600 font-medium text-sm ">Invoice</span><span class="text-900 font-medium text-sm ">{{order.invoice}}</span></li>
-                            <li *ngIf="!order.isAccept " class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border "><span class="text-600 font-medium text-sm ">Invoice</span><span class="text-900 font-medium text-sm ">{{order.invoice}}</span></li>
+                            <li
+                                class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border ">
+                                <span class="text-600 font-medium text-sm ">Created</span><span
+                                    class="text-900 font-medium text-sm ">{{timeFormatter(order.createdAt)}}</span></li>
+                            <li
+                                class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border ">
+                                <span class="text-600 font-medium text-sm ">Phone Number</span><span
+                                    class="text-900 font-medium text-sm ">{{order.phoneNumber}}</span></li>
+                            <li
+                                class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border ">
+                                <span class="text-600 font-medium text-sm ">Payment Method</span><span
+                                    class="text-900 font-medium text-sm ">{{order.paymentName}}</span></li>
+                            <li *ngIf="order.isAccept "
+                                class="px-0 py-2 flex justify-content-between align-items-center mb-2 "><span
+                                    class="text-600 font-medium text-sm ">Invoice</span><span
+                                    class="text-900 font-medium text-sm ">{{order.invoice}}</span></li>
+                            <li *ngIf="!order.isAccept "
+                                class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border ">
+                                <span class="text-600 font-medium text-sm ">Invoice</span><span
+                                    class="text-900 font-medium text-sm ">{{order.invoice}}</span></li>
                         </ul>
                         <div class="flex justify-content-end ">
-                            <button *ngIf="!order.isAccept " (click)="confirm(order.id) " class="p-button-outlined p-button-rounded mt-3 mb-2 right-0 " pButton label="Confirm "></button>
+                            <button *ngIf="!order.isAccept " (click)="confirm(order.id) "
+                                class="p-button-outlined p-button-rounded mt-3 mb-2 right-0 " pButton
+                                label="Confirm "></button>
                         </div>
                     </div>
                 </div>
@@ -42,7 +64,8 @@
         <!-- event course -->
         <div class="mb-5 ">
             <div class="flex justify-content-start align-items-center mb-3 ">
-                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle " style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
+                <div class="flex justify-content-center align-items-center bg-blue-500 border-circle "
+                    style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
                 <div class="font-bold text-lg text-900 ml-1 ">Event & Course</div>
             </div>
             <div class="grid grid-nogutter ">
@@ -80,7 +103,8 @@
                         </div>
                     </div>
                     <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2 " style="border-radius: 30px; ">Self Improvement</span>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2 "
+                            style="border-radius: 30px; ">Self Improvement</span>
                     </div>
                 </div>
 
@@ -118,7 +142,8 @@
                         </div>
                     </div>
                     <div>
-                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2 " style="border-radius: 30px; ">Self Improvement</span>
+                        <span class="bg-blue-100 text-blue-600 font-medium py-1 px-3 mr-2 "
+                            style="border-radius: 30px; ">Self Improvement</span>
                     </div>
                 </div>
             </div>
@@ -126,12 +151,14 @@
         <!-- articles -->
         <div>
             <div class="flex justify-content-start align-items-center my-5 ">
-                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle " style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
+                <div class="flex justify-content-center align-items-center bg-pink-500 border-circle "
+                    style="width: 2.2rem; height: 2.2rem; "><i class="text-50 pi pi-fw pi-calendar text-lg "></i></div>
                 <div class="font-bold text-lg text-900 ml-1 ">Article</div>
             </div>
             <div class="grid grid-nogutter " *ngFor="let data of dataArticle ">
                 <div class="p-3 shadow-2 border-round surface-card h-full mb-3 ">
-                    <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image " class="block w-full mb-3 " width="200 " [preview]="true "></p-image>
+                    <p-image src='http://localhost:1234/files/download/{{data.idFile}}' alt="No Image "
+                        class="block w-full mb-3 " width="200 " [preview]="true "></p-image>
                     <p class="line-height-3 mt-3 mb-5 text-900 font-medium ">{{data.title}}</p>
                     <div class="flex justify-content-between text-600 ">
                         <span>Posted by <span class="font-bold ">{{data.fullName}}</span></span>

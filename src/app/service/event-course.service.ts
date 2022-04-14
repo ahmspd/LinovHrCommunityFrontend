@@ -30,8 +30,8 @@ export class EventCourseService {
         return this.http.post<InsertEventCourseDtoRes>(`http://localhost:1234/event-course`, formData)
     }
 
-    getActiveEventCourse(type: String): Observable<GetAllEventCourseDtoRes> {
-        return this.http.get<GetAllEventCourseDtoRes>(`http://localhost:1234/event-course/type/${type}`)
+    getActiveEventCourse(type: String, idUser : string): Observable<GetAllEventCourseDtoRes> {
+        return this.http.get<GetAllEventCourseDtoRes>(`http://localhost:1234/event-course/type/${type}/${idUser}`)
     }
 
     getEventCourseByCreatedBy(type: String): Observable<GetAllEventCourseDtoRes> {

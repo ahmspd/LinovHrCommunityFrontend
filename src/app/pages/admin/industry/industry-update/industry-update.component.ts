@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Subscription } from 'rxjs';
+import { GetByIdIndustryDtoRes } from 'src/app/dto/industry/get-by-id-industry-dto-res';
 import { UpdateIndustryDtoReq } from 'src/app/dto/industry/update-industry-dto-req';
+import { UpdateIndustryDtoRes } from 'src/app/dto/industry/update-industry-dto-res';
 import { IndustryService } from 'src/app/service/industry.service';
 
 @Component({
@@ -9,36 +11,38 @@ import { IndustryService } from 'src/app/service/industry.service';
   templateUrl: './industry-update.component.html',
   styleUrls: ['./industry-update.component.scss']
 })
-export class IndustryUpdateComponent implements OnInit, OnDestroy {
+export class IndustryUpdateComponent implements OnInit {
 
   industry: UpdateIndustryDtoReq = new UpdateIndustryDtoReq()
-  industrySubsGetById?: Subscription
-  industrySubsUpdate?: Subscription
-  activateRouteSubscription?: Subscription
+  industryData: GetByIdIndustryDtoRes
+  industryUpdate : UpdateIndustryDtoRes
+  idIndustry : string
 
   constructor(private industryService: IndustryService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.activateRouteSubscription = this.activatedRoute.params.subscribe(result => {
-      const id: string = (result as any).id
-      this.industrySubsGetById = this.industryService.getById(id).subscribe(result => {
-        this.industry = result.data
-      })
-    })
+    this.getData()
   }
 
-  update(isValid: boolean): void {
-    if (isValid) {
-      this.industrySubsUpdate = this.industryService.update(this.industry).subscribe(result => {
-        this.router.navigateByUrl('/industry/list')
-      })
+  async getData() : Promise<void> {
+    try {
+      const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result=>result)))
+      this.idIndustry = (result as any).id
+      this.industryData = await firstValueFrom(this.industryService.getById(this.idIndustry))
+      this.industry = this.industryData.data
+    }
+    catch(error){
+
     }
   }
 
-  ngOnDestroy(): void {
-    this.industrySubsGetById?.unsubscribe()
-    this.industrySubsUpdate?.unsubscribe()
-    this.activateRouteSubscription?.unsubscribe()
+  async update(isValid: boolean): Promise<void> {
+    if (isValid) {
+      this.industryUpdate = await firstValueFrom(this.industryService.update(this.industry))
+      if(this.industryUpdate.data){
+        this.router.navigateByUrl('/industry/list')
+      }
+    }
   }
 
 }

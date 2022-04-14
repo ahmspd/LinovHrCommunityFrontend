@@ -27,13 +27,13 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items:[
-                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/']}
+                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/dashboard/admin']}
                 ]
             },
             {
                 label: 'Master',
                 items: [
-                    {label: 'Role', icon: 'pi pi-fw pi-youtube', routerLink: ['/role/list']},
+                    {label: 'Role', icon: 'pi pi-fw pi-users', routerLink: ['/role/list']},
                     {label: 'Industry', icon: 'pi pi-fw pi-building', routerLink: ['/industry/list']},
                     {label: 'Position', icon: 'pi pi-fw pi-id-card', routerLink: ['/position/list']},
                     {label: 'Payment Method', icon: 'pi pi-fw pi-wallet', routerLink: ['/payment-method/list']},

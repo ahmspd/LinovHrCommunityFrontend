@@ -1,14 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { GetOrderEventCourseDtoDataRes } from 'src/app/dto/event-course/get-order-event-course-dto-data-res';
-import { EventCourseService } from 'src/app/service/event-course.service';
 import * as moment from 'moment';
 import { ConfirmationService } from 'primeng/api';
-import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
-import { ThreadService } from 'src/app/service/thread.service';
-import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { firstValueFrom, map } from 'rxjs';
+import { ConfirmPayJoinEventCourseDtoRes } from 'src/app/dto/event-course/confirm-pay-join-event-course-dto-res';
 import { GetByIdEventCourseDtoDataRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-data-res';
+import { GetByIdEventCourseDtoRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-res';
+import { GetOrderEventCourseDtoDataRes } from 'src/app/dto/event-course/get-order-event-course-dto-data-res';
+import { GetOrderEventCourseDtoRes } from 'src/app/dto/event-course/get-order-event-course-dto-res';
+import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { EventCourseService } from 'src/app/service/event-course.service';
+import { ThreadService } from 'src/app/service/thread.service';
 
 @Component({
   selector: 'app-event-course-order-list',
@@ -16,16 +19,16 @@ import { GetByIdEventCourseDtoDataRes } from 'src/app/dto/event-course/get-by-id
   styleUrls: ['./event-course-order-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class EventCourseOrderListComponent implements OnInit, OnDestroy {
+export class EventCourseOrderListComponent implements OnInit {
 
   orders: GetOrderEventCourseDtoDataRes[] = []
   dataArticle: GetThreadDataDtoRes[] = []
   dataEventCourse: GetByIdEventCourseDtoDataRes = new GetByIdEventCourseDtoDataRes()
-  activatedRouteSubs: Subscription
-  dataEventCourseSubs: Subscription
-  getOrderEventCourseSubs: Subscription
-  confirmPaymentEventCourseSubs: Subscription
-  getAllArticleSubscription?: Subscription
+  eventCourse : GetByIdEventCourseDtoRes
+  orderData : GetOrderEventCourseDtoRes
+  article: GetAllThreadPageDtoRes
+  dataConfirm: ConfirmPayJoinEventCourseDtoRes
+
   idEvent: String
   idType: string = '2'
 
@@ -36,22 +39,16 @@ export class EventCourseOrderListComponent implements OnInit, OnDestroy {
     this.initData()
   }
 
-  initData(): void {
-    this.activatedRouteSubs = this.activatedRoute.params.subscribe(result => {
-      this.idEvent = (result as any).id
-    })
+  async initData(): Promise<void> {
+    const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result=>result)))
+    this.idEvent = (result as any).id
 
-    this.dataEventCourseSubs = this.eventcourseService.getByIdEventCourse(this.idEvent).subscribe(result => {
-      this.dataEventCourse = result.data
-    })
-
-    this.getOrderEventCourseSubs = this.eventcourseService.getOrderEventCourse(this.idEvent).subscribe(result => {
-      this.orders = result.data
-    })
-
-    this.getAllArticleSubscription = this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true).subscribe(result => {
-      this.dataArticle = result.data
-    })
+    this.eventCourse = await firstValueFrom(this.eventcourseService.getByIdEventCourse(this.idEvent))
+    this.dataEventCourse = this.eventCourse.data
+    this.orderData = await firstValueFrom(this.eventcourseService.getOrderEventCourse(this.idEvent))
+    this.orders = this.orderData.data
+    this.article = await firstValueFrom(this.threadService.getArticleActiveWithPage(this.idType, 0,2, true))
+    this.dataArticle = this.article.data
   }
 
   timeFormatter(time: Date): String {
@@ -72,16 +69,11 @@ export class EventCourseOrderListComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmPayment(idOrder: string): void {
-    this.confirmPaymentEventCourseSubs = this.eventcourseService.confirmPayJoin(idOrder).subscribe(_ => {
+  async confirmPayment(idOrder: string): Promise<void> {
+    this.dataConfirm = await firstValueFrom(this.eventcourseService.confirmPayJoin(idOrder))
+    if(this.dataConfirm.data){
       this.initData()
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.activatedRouteSubs?.unsubscribe()
-    this.getOrderEventCourseSubs?.unsubscribe()
-    this.confirmPaymentEventCourseSubs?.unsubscribe()
+    }
   }
 
 }

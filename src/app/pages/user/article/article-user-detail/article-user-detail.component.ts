@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Subscription } from 'rxjs';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { GetThreadDetailDtoRes } from 'src/app/dto/thread/get-thread-detail-dto-res';
 import { ThreadService } from 'src/app/service/thread.service';
 
 @Component({
@@ -9,30 +10,22 @@ import { ThreadService } from 'src/app/service/thread.service';
   templateUrl: './article-user-detail.component.html',
   styleUrls: ['./article-user-detail.component.scss']
 })
-export class ArticleUserDetailComponent implements OnInit , OnDestroy{
+export class ArticleUserDetailComponent implements OnInit{
   articleDetailData: GetThreadDataDtoRes = new GetThreadDataDtoRes()
-  //subscription
-  getDataSubscription?: Subscription
-  activatedRouteSubscription?: Subscription
+  articleDetail : GetThreadDetailDtoRes
 
   idThread:string
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private threadService: ThreadService) { }
 
   ngOnInit(): void {
-    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(result => {
-      this.idThread = (result as any).id
-      this.getData()
-    })
+    this.getData()
   }
 
-  getData() {
-    this.getDataSubscription = this.threadService.getThreadDetail(this.idThread).subscribe(result => {
-      this.articleDetailData = result.data
-    })
-  }
+  async getData(): Promise<void> {
+    const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result=>result)))
+    this.idThread = (result as any).id
 
-  ngOnDestroy(): void {
-    this.getDataSubscription?.unsubscribe()
-    this.activatedRouteSubscription?.unsubscribe()
+    this.articleDetail = await firstValueFrom(this.threadService.getThreadDetail(this.idThread))
+    this.articleDetailData = this.articleDetail.data
   }
 }

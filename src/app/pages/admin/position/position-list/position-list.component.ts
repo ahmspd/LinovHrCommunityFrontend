@@ -20,8 +20,10 @@ export class PositionListComponent implements OnInit {
 
   positions: GetAllPositionPageDtoDataRes[] = []
   positionGetAll: GetAllPositionPageDtoRes
+  
   deleteIds: string[] = []
   deletePosition: DeleteMultiplePositionDtoReq = new DeleteMultiplePositionDtoReq()
+
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
@@ -31,7 +33,15 @@ export class PositionListComponent implements OnInit {
 
   loadData(event: LazyLoadEvent) {
     console.log(event)
-    this.getData(event.first, event.rows)
+    if(event.globalFilter){
+      this.filter(event.globalFilter)
+    }else {
+      this.getData(event.first, event.rows)
+    }
+  }
+
+  filter(text: string):void{
+    this.positions = this.positions.filter(position=>position.positionName.includes(text))
   }
 
   async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {

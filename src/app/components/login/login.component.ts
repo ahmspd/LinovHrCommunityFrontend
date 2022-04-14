@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginService.saveData(result)
         const roleCode: string = result.data.roleCode
         if(roleCode.match('SA001')){
-          this.router.navigateByUrl('/dashboard')
+          this.router.navigateByUrl('/dashboard/admin')
         }
         if(roleCode.match('MB001')){
           this.router.navigateByUrl('/homepage')
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   forgotPassword():void{
-    this.router.navigateByUrl(`user/setting/forgot-password`)
+    this.router.navigateByUrl(`/forgot-password`)
   }
 
   toRegister(){

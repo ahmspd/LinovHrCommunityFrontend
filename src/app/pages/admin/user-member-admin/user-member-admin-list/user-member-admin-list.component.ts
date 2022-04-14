@@ -1,9 +1,12 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllUserMemberDtoDataRes } from 'src/app/dto/user-member/get-all-user-member-dto-data-res';
+import { GetAllUserMemberDtoRes } from 'src/app/dto/user-member/get-all-user-member-dto-res';
 import { UpdateUserMemberAcceptDtoReq } from 'src/app/dto/user-member/update-user-member-accept-dto-req';
+import { UpdateUserMemberAcceptDtoRes } from 'src/app/dto/user-member/update-user-member-accept-dto-res';
 import { UserMemberService } from 'src/app/service/user-member.service';
 
 @Component({
@@ -12,18 +15,18 @@ import { UserMemberService } from 'src/app/service/user-member.service';
   styleUrls: ['./user-member-admin-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class UserMemberAdminListComponent implements OnInit, OnDestroy {
+export class UserMemberAdminListComponent implements OnInit {
 
   userMemberData: GetAllUserMemberDtoDataRes[] = []
+  userMember : GetAllUserMemberDtoRes
+  userMemberUpadate : UpdateUserMemberAcceptDtoRes
+  updateData: UpdateUserMemberAcceptDtoReq = new UpdateUserMemberAcceptDtoReq()
+
 
   maxPage: number = 10
   totalRecords: number = 0
   loading: boolean = true
   isAccept: boolean = false
-
-  //Subscription
-  getAllSubscription?: Subscription
-  updateSubscription?: Subscription
 
   constructor(private confirmationService: ConfirmationService, private router: Router, private userMemberService: UserMemberService) { }
 
@@ -35,19 +38,18 @@ export class UserMemberAdminListComponent implements OnInit, OnDestroy {
     this.getData(event.first, event.rows)
   }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getAllSubscription = this.userMemberService.getAllUserMember(this.isAccept, startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.userMemberData = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-        console.log(resultData.total)
-      },
-      error: _ => this.loading = false
-    })
+    try{
+      this.userMember = await firstValueFrom(this.userMemberService.getAllUserMember(this.isAccept, startPage, maxPage))
+      this.userMemberData = this.userMember.data
+      this.loading = false
+      this.totalRecords = this.userMember.total
+    }
+    catch(error){
+      this.loading = false
+    }
   }
 
   update(id: string): void {
@@ -56,21 +58,21 @@ export class UserMemberAdminListComponent implements OnInit, OnDestroy {
       key: 'confirm',
       message: 'Are you sure to confirm this payment?',
       accept: () => {
-        const updateData: UpdateUserMemberAcceptDtoReq = new UpdateUserMemberAcceptDtoReq()
-        updateData.idUserMember = id
-        updateData.isAccept = true
-        this.updateSubscription = this.userMemberService.updateUserMember(updateData).subscribe(result => {
-          if (result.data) {
-            this.getData()
-          }
-        })
+        this.updateData.idUserMember = id
+        this.updateData.isAccept = true
+        
+        this.updateMember()
       },
       reject: () => {
         this.getData()
       }
     });
   }
-  ngOnDestroy(): void {
 
+  async updateMember() : Promise<void>{
+    this.userMemberUpadate = await firstValueFrom(this.userMemberService.updateUserMember(this.updateData))
+    if(this.userMemberUpadate.data){
+      this.getData()
+    }
   }
 }

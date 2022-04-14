@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { UpdateCategoryDtoDataRes } from 'src/app/dto/category/update-category-dto-data-res';
+import { firstValueFrom, map } from 'rxjs';
+import { GetByIdCategoryDtoRes } from 'src/app/dto/category/get-by-id-category-dto-res';
 import { UpdateCategoryDtoReq } from 'src/app/dto/category/update-category-dto-req';
+import { UpdateCategoryDtoRes } from 'src/app/dto/category/update-category-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
@@ -10,38 +11,43 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './category-update.component.html',
   styleUrls: ['./category-update.component.scss']
 })
-export class CategoryUpdateComponent implements OnInit, OnDestroy {
+export class CategoryUpdateComponent implements OnInit {
 
   category: UpdateCategoryDtoReq = new UpdateCategoryDtoReq()
+  categoryData : GetByIdCategoryDtoRes
+  updateCategory: UpdateCategoryDtoRes
 
-  getByIdSubscription?: Subscription
-  updateSubscription?: Subscription
-  acivatedRouteSubscription?: Subscription
+  idCategory: string
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.acivatedRouteSubscription = this.activatedRoute.params.subscribe(result => {
-      const id: string = (result as any).id
-      this.getByIdSubscription = this.categoryService.getById(id).subscribe(result => {
-        this.category = result.data
-      })
-    })
+    this.getData()
   }
 
-  update(isValid: boolean): void {
-    if (isValid) {
-      this.updateSubscription = this.categoryService.update(this.category).subscribe(result => {
-        if (result) {
-          this.router.navigateByUrl('/category/list')
-        }
-      })
+  async getData() : Promise<void> {
+    try{
+      const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
+      this.idCategory = (result as any).id
+      this.categoryData = await firstValueFrom(this.categoryService.getById(this.idCategory))
+      this.category = this.categoryData.data
+    }
+    catch (error){
+
     }
   }
 
-  ngOnDestroy(): void {
-    this.getByIdSubscription?.unsubscribe()
-    this.updateSubscription?.unsubscribe()
-    this.acivatedRouteSubscription?.unsubscribe()
+  async update(isValid: boolean): Promise<void> {
+    if (isValid) {
+      try{
+        this.updateCategory = await firstValueFrom(this.categoryService.update(this.category))
+        if(this.updateCategory.data){
+          this.router.navigateByUrl('/category/list')
+        }
+      }
+      catch(error){
+
+      }
+    }
   }
 }

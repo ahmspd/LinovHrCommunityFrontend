@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AppConfig } from 'src/app/api/appconfig';
+import { LoginUserDtoRes } from 'src/app/dto/user/login-user-dto-res';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { LoginService } from 'src/app/service/login.service';
 
@@ -10,11 +9,7 @@ import { LoginService } from 'src/app/service/login.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  
-  config: AppConfig  
-
-  subscription: Subscription
+export class NavbarComponent implements OnInit {
   
   isLogin: boolean = false
 
@@ -22,17 +17,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   avatar : string = 'assets/images/avatars/avatar.png'
 
+  dataLogin? : LoginUserDtoRes
+
   constructor(public configService: ConfigService, public router: Router, private loginService : LoginService) { }
 
   ngOnInit(): void {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-    });
-    if(this.loginService.getData().data!=null){
+    this.dataLogin = this.loginService.getData()
+    if(this.dataLogin !== null){
       this.isLogin = true
-      this.fullname = this.loginService.getData().data.fullName
-      if(this.loginService.getData().data.idFile != null){
+      this.fullname = this.dataLogin.data.fullName
+      if(this.dataLogin.data.idFile != null){
         
         this.avatar = `http://localhost:1234/files/download/${this.loginService.getData().data.idFile}`
 
@@ -40,15 +34,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     }
   }
-
   toRegister(){
     this.router.navigateByUrl('/register')
-  }
-
-  ngOnDestroy(): void {
-    if(this.subscription){
-      this.subscription.unsubscribe();
-    }
   }
 
 }

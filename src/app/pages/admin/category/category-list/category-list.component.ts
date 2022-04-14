@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { DeleteMultipleCategoryDtoDataReq } from 'src/app/dto/category/delete-multiple-category-dto-data-req';
 import { DeleteMultipleCategoryDtoReq } from 'src/app/dto/category/delete-multiple-category-dto-req';
 import { GetAllCategoryPageDtoDataRes } from 'src/app/dto/category/get-all-category-page-dto-data-res';
+import { GetAllCategoryPageDtoRes } from 'src/app/dto/category/get-all-category-page-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
@@ -13,14 +14,12 @@ import { CategoryService } from 'src/app/service/category.service';
   styleUrls: ['./category-list.component.scss'],
   providers: [ConfirmationService]
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
+export class CategoryListComponent implements OnInit {
 
   categories: GetAllCategoryPageDtoDataRes[] = []
+  categoryData : GetAllCategoryPageDtoRes
   deleteIds: string[] = []
   deleteCategory: DeleteMultipleCategoryDtoReq = new DeleteMultipleCategoryDtoReq()
-
-  getAllSubscription?: Subscription
-  deleteMultipleSubscription?: Subscription
 
   maxPage: number = 10
   totalRecords: number = 0
@@ -39,28 +38,29 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       this.getData(event.first, event.rows)
     }
   }
+  
+  filter(text: string): void {
+    this.categories = this.categories.filter(category => category.categoryName.includes(text))
+  }
 
-  getData(startPage: number = 0, maxPage: number = this.maxPage): void {
+  async getData(startPage: number = 0, maxPage: number = this.maxPage): Promise<void> {
     this.loading = true;
 
-    this.getAllSubscription = this.categoryService.getAll(startPage, maxPage).subscribe({
-      next: result => {
-        const resultData: any = result
-        this.categories = resultData.data
-        this.loading = false
-        this.totalRecords = resultData.total
-      },
-      error: _ => this.loading = false
-    })
+    try{
+      this.categoryData = await firstValueFrom(this.categoryService.getAll(startPage, maxPage))
+      this.categories = this.categoryData.data
+      this.loading = false
+      this.totalRecords = this.categoryData.total
+
+    }catch(error){
+      this.loading = false
+    }
   }
 
   update(id: string): void {
     this.router.navigateByUrl(`/category/${id}`)
   }
 
-  filter(text: string): void {
-    this.categories = this.categories.filter(category => category.categoryName.includes(text))
-  }
   confirm(): void {
     this.confirmationService.confirm({
       key: 'confirm',
@@ -74,7 +74,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     });
   }
 
-  doDelete(): void {
+  async doDelete(): Promise<void> {
     const deleteData: DeleteMultipleCategoryDtoDataReq[] = []
 
     this.deleteIds.forEach(value => {
@@ -84,14 +84,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     })
 
     this.deleteCategory.data = deleteData
-    this.deleteMultipleSubscription = this.categoryService.deleteMultiple(this.deleteCategory).subscribe(result => {
-      if(result){
-        this.getData()
-      }
-    })
-  }
-  ngOnDestroy(): void {
-    this.getAllSubscription?.unsubscribe()
-    this.deleteMultipleSubscription?.unsubscribe()
+    try {
+      await firstValueFrom(this.categoryService.deleteMultiple(this.deleteCategory))
+      this.getData()
+    }
+    catch (error){
+
+    }
   }
 }

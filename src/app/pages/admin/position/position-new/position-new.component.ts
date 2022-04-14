@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { InsertBookmarkDtoRes } from 'src/app/dto/bookmark/insert-bookmark-dto-res';
 import { InsertPositionDtoReq } from 'src/app/dto/position/insert-position-dto-req';
 import { PositionService } from 'src/app/service/position.service';
 
@@ -9,26 +10,23 @@ import { PositionService } from 'src/app/service/position.service';
   templateUrl: './position-new.component.html',
   styleUrls: ['./position-new.component.scss']
 })
-export class PositionNewComponent implements OnInit , OnDestroy{
+export class PositionNewComponent implements OnInit{
 
   position: InsertPositionDtoReq = new InsertPositionDtoReq()
+  positionData: InsertBookmarkDtoRes
 
-  insertSubscription? : Subscription
   constructor(private positionService: PositionService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  insert(isValid: boolean): void {
+  async insert(isValid: boolean): Promise<void> {
     if(isValid){
-      this.insertSubscription = this.positionService.insert(this.position).subscribe(result => {
-        console.log(result)
+      this.positionData = await firstValueFrom(this.positionService.insert(this.position))
+      if(this.positionData.data){
         this.router.navigateByUrl('/position/list')
-      })
+      }
     }
   }
 
-  ngOnDestroy(): void {
-    this.insertSubscription?.unsubscribe()
-  }
 }

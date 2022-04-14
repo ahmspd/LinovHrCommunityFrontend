@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
+import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { GetThreadDtoRes } from 'src/app/dto/thread/get-thread-dto-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
@@ -12,21 +14,21 @@ import { ThreadService } from 'src/app/service/thread.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements OnInit , OnDestroy{
+export class HomepageComponent implements OnInit{
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
+  eventData: GetAllEventCourseDtoRes
+  courseData: GetAllEventCourseDtoRes
   articleData : GetThreadDataDtoRes[]=[]
   threadData : GetThreadDataDtoRes[]=[]
-
-  //Subscription
-  getEventsSubscription?: Subscription
-  getCoursesSubscription?: Subscription
-  getArticleSubscription? : Subscription
-  getThreadSubscription? : Subscription
+  thread : GetThreadDtoRes
+  article : GetThreadDtoRes
 
   isPremium:boolean = false
   responsiveOptions!: any[]
+
+  idUser? : string
 
   constructor(public router : Router, private threadService : ThreadService, private loginService : LoginService, private eventCourseService: EventCourseService) { 
     this.responsiveOptions = [
@@ -50,28 +52,23 @@ export class HomepageComponent implements OnInit , OnDestroy{
 
   ngOnInit(): void {
     this.initData()
+    if(this.loginService.getData()!=null){
+      this.idUser = this.loginService.getData().data.id
+    }
   }
 
-  initData(): void {
-    this.getArticleSubscription = this.threadService.getThreadByType('2').subscribe(result=>{
-      this.articleData = result.data
-    })
-
-    this.getThreadSubscription = this.threadService.getThread().subscribe(result=>{
-      this.threadData = result.data
-    })
-
-    if(this.loginService!=null){
+  async initData(): Promise<void> {
+    this.article = await firstValueFrom(this.threadService.getThreadByType('2'))
+    this.articleData = this.article.data
+    this.thread = await firstValueFrom(this.threadService.getThread())
+    this.threadData = this.thread.data
+    if(this.loginService.getData()!=null){
       this.isPremium = this.loginService.getData().data.isMember
     }
-
-    this.getEventsSubscription = this.eventCourseService.getActiveEventCourse('Event').subscribe(result => {
-      this.events = result.data
-    })
-
-    this.getCoursesSubscription = this.eventCourseService.getActiveEventCourse('Course').subscribe(result => {
-      this.courses = result.data
-    })
+    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.events = this.eventData.data
+    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courses = this.courseData.data
   }
 
   toThread(){
@@ -85,8 +82,4 @@ export class HomepageComponent implements OnInit , OnDestroy{
     this.router.navigateByUrl(`/thread/${id}`)
   }
   
-  ngOnDestroy(): void {
-    this.getArticleSubscription?.unsubscribe()
-    this.getThreadSubscription?.unsubscribe()
-  }
 }

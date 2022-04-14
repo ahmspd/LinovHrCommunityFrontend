@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { first, firstValueFrom, map, Subscription } from 'rxjs';
+import { GetByIdPositionDtoRes } from 'src/app/dto/position/get-by-id-position-dto-res';
 import { UpdatePositionDtoReq } from 'src/app/dto/position/update-position-dto-req';
+import { UpdatePositionDtoRes } from 'src/app/dto/position/update-position-dto-res';
 import { PositionService } from 'src/app/service/position.service';
 
 @Component({
@@ -9,34 +11,33 @@ import { PositionService } from 'src/app/service/position.service';
   templateUrl: './position-update.component.html',
   styleUrls: ['./position-update.component.scss']
 })
-export class PositionUpdateComponent implements OnInit , OnDestroy{
+export class PositionUpdateComponent implements OnInit {
 
   position: UpdatePositionDtoReq = new UpdatePositionDtoReq()
-  positionSubsGetById?: Subscription
-  positionSubsUpdate?: Subscription
+  positionData : GetByIdPositionDtoRes
+  positionUpdate : UpdatePositionDtoRes
 
+  idPosition : string
   constructor(private positionService: PositionService, private activatedRoute: ActivatedRoute, private router: Router ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(result => {
-      const id: string = (result as any).id
-      this.positionSubsGetById = this.positionService.getById(id).subscribe(result => {
-        this.position = result.data
-      })
-    })
+    this.getData()
   }
 
-  update(isValid: boolean): void {
+  async getData() : Promise<void>{
+    const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result=>result)))
+    this.idPosition = (result as any).id
+    this.positionData = await firstValueFrom(this.positionService.getById(this.idPosition))
+    this.position = this.positionData.data
+  }
+
+  async update(isValid: boolean): Promise<void> {
     if(isValid){
-      this.positionSubsUpdate = this.positionService.update(this.position).subscribe(result => {
+      this.positionUpdate = await firstValueFrom(this.positionService.update(this.position))
+      if(this.positionUpdate.data){
         this.router.navigateByUrl('/position/list')
-      })
+      }
     }
-  }
-
-  ngOnDestroy(): void {
-    this.positionSubsGetById?.unsubscribe()
-    this.positionSubsUpdate?.unsubscribe()
   }
 
 }

@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Subscription } from 'rxjs';
+import { GetByIdPriceListDtoRes } from 'src/app/dto/price-list/get-by-id-price-list-dto-res';
 import { UpdatePriceListDtoReq } from 'src/app/dto/price-list/update-price-list-dto-req';
+import { UpdatePriceListDtoRes } from 'src/app/dto/price-list/update-price-list-dto-res';
+import { GetAllPriceTypeDtoRes } from 'src/app/dto/price-type/get-all-price-type-dto-res';
 import { GetAllPriceTypePageDtoDataRes } from 'src/app/dto/price-type/get-all-price-type-page-dto-data-res';
 import { PriceListService } from 'src/app/service/price-list.service';
 import { PriceTypeService } from 'src/app/service/price-type.service';
@@ -11,45 +14,39 @@ import { PriceTypeService } from 'src/app/service/price-type.service';
   templateUrl: './price-list-update.component.html',
   styleUrls: ['./price-list-update.component.scss']
 })
-export class PriceListUpdateComponent implements OnInit , OnDestroy{
+export class PriceListUpdateComponent implements OnInit{
 
   priceList : UpdatePriceListDtoReq = new UpdatePriceListDtoReq()
-  priceType: GetAllPriceTypePageDtoDataRes[]=[]
+  priceListData : GetByIdPriceListDtoRes
+  priceListUpdate : UpdatePriceListDtoRes
 
-  activatedRouteSubscription? : Subscription
-  getByIdSubscription? : Subscription
-  getAllPriceTypeSubscription? : Subscription
-  updateSubscription? : Subscription
+  priceType: GetAllPriceTypePageDtoDataRes[]=[]
+  priceTypeData : GetAllPriceTypeDtoRes
+
+  idPriceList : string
 
   constructor(private activatedRoute : ActivatedRoute, private router : Router, private priceListService : PriceListService,private priceTypeService : PriceTypeService) { }
 
 
   ngOnInit(): void {
-    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(result => {
-      const id: string = (result as any).id 
-      this.getByIdSubscription = this.priceListService.getById(id).subscribe(result => {
-        this.priceList = result.data
-      })
-    })
-    this.getAllPriceTypeSubscription = this.priceTypeService.getAllPriceType().subscribe(result => {
-      this.priceType = result.data
-    })
+    this.getData()
   }
 
-  update(isValid: boolean):void {
+  async getData(): Promise<void>{
+    const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result=>result)))
+    this.idPriceList = (result as any).id
+    this.priceListData = await firstValueFrom(this.priceListService.getById(this.idPriceList))
+    this.priceList = this.priceListData.data
+    this.priceTypeData = await firstValueFrom(this.priceTypeService.getAllPriceType())
+    this.priceType = this.priceTypeData.data
+  }
+
+  async update(isValid: boolean): Promise<void> {
     if(isValid){
-      this.updateSubscription = this.priceListService.update(this.priceList).subscribe(result=>{
-        if(result){
-          this.router.navigateByUrl('/price-list/list');
-        }
-      })
+      this.priceListUpdate = await firstValueFrom(this.priceListService.update(this.priceList))
+      if(this.priceListUpdate.data){
+        this.router.navigateByUrl('/price-list/list');
+      }
     }
-  }
-
-  ngOnDestroy(): void {
-    this.activatedRouteSubscription?.unsubscribe()
-    this.getByIdSubscription?.unsubscribe()
-    this.getAllPriceTypeSubscription?.unsubscribe()
-    this.updateSubscription?.unsubscribe()
   }
 }

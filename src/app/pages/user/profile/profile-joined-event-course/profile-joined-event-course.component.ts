@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { LoginService } from 'src/app/service/login.service';
 import { GetAllEventCourseDtoDataRes } from "../../../../dto/event-course/get-all-event-course-dto-data-res";
 import * as moment from 'moment';
+import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
 
 @Component({
   selector: 'app-profile-joined-event-course',
@@ -14,7 +15,7 @@ import * as moment from 'moment';
 export class ProfileJoinedEventCourseComponent implements OnInit {
 
   dataEventCourse: GetAllEventCourseDtoDataRes[] = []
-  getAllDataEventCourseSubs?: Subscription
+  data: GetAllEventCourseDtoRes
 
   constructor(public router: Router, private loginService: LoginService, private eventCourseService: EventCourseService) { }
 
@@ -22,10 +23,9 @@ export class ProfileJoinedEventCourseComponent implements OnInit {
     this.initData()
   }
 
-  initData(): void {
-    this.getAllDataEventCourseSubs = this.eventCourseService.getJoinedEventCourse().subscribe(result => {
-      this.dataEventCourse = result.data
-    })
+  async initData(): Promise<void> {
+    this.data = await firstValueFrom(this.eventCourseService.getJoinedEventCourse())
+    this.dataEventCourse = this.data.data
   }
 
   dateFormatter(date: moment.MomentInput): String {

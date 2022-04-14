@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { InsertCategoryDtoReq } from 'src/app/dto/category/insert-category-dto-req';
+import { InsertCategoryDtoRes } from 'src/app/dto/category/insert-category-dto-res';
 import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
@@ -9,28 +10,22 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './category-new.component.html',
   styleUrls: ['./category-new.component.scss']
 })
-export class CategoryNewComponent implements OnInit , OnDestroy{
+export class CategoryNewComponent implements OnInit{
 
   category: InsertCategoryDtoReq = new InsertCategoryDtoReq()
-
-  insertSubscription? : Subscription
+  categoryInsert: InsertCategoryDtoRes
 
   constructor(private router : Router, private categoryService : CategoryService) { }
 
   ngOnInit(): void {
   }
 
-  insert(isValid : boolean) : void {
+  async insert(isValid : boolean) : Promise<void> {
     if(isValid) {
-      this.insertSubscription = this.categoryService.insert(this.category).subscribe(result => {
-        if(result) {
-          this.router.navigateByUrl('/category/list')
-        }
-      })
+      this.categoryInsert = await firstValueFrom(this.categoryService.insert(this.category))
+      if(this.categoryInsert.data){
+        this.router.navigateByUrl('/category/list')
+      }
     }
-  }
-
-  ngOnDestroy(): void {
-    this.insertSubscription?.unsubscribe()
   }
 }
