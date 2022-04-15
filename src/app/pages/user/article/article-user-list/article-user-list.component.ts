@@ -16,16 +16,14 @@ import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res'
   templateUrl: './article-user-list.component.html',
   styleUrls: ['./article-user-list.component.scss'],
   providers: [ConfirmationService]
-
 })
 export class ArticleUserListComponent implements OnInit {
 
   events: GetAllEventCourseDtoDataRes[] = []
   courses: GetAllEventCourseDtoDataRes[] = []
+  dataArticle : GetThreadDataDtoRes[]=[]
   eventData: GetAllEventCourseDtoRes
   courseData: GetAllEventCourseDtoRes
-
-  dataArticle : GetThreadDataDtoRes[]=[]
   article : GetAllThreadPageDtoRes
 
   maxPage: number = 10

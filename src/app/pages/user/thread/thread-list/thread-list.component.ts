@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
@@ -33,7 +33,6 @@ export class ThreadListComponent implements OnInit {
   totalRecords: number = 0
   loading: boolean = true
   idType: string = '2'
-
   idUser? : string
 
   constructor(private router: Router, private confirmationService: ConfirmationService, private threadService: ThreadService, 

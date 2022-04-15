@@ -80,7 +80,7 @@
                 </p-multiSelect>
 
                 <div class="text-500 flex justify-content-end align-items-center mr-1 mt-3">
-                    <p-button (onClick)="click()" [disabled]="formCreateEventCourse.form.invalid || !file">
+                    <p-button (click)="click()" [disabled]="formCreateEventCourse.form.invalid || !file">
                         Create &nbsp;
                         <span *ngIf="insertEventCourse.idEventCourseType == '1'"> Event</span>
                         <span *ngIf="insertEventCourse.idEventCourseType == '2'"> Course</span>

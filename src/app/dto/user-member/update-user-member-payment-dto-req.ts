@@ -1,4 +1,5 @@
 export class UpdateUserMemberPaymentDtoReq { 
-	 idOrder! : string 
+	 idOrder! : string
+	 idPaymentMethod!: string 
 } 
 

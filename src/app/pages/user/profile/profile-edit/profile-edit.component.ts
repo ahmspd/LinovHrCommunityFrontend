@@ -1,4 +1,3 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom, Subscription } from 'rxjs';
@@ -40,6 +39,7 @@ export class ProfileEditComponent implements OnInit {
   updateUser : UpdateUserDtoRes
   idUser : string
   file: File
+  edit: boolean = false
 
   constructor(public router : Router, private userService:UserService, private loginService:LoginService,private industryService : IndustryService,
     private positionService : PositionService, private cityService : CityService, private provinceService : ProvinceService) { }
@@ -79,4 +79,13 @@ export class ProfileEditComponent implements OnInit {
     this.file = event[0]
   }
 
+  doEdit(): void {
+    this.edit = true
+    this.getData()
+  }
+  
+  cancelEdit(): void {
+    this.edit = false
+    this.getData()
+  }
 }

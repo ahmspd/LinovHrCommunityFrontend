@@ -74,39 +74,39 @@
                         <div class="flex align-items-center">
                             <img *ngIf="!userData.idFile" src="../../../../../assets/images/avatars/avatar.png" class="mr-4" style="width: 75px;">
                             <img *ngIf="userData.idFile" src='http://localhost:1234/files/download/{{userData.idFile}}' class="mr-4" style="width: 75px;">
-                            <p-fileUpload #fubauto mode="basic" name="avatar" id="avatar" url="./upload.php" accept="image/*" maxFileSize="1000000" [auto]="false" chooseLabel="Browse" (onSelect)="changeFile($event.files)"></p-fileUpload>
+                            <p-fileUpload *ngIf="edit" #fubauto mode="basic" name="avatar" id="avatar" url="./upload.php" accept="image/*" maxFileSize="1000000" [auto]="false" chooseLabel="Browse" (onSelect)="changeFile($event.files)"></p-fileUpload>
                         </div>
                     </div>
                     <div class="field mb-4 col-12">
                         <label for="fullname" class="font-medium">Fullname</label>
-                        <input id="fullname" name="fullname" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.fullName">
+                        <input [disabled]="!edit" id="fullname" name="fullname" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.fullName">
                     </div>
                     <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
                     <div class="field mb-4 col-12">
                         <label for="email" class="font-medium">Email</label>
-                        <input id="email" type="email" name="email" pinputtext="" class="p-inputtext p-component p-element" [(ngModel)]="userData.email">
+                        <input [disabled]="!edit" id="email" type="email" name="email" pinputtext="" class="p-inputtext p-component p-element" [(ngModel)]="userData.email">
                     </div>
                     <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
 
                     <div class="field mb-4 col-12 md:col-6"><label for="province" class="font-medium">Province</label>
-                        <p-dropdown [options]="provinceData" optionLabel="provinceName" optionValue="id" [(ngModel)]="userData.idProvince" name="provinceName" placeholder="Select a Province" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
+                        <p-dropdown [disabled]="!edit" [options]="provinceData" optionLabel="provinceName" optionValue="id" [(ngModel)]="userData.idProvince" name="provinceName" placeholder="Select a Province" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
                         </p-dropdown>
                     </div>
 
                     <div class="field mb-4 col-12 md:col-6"><label for="city" class="font-medium">City</label>
-                        <p-dropdown [options]="cityData" optionLabel="cityName" optionValue="id" [(ngModel)]="userData.idCity" name="cityName" placeholder="Select a City" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
+                        <p-dropdown [disabled]="!edit" [options]="cityData" optionLabel="cityName" optionValue="id" [(ngModel)]="userData.idCity" name="cityName" placeholder="Select a City" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
                         </p-dropdown>
                     </div>
 
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="postalCode" class="font-medium">Postal Code</label>
-                        <input id="postalCode" name="postalCode" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.postalCode">
+                        <input [disabled]="!edit" id="postalCode" name="postalCode" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.postalCode">
                     </div>
 
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="phoneNumber" class="font-medium">Phone Number</label>
                         <div class="p-inputgroup"><span class="p-inputgroup-addon">🇮🇩</span>
-                            <input id="phoneNumber" name="phoneNumber" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.phoneNumber">
+                            <input [disabled]="!edit" id="phoneNumber" name="phoneNumber" type="text" class="p-inputtext p-component p-element" [(ngModel)]="userData.phoneNumber">
                         </div>
                     </div>
 
@@ -114,36 +114,48 @@
 
                     <div class="field mb-4 col-12">
                         <label for="company" class="font-medium">Company</label>
-                        <input id="company" name="company" type="text" pinputtext="" class="p-inputtext p-component p-element" [(ngModel)]="userData.company">
+                        <input [disabled]="!edit" id="company" name="company" type="text" pinputtext="" class="p-inputtext p-component p-element" [(ngModel)]="userData.company">
                     </div>
 
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="industry" class="block text-900 font-medium text-xl mb-2">Industry</label>
-                        <p-dropdown [options]="industryData" optionLabel="industryName" optionValue="id" [(ngModel)]="userData.idIndustry" name="industryName" placeholder="Select a Industry" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
+                        <p-dropdown [disabled]="!edit" [options]="industryData" optionLabel="industryName" optionValue="id" [(ngModel)]="userData.idIndustry" name="industryName" placeholder="Select a Industry" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
                         </p-dropdown>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>
-                        <p-dropdown [options]="positionData" optionLabel="positionName" optionValue="id" [(ngModel)]="userData.idPosition" name="positionName" placeholder="Select a Position" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
+                        <p-dropdown [disabled]="!edit" [options]="positionData" optionLabel="positionName" optionValue="id" [(ngModel)]="userData.idPosition" name="positionName" placeholder="Select a Position" class="p-element p-inputwrapper ng-tns-c44-2 ng-star-inserted" required="true">
                         </p-dropdown>
                     </div>
 
                     <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
                     <div class="field mb-4 col-12">
                         <label for="instagram" class="font-medium">Instagram</label>
-                        <input id="instagram" name="instagram" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.instagram">
+                        <input [disabled]="!edit" id="instagram" name="instagram" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.instagram">
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="twitter" class="font-medium">Twitter</label>
-                        <input id="twitter" name="twitter" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.twitter">
+                        <input [disabled]="!edit" id="twitter" name="twitter" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.twitter">
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="facebook" class="font-medium">Facebook</label>
-                        <input id="facebook" name="facebook" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.facebook">
+                        <input [disabled]="!edit" id="facebook" name="facebook" type="text" pinputtext="" class="p-inputtext p-component p-element" placeholder="enter your username" [(ngModel)]="userData.facebook">
                     </div>
                     <div class="surface-100 mb-3 col-12" style="height: 2px;"></div>
-                    <div class="col-12"><button pbutton="" pripple="" label="Save Changes" class="p-ripple p-element w-auto mt-3 p-button p-component" (click)="update()"><span class="p-ink" ></span><span
-                                class="p-button-label">Save Changes</span></button></div>
+                    <div class="col-12">
+                        <button *ngIf="edit" pbutton="" pripple="" label="Save Changes" class="p-ripple p-element w-auto mt-3 p-button p-component" (click)="update()">
+                            <span class="p-ink"></span>
+                            <span class="p-button-label">Save Changes</span>
+                        </button>
+                        <button *ngIf="edit" pbutton="" pripple="" label="Save Changes" class="p-ripple p-element w-auto mt-3 p-button p-button-danger p-component ml-3" (click)="cancelEdit()">
+                            <span class="p-ink"></span>
+                            <span class="p-button-label">Cancel</span>
+                        </button>
+                        <button *ngIf="!edit" pbutton="" pripple="" label="Save Changes" class="p-ripple p-element w-auto mt-3 p-button p-component" (click)="doEdit()">
+                            <span class="p-ink"></span>
+                            <span class="p-button-label">Edit Profile</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>

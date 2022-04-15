@@ -8,6 +8,7 @@ import { GetThreadDtoRes } from 'src/app/dto/thread/get-thread-dto-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ThreadService } from 'src/app/service/thread.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-homepage',
@@ -71,15 +72,31 @@ export class HomepageComponent implements OnInit{
     this.courses = this.courseData.data
   }
 
-  toThread(){
+  toLogin(): void {
+    this.router.navigateByUrl('/login')
+  }
+
+  toThread(): void {
     this.router.navigateByUrl('/thread/list')
   }
 
-  articleDetail(id:number):void{
+  articleDetail(id:number):void {
     this.router.navigateByUrl(`/user/article/${id}`)
   }
-  threadDetail(id:number):void{
+
+  threadDetail(id:number):void {
     this.router.navigateByUrl(`/thread/${id}`)
   }
+
+  dateFormatter(date: moment.MomentInput): String {
+    return moment(date).fromNow()
+  }
   
+  dateEventCourseFormatter(date: moment.MomentInput): String {
+    return moment(date).format('dddd, DD MMMM YYYY')
+  }
+  
+  dateThreadFormatter(date: moment.MomentInput): String {
+    return moment(date).format('dddd, DD MMMM YYYY hh:mm')
+  }
 }

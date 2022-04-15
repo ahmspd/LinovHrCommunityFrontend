@@ -6,6 +6,8 @@ import { GetBookmarkThreadDtoDataRes } from 'src/app/dto/bookmark/get-bookmark-t
 import { GetBookmarkThreadDtoRes } from 'src/app/dto/bookmark/get-bookmark-thread-dto-res';
 import { InsertBookmarkDtoReq } from 'src/app/dto/bookmark/insert-bookmark-dto-req';
 import { InsertBookmarkDtoRes } from 'src/app/dto/bookmark/insert-bookmark-dto-res';
+import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
+import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
 import { DeleteLikeDtoRes } from 'src/app/dto/like/delete-like-dto-res';
 import { GetLikeThreadDtoDataRes } from 'src/app/dto/like/get-like-thread-dto-data-res';
 import { GetLikeThreadDtoRes } from 'src/app/dto/like/get-like-thread-dto-res';
@@ -20,24 +22,36 @@ import { GetPollingDetailByPollingIdDto } from 'src/app/dto/polling-detail/get-p
 import { InsertPollingDetailDtoReq } from 'src/app/dto/polling-detail/insert-polling-detail-dto-req';
 import { InsertThreadDetailDtoReq } from 'src/app/dto/thread-detail/insert-thread-detail-dto-req';
 import { InsertThreadDetailDtoRes } from 'src/app/dto/thread-detail/insert-thread-detail-dto-res';
+import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
 import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
 import { GetThreadDetailDtoRes } from 'src/app/dto/thread/get-thread-detail-dto-res';
 import { BookmarkService } from 'src/app/service/bookmark.service';
+import { EventCourseService } from 'src/app/service/event-course.service';
 import { LikeService } from 'src/app/service/like.service';
 import { LoginService } from 'src/app/service/login.service';
 import { PollingDetailVoteService } from 'src/app/service/polling-detail-vote.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
+import * as moment from 'moment';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-thread-detail',
   templateUrl: './thread-detail.component.html',
-  styleUrls: ['./thread-detail.component.scss']
+  styleUrls: ['./thread-detail.component.scss'],
+  providers: [ConfirmationService]
 })
 export class ThreadDetailComponent implements OnInit {
   editor: any = ClassicEditor;
   data: string = '';
   showComment: boolean = false
+
+  events: GetAllEventCourseDtoDataRes[] = []
+  courses: GetAllEventCourseDtoDataRes[] = []
+  dataArticle: GetThreadDataDtoRes[] = []
+  eventData: GetAllEventCourseDtoRes
+  courseData: GetAllEventCourseDtoRes
+  article: GetAllThreadPageDtoRes
 
   threadDetailData: GetThreadDataDtoRes = new GetThreadDataDtoRes()
   threadCommentData: InsertThreadDetailDtoReq = new InsertThreadDetailDtoReq()
@@ -68,11 +82,14 @@ export class ThreadDetailComponent implements OnInit {
   idLike: string
   idBookmark: string
   voteStatus: boolean = true
+  idType: string = '2'
+  idUser? : string
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private threadService: ThreadService, private loginService: LoginService,
-    private likeService: LikeService, private bookmarkService: BookmarkService, private pollingDetailVoteService: PollingDetailVoteService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private threadService: ThreadService, private loginService: LoginService, private confirmationService: ConfirmationService,
+    private likeService: LikeService, private bookmarkService: BookmarkService, private pollingDetailVoteService: PollingDetailVoteService, private eventCourseService: EventCourseService) { }
 
   ngOnInit(): void {
+    this.initData()
     this.getIdThread()
     if (this.loginService.getData() != null) {
       this.showComment = true
@@ -82,11 +99,21 @@ export class ThreadDetailComponent implements OnInit {
     this.threadCommentData.contents = ''
   }
 
+  async initData(): Promise<void> {
+    this.article = await firstValueFrom(this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true))
+    this.dataArticle = this.article.data
+    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.events = this.eventData.data
+    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courses = this.courseData.data
+  }
+
   async getIdThread(): Promise<void> {
     const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
     this.idThread = (result as any).id
     this.getData()
   }
+
   async cekVote(): Promise<void> {
     const dataVote: GetPollingDetailByPollingIdDto[] = this.threadDetailData.dataThreadPolling
     if (dataVote) {
@@ -213,7 +240,33 @@ export class ThreadDetailComponent implements OnInit {
     }
   }
 
-  commentClick() {
+  commentClick(): void {
 
+  }
+
+  dateFormatter(date: moment.MomentInput): String {
+    return moment(date).format('ddd, DD MMM')
+  }
+
+  timeFormatter(time: String): String {
+    return time.substring(0, 5)
+  }
+
+  priceFormatter(price: any): String {
+    return `Rp.${price}`
+  }
+
+  join(event: String, idEvent: String) {
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to join ${event} ?`,
+      header: 'Confirmation',
+      icon: 'pi pi-check-circle',
+      accept: () => {
+        this.router.navigateByUrl(`/event-course/join/${idEvent}`)
+      },
+      reject: () => {
+        this.initData()
+      }
+    });
   }
 }

@@ -11,6 +11,9 @@ import { GetUserDtoRes } from 'src/app/dto/user/get-user-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { UserMemberService } from 'src/app/service/user-member.service';
 import { UserService } from 'src/app/service/user.service';
+import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
+import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
+import { PaymentMethodService } from 'src/app/service/payment-method.service';
 
 @Component({
   selector: 'app-profile-user-premium',
@@ -25,6 +28,8 @@ export class ProfileUserPremiumComponent implements OnInit {
   updateInvoice: UpdateUserMemberPaymentDtoReq = new UpdateUserMemberPaymentDtoReq()
   userData: GetUserDtoDataRes = new GetUserDtoDataRes()
   datas: GetUserDtoRes
+  paymentMethods: GetAllPaymentMethodDtoDataRes[] = []
+  paymentMethodsData : GetAllPaymentMethodDtoRes
   idOrder: string
   idUserMember: string
   file?: File
@@ -38,15 +43,15 @@ export class ProfileUserPremiumComponent implements OnInit {
   statWaiting: boolean = false
   statPremium: boolean = false
 
-  constructor(public router: Router, private confirmationService: ConfirmationService,
+  constructor(public router: Router, private confirmationService: ConfirmationService, private paymentMethodService: PaymentMethodService,
     private userMemberService: UserMemberService, private loginService: LoginService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.idUser = this.loginService.getData().data.id
-    this.getDataUser()
+    this.getData()
   }
 
-  async getDataUser(): Promise<void> {
+  async getData(): Promise<void> {
     this.datas = await firstValueFrom(this.userService.getById(this.idUser))
     this.userData = this.datas.data
     if (this.userData.statUserMember === 0) {
@@ -73,7 +78,11 @@ export class ProfileUserPremiumComponent implements OnInit {
       this.statWaiting = false
       this.statPremium = true
     }
+
+    this.paymentMethodsData = await firstValueFrom(this.paymentMethodService.findAll())
+    this.paymentMethods = this.paymentMethodsData.data
   }
+
   confirm(idPriceList: string): void {
     this.regisPremium.idPriceList = idPriceList
     this.regisPremium.idPaymentMethod = '2'
@@ -90,19 +99,23 @@ export class ProfileUserPremiumComponent implements OnInit {
     if(this.insertData.data){
       this.idOrder = this.insertData.data.idOrder
       this.idUserMember = this.insertData.data.id
-      this.getDataUser()
+      this.getData()
     }
   }
 
   changeFile(event: any) {
     this.file = event[0]
-    this.updateInvoice.idOrder = this.userData.idOrder
   }
 
+  removeFile(): void {
+    this.file = null
+  }
+  
   async onUploadInvoice() : Promise<void> {
+    this.updateInvoice.idOrder = this.userData.idOrder
     this.updateData = await firstValueFrom(this.userMemberService.updateInvoice(this.updateInvoice, this.file))
     if(this.updateData.data){
-      this.getDataUser()
+      this.getData()
     }
   }
 
