@@ -28,7 +28,7 @@ export class PriceTypeUpdateComponent implements OnInit {
   async getData(): Promise<void> {
     const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
     this.idPriceType = (result as any).id
-    this.priceTypeData = await firstValueFrom(this.priceTypeService.deleteById(this.idPriceType))
+    this.priceTypeData = await firstValueFrom(this.priceTypeService.getById(this.idPriceType))
     this.priceType = this.priceTypeData.data
   }
   

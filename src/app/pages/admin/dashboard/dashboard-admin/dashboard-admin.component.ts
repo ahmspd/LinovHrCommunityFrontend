@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
+import { GetDashboardDataDtoRes } from 'src/app/dto/dashboard/get-dashboard-data-dto-res';
+import { GetDashboardDtoRes } from 'src/app/dto/dashboard/get-dashboard-dto-res';
 import { ConfigService } from 'src/app/service/app.config.service';
+import { DashboardService } from 'src/app/service/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -11,23 +14,17 @@ import { ConfigService } from 'src/app/service/app.config.service';
 })
 export class DashboardAdminComponent implements OnInit {
 
-  items: MenuItem[];
+  dataDashboard : GetDashboardDtoRes
+  dashboard : GetDashboardDataDtoRes
 
-  subscription: Subscription;
-
-  config: AppConfig;
-
-  constructor(public configService: ConfigService) { }
+  constructor(public configService: ConfigService, private dashboardService : DashboardService) { }
 
   ngOnInit() {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-    });
+    this.getData()
+  }
 
-    this.items = [
-      { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-      { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-    ];
+  async getData() : Promise<void>{
+    this.dataDashboard = await firstValueFrom(this.dashboardService.getDataDashboard())
+    this.dashboard = this.dataDashboard.data
   }
 }

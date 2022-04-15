@@ -30,7 +30,7 @@
                                 style="color: var(--primary-color)" (click)="forgotPassword()">Forgot password?</a>
                         </div>
                         <button pButton pRipple label="Sign In" class="w-full p-3 text-xl"
-                            [disabled]="formLogin.form.invalid"></button>
+                            [disabled]="formLogin.form.invalid" [loading]="isLoading"></button>
                     </form>
                 </div>
             </div>

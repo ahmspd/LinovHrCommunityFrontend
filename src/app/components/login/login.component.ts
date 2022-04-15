@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ConfigService } from '../../service/app.config.service';
-import { AppConfig } from '../../api/appconfig';
-import { Subscription } from 'rxjs';
-import { LoginService } from 'src/app/service/login.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { LoginUserDtoReq } from 'src/app/dto/user/login-user-dto-req';
+import { LoginUserDtoRes } from 'src/app/dto/user/login-user-dto-res';
+import { LoginService } from 'src/app/service/login.service';
+import { ConfigService } from '../../service/app.config.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,35 +27,38 @@ import { LoginUserDtoReq } from 'src/app/dto/user/login-user-dto-req';
     }
   `]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   valCheck: string[] = ['remember'];
   login: LoginUserDtoReq = new LoginUserDtoReq()
-  config: AppConfig;
-  subscription: Subscription;
+  loginData : LoginUserDtoRes
 
+  isLoading: boolean = false
   constructor(public configService: ConfigService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-    });
   }
 
-  onLogin(isValid: boolean): void {
+  async onLogin(isValid: boolean): Promise<void> {
     if (isValid) {
-      this.loginService.login(this.login).subscribe(result => {
-        console.log(result)
-        this.loginService.saveData(result)
-        const roleCode: string = result.data.roleCode
-        if(roleCode.match('SA001')){
-          this.router.navigateByUrl('/dashboard/admin')
+      this.isLoading = true
+      try{
+        this.loginData = await firstValueFrom(this.loginService.login(this.login))
+        if(this.loginData.data){
+          this.isLoading = false
+          this.loginService.saveData(this.loginData)
+          const roleCode: string = this.loginData.data.roleCode
+          if(roleCode.match('SA001')){
+            this.router.navigateByUrl('/dashboard/admin')
+          }
+          if(roleCode.match('MB001')){
+            this.router.navigateByUrl('/homepage')
+          }
         }
-        if(roleCode.match('MB001')){
-          this.router.navigateByUrl('/homepage')
-        }
-      })
+      }
+      catch(error){
+        this.isLoading = false
+      }
     }
   }
 
@@ -65,11 +68,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   toRegister(){
     this.router.navigateByUrl('/register')
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }
