@@ -1,9 +1,4 @@
 <div class="card">
-    <pre>
-        {{
-            priceList | json
-        }}
-    </pre>
     <form #formSubmit="ngForm" (ngSubmit)="update(formSubmit.form.valid)">
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">

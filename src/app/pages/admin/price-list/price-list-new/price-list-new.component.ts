@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { InsertPriceListDtoReq } from 'src/app/dto/price-list/insert-price-list-dto-req';
 import { InsertPriceListDtoRes } from 'src/app/dto/price-list/insert-price-list-dto-res';
 import { GetAllPriceTypeDtoRes } from 'src/app/dto/price-type/get-all-price-type-dto-res';

@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { DeleteMultiplePaymentMethodDtoDataReq } from 'src/app/dto/payment-method/delete-multiple-payment-method-dto-data-req';
 import { DeleteMultiplePaymentMethodDtoReq } from 'src/app/dto/payment-method/delete-multiple-payment-method-dto-req';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
-import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
 import { GetAllPaymentMethodPageDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-page-dto-res';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
 

@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map, Subscription } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { GetByIdThreadTypeDtoRes } from 'src/app/dto/thread-type/get-by-id-thread-type-dto-res';
 import { UpdateThreadTypeDtoReq } from 'src/app/dto/thread-type/update-thread-type-dto-req';
 import { UpdateThreadTypeDtoRes } from 'src/app/dto/thread-type/update-thread-type-dto-res';

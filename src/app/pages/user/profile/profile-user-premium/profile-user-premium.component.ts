@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
+import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
 import { InsertUserMemberDtoReq } from 'src/app/dto/user-member/insert-user-member-dto-req';
 import { InsertUserMemberDtoRes } from 'src/app/dto/user-member/insert-user-member-dto-res';
 import { UpdateUserMemberPaymentDtoReq } from 'src/app/dto/user-member/update-user-member-payment-dto-req';
@@ -9,11 +11,9 @@ import { UpdateUserMemberPaymentDtoRes } from 'src/app/dto/user-member/update-us
 import { GetUserDtoDataRes } from 'src/app/dto/user/get-user-dto-data-res';
 import { GetUserDtoRes } from 'src/app/dto/user/get-user-dto-res';
 import { LoginService } from 'src/app/service/login.service';
+import { PaymentMethodService } from 'src/app/service/payment-method.service';
 import { UserMemberService } from 'src/app/service/user-member.service';
 import { UserService } from 'src/app/service/user.service';
-import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
-import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
-import { PaymentMethodService } from 'src/app/service/payment-method.service';
 
 @Component({
   selector: 'app-profile-user-premium',

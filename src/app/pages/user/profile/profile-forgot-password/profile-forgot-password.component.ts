@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { UserForgotPasswordDtoReq } from 'src/app/dto/user/user-forgot-password-dto-req';
 import { UserForgotPasswordDtoRes } from 'src/app/dto/user/user-forgot-password-dto-res';
 import { UserService } from 'src/app/service/user.service';

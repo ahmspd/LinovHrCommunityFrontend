@@ -1,8 +1,7 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { GetAllUserMemberDtoDataRes } from 'src/app/dto/user-member/get-all-user-member-dto-data-res';
 import { GetAllUserMemberDtoRes } from 'src/app/dto/user-member/get-all-user-member-dto-res';
 import { UpdateUserMemberAcceptDtoReq } from 'src/app/dto/user-member/update-user-member-accept-dto-req';

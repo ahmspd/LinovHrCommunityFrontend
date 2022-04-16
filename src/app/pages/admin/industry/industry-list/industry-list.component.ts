@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { DeleteMultipleIndustryDtoDataReq } from 'src/app/dto/industry/delete-multiple-industry-dto-data-req';
 import { DeleteMultipleIndustryDtoReq } from 'src/app/dto/industry/delete-multiple-industry-dto-req';
 import { GetAllIndustryPageDtoDataRes } from 'src/app/dto/industry/get-all-industry-page-dto-data-res';
@@ -88,8 +88,5 @@ export class IndustryListComponent implements OnInit{
     catch(error){
 
     }
-    // this.industrySubsDeleteMultiple = this.industryService.deleteMultiple(this.deleteIndustry).subscribe(result => {
-    //   this.getData()
-    // })
   }
 }

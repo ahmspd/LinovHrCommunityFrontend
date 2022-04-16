@@ -25,8 +25,6 @@ export class ArticleNewComponent implements OnInit {
   selectCategories: GetAllCategoryThreadDetail[] = []
 
   insertThreadData : InsertThreadDtoRes
-  // insertArticleSubscription? : Subscription
-  // getAllCategoriesSubscription?: Subscription
 
   idThreadType: string = '2'
 
@@ -53,20 +51,10 @@ export class ArticleNewComponent implements OnInit {
     if(isValid){
       this.insertArticle.idThreadType = this.idThreadType
       this.insertArticle.dataCategory = this.selectCategories
-      // this.insertArticleSubscription = this.threadService.insert(this.insertArticle, this.file).subscribe(result=>{
-      //   if(result){
-      //     this.router.navigateByUrl('article/list')
-      //   }
-      // })
       this.insertThreadData = await firstValueFrom(this.threadService.insert(this.insertArticle, this.file))
       if(this.insertThreadData.data){
         this.router.navigateByUrl('article/list')
       }
     }
   }
-
-  // ngOnDestroy(): void {
-  //   this.insertArticleSubscription?.unsubscribe()
-  //   this.getAllCategoriesSubscription?.unsubscribe()
-  // }
 }

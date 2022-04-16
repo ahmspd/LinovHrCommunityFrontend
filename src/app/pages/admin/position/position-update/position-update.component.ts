@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first, firstValueFrom, map, Subscription } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { GetByIdPositionDtoRes } from 'src/app/dto/position/get-by-id-position-dto-res';
 import { UpdatePositionDtoReq } from 'src/app/dto/position/update-position-dto-req';
 import { UpdatePositionDtoRes } from 'src/app/dto/position/update-position-dto-res';

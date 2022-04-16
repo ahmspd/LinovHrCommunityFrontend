@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map, Subscription } from 'rxjs';
+import * as moment from 'moment';
+import { ConfirmationService } from 'primeng/api';
+import { firstValueFrom, map } from 'rxjs';
 import { DeleteBookmarkDtoRes } from 'src/app/dto/bookmark/delete-bookmark-dto-res';
 import { GetBookmarkThreadDtoDataRes } from 'src/app/dto/bookmark/get-bookmark-thread-dto-data-res';
 import { GetBookmarkThreadDtoRes } from 'src/app/dto/bookmark/get-bookmark-thread-dto-res';
@@ -19,7 +21,6 @@ import { GetPollingDtoRes } from 'src/app/dto/polling-detail-vote/get-polling-dt
 import { InsertPollingVoteDtoReq } from 'src/app/dto/polling-detail-vote/insert-polling-vote-dto-req';
 import { InsertPollingVoteDtoRes } from 'src/app/dto/polling-detail-vote/insert-polling-vote-dto-res';
 import { GetPollingDetailByPollingIdDto } from 'src/app/dto/polling-detail/get-polling-detail-by-polling-id-dto';
-import { InsertPollingDetailDtoReq } from 'src/app/dto/polling-detail/insert-polling-detail-dto-req';
 import { InsertThreadDetailDtoReq } from 'src/app/dto/thread-detail/insert-thread-detail-dto-req';
 import { InsertThreadDetailDtoRes } from 'src/app/dto/thread-detail/insert-thread-detail-dto-res';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
@@ -32,8 +33,6 @@ import { LoginService } from 'src/app/service/login.service';
 import { PollingDetailVoteService } from 'src/app/service/polling-detail-vote.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as ClassicEditor from 'src/ckeditor5/build/ckeditor';
-import * as moment from 'moment';
-import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-thread-detail',

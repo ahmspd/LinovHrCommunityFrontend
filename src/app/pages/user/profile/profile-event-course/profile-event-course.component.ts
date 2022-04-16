@@ -31,9 +31,9 @@ export class ProfileEventCourseComponent implements OnInit {
   }
 
   async initData(): Promise<void> {
-    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.eventData = await firstValueFrom(this.eventCourseService.getEventCourseByCreatedBy('Event'))
     this.events = this.eventData.data
-    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courseData = await firstValueFrom(this.eventCourseService.getEventCourseByCreatedBy('Course'))
     this.courses = this.courseData.data
 
     this.idUser = this.loginService.getData().data.id

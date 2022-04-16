@@ -37,10 +37,4 @@ export class UserMemberService {
         return this.http.put<UpdateUserMemberAcceptDtoRes>(`http://localhost:1234/user-members/premium`, data)
     }
 
-    // @PutMapping("/premium")
-	// public ResponseEntity<UpdateUserMemberAcceptDtoRes> updateAccept(
-	// 		@RequestBody @Valid UpdateUserMemberAcceptDtoReq request) throws Exception {
-	// 	UpdateUserMemberAcceptDtoRes response = userMemberService.updateAccept(request);
-	// 	return new ResponseEntity<UpdateUserMemberAcceptDtoRes>(response, HttpStatus.OK);
-	// }
 }

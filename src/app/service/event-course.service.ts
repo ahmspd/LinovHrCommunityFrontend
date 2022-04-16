@@ -75,12 +75,6 @@ export class EventCourseService {
         return this.http.put<ConfirmPayJoinEventCourseDtoRes>(`http://localhost:1234/event-course/confirm/${id}`, id)
     }
 
-    // @GetMapping("page/report/admin")
-	// public ResponseEntity<GetReportEventCourseByIdRes> getReportUserJoinByAdmin(@RequestParam int start, @RequestParam int max) throws Exception {
-	// 	GetReportEventCourseByIdRes res = eventCourseService.getReportUserJoinByAdmin(start, max);
-	// 	return new ResponseEntity<GetReportEventCourseByIdRes>(res, HttpStatus.OK);
-	// }
-
     getReportPageUserJoinByAdmin(startPage: number, maxPage: number): Observable<GetReportEventCourseByIdRes> {
         return this.http.get<GetReportEventCourseByIdRes>(`http://localhost:1234/event-course/page/report/admin?start=${startPage}&max=${maxPage}`)
     }

@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { firstValueFrom, Subscription } from 'rxjs';
-import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
-import { EventCourseService } from 'src/app/service/event-course.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ConfirmationService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { ThreadService } from 'src/app/service/thread.service';
-import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { firstValueFrom } from 'rxjs';
+import { GetAllEventCourseDtoDataRes } from 'src/app/dto/event-course/get-all-event-course-dto-data-res';
 import { GetAllEventCourseDtoRes } from 'src/app/dto/event-course/get-all-event-course-dto-res';
 import { GetAllThreadPageDtoRes } from 'src/app/dto/thread/get-all-thread-page-dto-res';
+import { GetThreadDataDtoRes } from 'src/app/dto/thread/get-thread-data-dto-res';
+import { EventCourseService } from 'src/app/service/event-course.service';
 import { LoginService } from 'src/app/service/login.service';
+import { ThreadService } from 'src/app/service/thread.service';
 
 @Component({
   selector: 'app-event-course-list',

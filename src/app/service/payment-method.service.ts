@@ -11,7 +11,6 @@ import { InsertPaymentMethodDtoRes } from "../dto/payment-method/insert-payment-
 import { UpdatePaymentMethodDtoReq } from "../dto/payment-method/update-payment-method-dto-req";
 import { UpdatePaymentMethodDtoRes } from "../dto/payment-method/update-payment-method-dto-res";
 import { GetByIdPositionDtoRes } from "../dto/position/get-by-id-position-dto-res";
-import { UpdatePositionDtoRes } from "../dto/position/update-position-dto-res";
 
 @Injectable({
     providedIn: 'root'

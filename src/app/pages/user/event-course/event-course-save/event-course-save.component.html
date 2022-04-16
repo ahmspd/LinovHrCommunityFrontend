@@ -9,7 +9,7 @@
                 <p-selectButton styleClass="mb-3 col-6" id="evtType" name="evtType" [options]="types" optionLabel="eventTypeName" optionValue="id" [(ngModel)]="insertEventCourse.idEventCourseType" required="true"></p-selectButton>
 
                 <label for="title" class="block text-900 text-xl font-medium mb-2">Title<span style="color: red;">*</span></label>
-                <input id="title" name="title" type="text" pInputText class="w-full mb-3" style="padding:1rem;" [(ngModel)]="insertEventCourse.title" required="true">
+                <input id="title" name="title" type="text" pInputText class="w-full mb-3" style="padding:1rem;" [(ngModel)]="insertEventCourse.title" required="true" minlength="5" maxlength="35" >
 
                 <label for="content" class="block text-900 text-xl font-medium mb-2">Description<span style="color: red;">*</span></label>
                 <textarea class="mb-3" id="contents" name="contents" rows="5" cols="93" pInputTextarea autoResize="autoResize" [(ngModel)]="insertEventCourse.contents"></textarea>

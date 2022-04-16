@@ -1,18 +1,17 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map, Subscription } from 'rxjs';
+import * as moment from 'moment';
+import { firstValueFrom, map } from 'rxjs';
 import { GetByIdEventCourseDtoDataRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-data-res';
+import { GetByIdEventCourseDtoRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-res';
+import { JoinEventCourseDtoRes } from 'src/app/dto/event-course/join-event-course-dto-res';
 import { PayJoinEventCourseDtoReq } from 'src/app/dto/event-course/pay-join-event-course-dto-req';
+import { PayJoinEventCourseDtoRes } from 'src/app/dto/event-course/pay-join-event-course-dto-res';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
+import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { OrderService } from 'src/app/service/order.service';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
-import * as moment from 'moment';
-import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
-import { GetByIdEventCourseDtoRes } from 'src/app/dto/event-course/get-by-id-event-course-dto-res';
-import { JoinEventCourseDtoRes } from 'src/app/dto/event-course/join-event-course-dto-res';
-import { PayJoinEventCourseDtoRes } from 'src/app/dto/event-course/pay-join-event-course-dto-res';
 
 @Component({
   selector: 'app-event-course-join',

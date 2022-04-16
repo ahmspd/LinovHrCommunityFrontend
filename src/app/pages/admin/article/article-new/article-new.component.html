@@ -5,8 +5,10 @@
                 <h5 class="mt-3">Add Article</h5>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary mr-2" routerLink="/article/list"></button>
-                <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-primary mr-2" [disabled]="formSubmit.form.invalid"></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-secondary mr-2"
+                    routerLink="/article/list"></button>
+                <button pButton pRipple label="Save" icon="pi pi-save" class="p-button-primary mr-2"
+                    [disabled]="formSubmit.form.invalid"></button>
             </ng-template>
         </p-toolbar>
         <div class="grid formgrid p-fluid">
@@ -14,14 +16,15 @@
                 <label for="articleTitle" class="font-medium text-900">
                     Title <span style="color: red;">*</span>
                 </label>
-                <input class="p-inputtext p-component p-element" id="articleTitle" name="articleTitle" type="text" [(ngModel)]="insertArticle.title" required="true"minlength="10" maxlength="200">
+                <input class="p-inputtext p-component p-element" id="articleTitle" name="articleTitle" type="text"
+                    [(ngModel)]="insertArticle.title" required="true" minlength="10" maxlength="200">
             </div>
             <div class="field mb-4 col-12 md:col-12">
                 <label for="articleContent" class="font-medium text-900">
                     Article Contents <span style="color: red;">*</span>
                 </label>
-                <ckeditor name="articleContent" [editor]="editor" [(ngModel)]="insertArticle.contents" required="true" minlength="50"></ckeditor>
-                <!-- <input class="p-inputtext p-component p-element" id="industryCode" name="industryCode" type="text" [(ngModel)]="category.code" required="true" minlength="5" maxlength="7"> -->
+                <ckeditor name="articleContent" [editor]="editor" [(ngModel)]="insertArticle.contents" required="true"
+                    minlength="50"></ckeditor>
             </div>
             <div class="field mb-4 col-12 md:col-12">
                 <label for="articleContent" class="font-medium text-900">
@@ -32,7 +35,6 @@
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="country-item country-item-value inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
                             *ngFor="let option of selectCategories">
-                            <!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'flag flag-' + option.code.toLowerCase()" /> -->
                             <div>{{option.categoryName}}</div>
                         </div>
                         <div *ngIf="!selectCategories || selectCategories.length === 0" class="country-placeholder">
@@ -41,7 +43,6 @@
                     </ng-template>
                     <ng-template let-category pTemplate="item">
                         <div class="flex align-items-center country-item">
-                            <!-- <img src="assets/demo/flags/flag_placeholder.png" [class]="'mr-2 flag flag-' + country.code.toLowerCase()" style="width:18px; height:12px;"/> -->
                             <div>{{category.categoryName}}</div>
                         </div>
                     </ng-template>
@@ -49,7 +50,8 @@
             </div>
             <div class="field mb-4 col-12 md:col-12">
                 <label for="file" class="block text-900 text-xl font-medium mb-2 mt-3">File</label>
-                <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
+                <p-fileUpload id="file" name="file" accept="image/*" (onSelect)="changeFile($event.files)" [auto]="true"
+                    chooseLabel="Browse"></p-fileUpload>
             </div>
         </div>
 

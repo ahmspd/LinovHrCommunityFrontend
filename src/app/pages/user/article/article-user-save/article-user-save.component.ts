@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { GetAllCategoryDtoDataRes } from 'src/app/dto/category/get-all-category-dto-data-res';
 import { GetAllCategoryDtoRes } from 'src/app/dto/category/get-all-category-dto-res';
 import { GetAllCategoryThreadDetail } from 'src/app/dto/category/get-all-category-thread-detail';
-import { GetByIdCategoryDtoRes } from 'src/app/dto/category/get-by-id-category-dto-res';
 import { InsertThreadDtoReq } from 'src/app/dto/thread/insert-thread-dto-req';
 import { InsertThreadDtoRes } from 'src/app/dto/thread/insert-thread-dto-res';
 import { CategoryService } from 'src/app/service/category.service';

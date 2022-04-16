@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { InsertIndustryDtoReq } from 'src/app/dto/industry/insert-industry-dto-req';
 import { InsertIndustryDtoRes } from 'src/app/dto/industry/insert-industry-dto-res';
 import { IndustryService } from 'src/app/service/industry.service';
