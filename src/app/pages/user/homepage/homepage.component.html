@@ -9,9 +9,12 @@
                 </div>
                 <div class="flex justify-content-between flex-column p-4 w-full" *ngIf="i<2">
                     <div class="flex justify-content-between mb-3">
-                        <div class="grid" *ngFor="let dataCategory of data.dataCategoryDetail">
-                            <span class="text-orange-500 mr-2 font-medium col-auto">{{dataCategory.categoryName}}</span>
+                        <div class="flex justify-content-start">
+                            <div class="mr-4" *ngFor="let dataCategory of data.dataCategoryDetail">
+                                <span class="text-orange-500 font-medium">{{dataCategory.categoryName}}</span>
+                            </div>
                         </div>
+
                         <span class="text-500 text-sm font-medium">{{dateFormatter(data.date)}}</span>
                     </div>
                     <div class="font-medium text-2xl mb-3 line-height-3">{{data.title}}</div>
@@ -44,9 +47,9 @@
     <div class="grid nogutter">
         <div class="col-12 lg:col-4 p-4" *ngFor="let data of threadData; let i = index">
             <div class="border-top-3 border-blue-600 mb-3" *ngIf="i<3"></div>
-            <div class="grid" *ngFor="let dataCategory of data.dataCategoryDetail">
-                <div class="text-blue-600 font-medium mx-2 col-auto" *ngIf="i<3">
-                    <span class="mr-3">{{dataCategory.categoryName}}</span>
+            <div class="flex justify-content-start">
+                <div class="grid mr-4 my-2" *ngFor="let dataCategory of data.dataCategoryDetail">
+                    <span class="text-blue-600 font-medium">{{dataCategory.categoryName}}</span>
                 </div>
             </div>
             <a (click)="threadDetail(data.id)" *ngIf="i<3">

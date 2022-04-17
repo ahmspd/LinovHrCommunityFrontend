@@ -97,7 +97,7 @@ export class EventCourseCartComponent implements OnInit {
     this.insertPayment.totalPrice = this.totalPrice
     this.insertPaymentData = await firstValueFrom(this.eventCoursePaymentService.pay(this.insertPayment, this.file))
     if(this.insertPaymentData.data){
-      this.router.navigateByUrl('/user/setting/event-course')
+      this.initData()
     }
   }
 
