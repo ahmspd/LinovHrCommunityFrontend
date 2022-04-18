@@ -100,9 +100,12 @@
                                     <span class="bg-blue-100 text-blue-600 font-medium py-2 px-3 mr-2" style="border-radius: 30px;">{{category.categoryName}}</span>
                                 </div>
                             </div>
-                            <button *ngIf="event.isJoin == null" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton label="Join"></button>
-                            <button *ngIf="event.isJoin" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
-                            <button *ngIf="event.isJoin == false" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                            <div *ngIf="idUser != null">
+                                <button *ngIf="event.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="confirm(event.id) " pButton label="Order List "></button>
+                                <button *ngIf="event.isJoin == null && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton label="Join"></button>
+                                <button *ngIf="event.isJoin && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                                <button *ngIf="event.isJoin == false && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -145,9 +148,12 @@
                                     <span class="bg-blue-100 text-blue-600 font-medium py-2 px-3 mr-2" style="border-radius: 30px;">{{category.categoryName}}</span>
                                 </div>
                             </div>
-                            <button *ngIf="course.isJoin == null" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton label="Join"></button>
-                            <button *ngIf="course.isJoin" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
-                            <button *ngIf="course.isJoin == false" class="p-button-outlined p-button-rounded p-button-sm mb-2 mt-3" (click)="join(course.title, course.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                            <div *ngIf="idUser != null">
+                                <button *ngIf="course.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="confirm(event.id) " pButton label="Order List "></button>
+                                <button *ngIf="course.isJoin == null && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton label="Join"></button>
+                                <button *ngIf="course.isJoin && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                                <button *ngIf="course.isJoin == false && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2 mt-3" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,7 +170,7 @@
                 <div *ngFor="let data of dataArticle; let i = index">
                     <div *ngIf="i<2">
                         <a routerLink="/user/article/{{data.id}}" class="cursor-pointer">
-                            <div class="p-3 shadow-2 border-round surface-card h-full mb-3" >
+                            <div class="p-3 shadow-2 border-round surface-card h-full mb-3">
                                 <img src='http://localhost:1234/files/download/{{data.idFile}}' alt="Image" class="block w-full mb-3">
                                 <p class="line-height-3 mt-3 mb-5 text-900 font-medium">{{data.title}}</p>
                                 <div class="flex justify-content-between text-600">
