@@ -9,10 +9,6 @@
     <p-table #dt [value]="userMemberData" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10,25,50]" selectionMode="single">
         <ng-template pTemplate="caption">
             <div class="flex flex-column md:flex-row md:justify-content-start md:align-items-center">
-                <span class="block mt-2 md:mt-0 p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
-                </span>
                 <div class="field-radiobutton ml-3 mt-3">
                     <p-radioButton name="category" [value]=false [(ngModel)]="isAccept" inputId="unpaid" (onClick)="getData()"></p-radioButton>
                     <label for="unpaid">Unpaid</label>

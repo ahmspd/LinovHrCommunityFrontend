@@ -33,10 +33,10 @@ export class EventCourseListComponent implements OnInit {
     private router: Router, private threadService: ThreadService, private loginService : LoginService) { }
 
   ngOnInit(): void {
-    this.initData()
     if(this.loginService.getData()!=null){
       this.idUser = this.loginService.getData().data.id
     }
+    this.initData()
   }
 
   async initData(): Promise<void> {
@@ -81,4 +81,7 @@ export class EventCourseListComponent implements OnInit {
     });
   }
 
+  confirm(idEvent: string): void {
+    this.router.navigateByUrl(`/event-course/order-list/${idEvent}`)
+  }
 }

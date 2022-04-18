@@ -6,7 +6,6 @@
                 <p-button (onClick)="pay()" label="Pay" [disabled]="formEventCourseCart.form.invalid || !idAndPrices.length || !file"></p-button>
             </div>
         </div>
-        {{idAndPrices | json}}
         <label for="paymentMethod" class="block text-900 text-xl font-medium mb-3">Payment Method</label>
         <p-dropdown [options]="paymentMethods" [(ngModel)]="insertPayment.idPaymentMethod" optionLabel="paymentName" optionValue="id" id="paymentMethod" name="paymentMethod" optionlabel="name" styleclass="w-100" required="true">
             <div class="ng-tns-c41-2 w-full p-dropdown p-component p-dropdown-clearable">

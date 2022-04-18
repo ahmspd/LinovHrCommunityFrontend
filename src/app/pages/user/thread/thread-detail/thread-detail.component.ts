@@ -90,11 +90,6 @@ export class ThreadDetailComponent implements OnInit {
   ngOnInit(): void {
     this.initData()
     this.getIdThread()
-    if (this.loginService.getData() != null) {
-      this.showComment = true
-      this.getDataLike()
-      this.getDataBookmark()
-    }
     this.threadCommentData.contents = ''
   }
 
@@ -105,6 +100,11 @@ export class ThreadDetailComponent implements OnInit {
     this.events = this.eventData.data
     this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
     this.courses = this.courseData.data
+    if (this.loginService.getData() != null) {
+      this.showComment = true
+      this.getDataLike()
+      this.getDataBookmark()
+    }
   }
 
   async getIdThread(): Promise<void> {
