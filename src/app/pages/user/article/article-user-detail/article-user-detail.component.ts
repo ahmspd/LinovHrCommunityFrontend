@@ -9,6 +9,7 @@ import { GetThreadDetailDtoRes } from 'src/app/dto/thread/get-thread-detail-dto-
 import { EventCourseService } from 'src/app/service/event-course.service';
 import { ThreadService } from 'src/app/service/thread.service';
 import * as moment from 'moment';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-article-user-detail',
@@ -30,7 +31,7 @@ export class ArticleUserDetailComponent implements OnInit{
   idThread:string
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private threadService: ThreadService,
-    private confirmationService: ConfirmationService, private eventCourseService: EventCourseService) { }
+    private confirmationService: ConfirmationService, private eventCourseService: EventCourseService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.getData()
@@ -47,6 +48,10 @@ export class ArticleUserDetailComponent implements OnInit{
     this.events = this.eventData.data
     this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
     this.courses = this.courseData.data
+
+    if (this.loginService.getData() != null) {
+      this.idUser = this.loginService.getData().data.id
+    }
   }
 
   dateFormatter(date: moment.MomentInput): String {
@@ -73,5 +78,9 @@ export class ArticleUserDetailComponent implements OnInit{
         this.getData()
       }
     });
+  }
+
+  confirm(idEvent: string): void {
+    this.router.navigateByUrl(`/event-course/order-list/${idEvent}`)
   }
 }

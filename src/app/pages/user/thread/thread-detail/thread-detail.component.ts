@@ -96,11 +96,12 @@ export class ThreadDetailComponent implements OnInit {
   async initData(): Promise<void> {
     this.article = await firstValueFrom(this.threadService.getArticleActiveWithPage(this.idType, 0, 2, true))
     this.dataArticle = this.article.data
-    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', this.idUser))
+    this.eventData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Event', null))
     this.events = this.eventData.data
-    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', this.idUser))
+    this.courseData = await firstValueFrom(this.eventCourseService.getActiveEventCourse('Course', null))
     this.courses = this.courseData.data
     if (this.loginService.getData() != null) {
+      this.idUser = this.loginService.getData().data.id
       this.showComment = true
       this.getDataLike()
       this.getDataBookmark()
@@ -268,4 +269,9 @@ export class ThreadDetailComponent implements OnInit {
       }
     });
   }
+
+  confirm(idEvent: string): void {
+    this.router.navigateByUrl(`/event-course/order-list/${idEvent}`)
+  }
+  
 }

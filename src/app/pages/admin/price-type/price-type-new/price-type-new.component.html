@@ -14,13 +14,13 @@
                 <label for="industryName" class="font-medium text-900">
                     Price Type Name <span style="color: red;">*</span>
                 </label>
-                <input class="p-inputtext p-component p-element" id="industryName" name="industryName" type="text" [(ngModel)]="priceType.priceTypeName" required="true">
+                <input class="p-inputtext p-component p-element" id="industryName" name="industryName" type="text" [(ngModel)]="priceType.priceTypeName" minlength="5" maxlength="30" required="true">
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="industryCode" class="font-medium text-900">
                     Price Type Code <span style="color: red;">*</span>
                 </label>
-                <input class="p-inputtext p-component p-element" id="industryCode" name="industryCode" type="text" [(ngModel)]="priceType.code" required="true">
+                <input class="p-inputtext p-component p-element" id="industryCode" name="industryCode" type="text" [(ngModel)]="priceType.code" minlength="5" maxlength="10" required="true">
             </div>
         </div>
 

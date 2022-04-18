@@ -118,4 +118,8 @@ export class ThreadListComponent implements OnInit {
     });
   }
 
+  confirm(idEvent: string): void {
+    this.router.navigateByUrl(`/event-course/order-list/${idEvent}`)
+  }
+  
 }
