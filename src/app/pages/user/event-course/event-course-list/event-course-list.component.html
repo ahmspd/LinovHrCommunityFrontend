@@ -53,10 +53,12 @@
                                         </span>
                                     </p-tag>
                                 </div>
-                                <button *ngIf="event.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 " (click)="confirm(event.id) " pButton label="Order List "></button>
-                                <button *ngIf="event.isJoin == null && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton label="Join"></button>
-                                <button *ngIf="event.isJoin && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
-                                <button *ngIf="event.isJoin == false && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                                <div *ngIf="idUser != null">
+                                    <button *ngIf="event.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 " (click)="confirm(event.id) " pButton label="Order List "></button>
+                                    <button *ngIf="event.isJoin == null && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton label="Join"></button>
+                                    <button *ngIf="event.isJoin && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                                    <button *ngIf="event.isJoin == false && event.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(event.title, event.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                                </div>
                             </div>
                         </div>
                     </ng-template>
@@ -104,10 +106,12 @@
                                         </span>
                                     </p-tag>
                                 </div>
-                                <button *ngIf="course.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 " (click)="confirm(course.id) " pButton label="Order List "></button>
-                                <button *ngIf="course.isJoin == null && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton label="Join"></button>
-                                <button *ngIf="course.isJoin && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
-                                <button *ngIf="course.isJoin == false && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                                <div *ngIf="idUser != null">
+                                    <button *ngIf="course.createdBy == idUser" class="p-button-outlined p-button-rounded mb-2 " (click)="confirm(course.id) " pButton label="Order List "></button>
+                                    <button *ngIf="course.isJoin == null && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton label="Join"></button>
+                                    <button *ngIf="course.isJoin && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton icon="pi pi-check" label="Joined" disabled></button>
+                                    <button *ngIf="course.isJoin == false && course.createdBy != idUser" class="p-button-outlined p-button-rounded mb-2" (click)="join(course.title, course.id)" pButton icon="pi pi-exclamation-triangle" label="Pending" disabled></button>
+                                </div>
                             </div>
                         </div>
                     </ng-template>

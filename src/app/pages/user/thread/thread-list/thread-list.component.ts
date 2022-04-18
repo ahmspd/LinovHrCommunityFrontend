@@ -39,10 +39,10 @@ export class ThreadListComponent implements OnInit {
     private loginService: LoginService, private eventCourseService: EventCourseService) { }
 
   ngOnInit(): void {
-    this.initData()
     if(this.loginService.getData()!=null){
       this.idUser = this.loginService.getData().data.id
     }
+    this.initData()
   }
 
   async initData(): Promise<void> {
