@@ -4,6 +4,7 @@ import { ConfirmationService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { GetAllPaymentMethodDtoDataRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-data-res';
 import { GetAllPaymentMethodDtoRes } from 'src/app/dto/payment-method/get-all-payment-method-dto-res';
+import { GetByIdPriceListDtoRes } from 'src/app/dto/price-list/get-by-id-price-list-dto-res';
 import { InsertUserMemberDtoReq } from 'src/app/dto/user-member/insert-user-member-dto-req';
 import { InsertUserMemberDtoRes } from 'src/app/dto/user-member/insert-user-member-dto-res';
 import { UpdateUserMemberPaymentDtoReq } from 'src/app/dto/user-member/update-user-member-payment-dto-req';
@@ -12,6 +13,7 @@ import { GetUserDtoDataRes } from 'src/app/dto/user/get-user-dto-data-res';
 import { GetUserDtoRes } from 'src/app/dto/user/get-user-dto-res';
 import { LoginService } from 'src/app/service/login.service';
 import { PaymentMethodService } from 'src/app/service/payment-method.service';
+import { PriceListService } from 'src/app/service/price-list.service';
 import { UserMemberService } from 'src/app/service/user-member.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -35,16 +37,19 @@ export class ProfileUserPremiumComponent implements OnInit {
   file?: File
 
   idUser: string
+  idPriceList: string = '1'
   insertData : InsertUserMemberDtoRes
   updateData : UpdateUserMemberPaymentDtoRes
+  priceData : GetByIdPriceListDtoRes
 
   statPricing: boolean = false
   statUpload: boolean = false
   statWaiting: boolean = false
   statPremium: boolean = false
+  pricePremium : BigInteger
 
   constructor(public router: Router, private confirmationService: ConfirmationService, private paymentMethodService: PaymentMethodService,
-    private userMemberService: UserMemberService, private loginService: LoginService, private userService: UserService) { }
+    private userMemberService: UserMemberService, private loginService: LoginService, private userService: UserService, private priceListService : PriceListService) { }
 
   ngOnInit(): void {
     this.idUser = this.loginService.getData().data.id
@@ -81,11 +86,13 @@ export class ProfileUserPremiumComponent implements OnInit {
 
     this.paymentMethodsData = await firstValueFrom(this.paymentMethodService.findAll())
     this.paymentMethods = this.paymentMethodsData.data
+
+    this.priceData = await firstValueFrom(this.priceListService.getById(this.idPriceList))
+    this.pricePremium = this.priceData.data.price
   }
 
   confirm(idPriceList: string): void {
     this.regisPremium.idPriceList = idPriceList
-    this.regisPremium.idPaymentMethod = '2'
     this.confirmationService.confirm({
       message: 'Are you sure that you want to buy this ?',
       accept: () => {
